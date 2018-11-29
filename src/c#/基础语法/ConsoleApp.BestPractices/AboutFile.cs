@@ -5,8 +5,6 @@ using System.Text;
 
 namespace ConsoleApp.BestPractices
 {
-
-
     /// <summary>
     /// 一般用静态方法就行，如果对性能要求很高，才考虑打开后操作，操作完再关闭
     /// </summary>
@@ -41,19 +39,14 @@ namespace ConsoleApp.BestPractices
             var cnt3 = File.ReadAllBytes(filepath);
 
 
-            File.Copy(filepath, filepath + ".txt");
+            File.Copy(filepath, filepath + ".txt", true);
             File.Delete(filepath);
 
 
-
-
-
-            var tempPath = Path.Combine("C:", "a", "b", "c.txt"); //C:\a\b 
+            var tempPath = Path.Combine("C:", "a", "b", "c.txt"); //C:\a\b\c.txt 
             var filename = Path.GetFileName(tempPath);
             var fullpath = Path.GetFullPath(tempPath);
             var extend = Path.GetExtension(tempPath);
-
-
         }
     }
 }
