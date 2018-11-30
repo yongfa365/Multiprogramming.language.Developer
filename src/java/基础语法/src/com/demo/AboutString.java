@@ -1,18 +1,13 @@
 package com.demo;
 
+import com.demo.Helper.AESHelper;
 import com.demo.Helper.SecurityHelper;
-
-import java.io.UnsupportedEncodingException;
-import java.lang.invoke.StringConcatFactory;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 
 public class AboutString {
 
@@ -160,7 +155,7 @@ public class AboutString {
             var src = "我是123の뭐라구";
 
             var base64_to = SecurityHelper.ToBase64(src);
-            var base64_from =SecurityHelper.FromBase64(base64_to);
+            var base64_from = SecurityHelper.FromBase64(base64_to);
 
             var md5_16bit = SecurityHelper.To16bitMD5(src);
             var md5_32bit = SecurityHelper.To32bitMD5(src);
@@ -168,14 +163,14 @@ public class AboutString {
             var sha1 = SecurityHelper.ToSHA1(src);
             var sha512 = SecurityHelper.ToSHA512(src);
 
+            var aes_key_iv = AESHelper.GetKeys();
+            var aes_en = AESHelper.AESEncrypt(src, aes_key_iv[0],aes_key_iv[1]);
+            var aes_de = AESHelper.AESDecrypt(aes_en, aes_key_iv[0],aes_key_iv[1]);
+
             System.out.println("断点用");
 
 /*
 
-
-            var aesKeys = AesHelper.GetKeys();
-            var aes_en = src.AESEncrypt(aesKeys.Key, aesKeys.IV);
-            var aes_de = aes_en.AESDecrypt(aesKeys.Key, aesKeys.IV);
 
             var rsaKeys = RSAHelper.GetKeys();
             var rsa_en = src.RSAEncrypt(rsaKeys.PublicKey);
