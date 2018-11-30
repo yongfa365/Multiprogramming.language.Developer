@@ -153,7 +153,6 @@ namespace ConsoleApp.BestPractices
                 {
                     Console.WriteLine($"Timer Runing {timer.Interval++}");
                 };
-                Console.ReadLine();//因为timer是异步的，为了看到效果，所以不让进程死掉，回车可以停止
             } 
             #endregion
 

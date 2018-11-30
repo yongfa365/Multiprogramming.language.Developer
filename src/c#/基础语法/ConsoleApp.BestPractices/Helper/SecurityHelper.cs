@@ -84,7 +84,7 @@ namespace ConsoleApp.BestPractices
 
 
 
-    public static class AesHelper
+    public static class AESHelper
     {
 
         /// <summary>

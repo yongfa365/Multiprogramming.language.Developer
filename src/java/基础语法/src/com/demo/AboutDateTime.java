@@ -8,13 +8,13 @@ import java.util.*;
 public class AboutDateTime {
     public static void RunDemo() throws Exception {
 
-        //region 相关类 与C#大不同
+        //region 相关类 与C#大不同,研究这个花了一天多时间
 
         //1.8之前的，位于java.util中，初始化后还可以set改变，改变后getxxx时才生效，线程不安全，被各种吐槽，不推荐：
         //Date 大量方法已经标记@deprecated，
         //Calendar 也有各种缺陷
 
-        //1.8后新增加的，位于java.time包中，这里的类是不可变的且线程俺去的，推荐：
+        //1.8后新增加的，位于java.time包中，这里的类是不可变的且线程安全的，toString()默认都是ISO的，推荐：
         //Instant：表示时刻，不直接对应年月日信息，需要通过时区转换
         //LocalDateTime: 表示与时区无关的日期和时间信息，不直接对应时刻，需要通过时区转换
         //LocalDate：表示与时区无关的日期，与LocalDateTime相比，只有日期信息，没有时间信息
@@ -131,7 +131,7 @@ public class AboutDateTime {
 
         //region 计时器，Stopwatch
         {
-            //看一段代码执行花了多久,方法1：
+            //★看一段代码执行花了多久,方法1：
             var timer11 = System.currentTimeMillis();
             Thread.sleep(1000);
             var timer22 = System.currentTimeMillis();
@@ -147,6 +147,7 @@ public class AboutDateTime {
         //region timer
         {
             var timer = new Timer("我是个Timer", true);
+
             timer.schedule(new TimerTask() {
                 public void run() {
                     System.out.println(LocalTime.now().toString() + "Timer Runing ");
@@ -154,7 +155,6 @@ public class AboutDateTime {
 
             }, 1000 * 1, 1000 * 1);
 
-            new Scanner(System.in).nextLine();//因为timer是异步的，为了看到效果，所以不让进程死掉，回车可以停止
         }
         //endregion
 
