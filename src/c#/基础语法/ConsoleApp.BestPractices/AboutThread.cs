@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,6 +59,32 @@ namespace ConsoleApp.BestPractices
             //并行调用多个方法
             Parallel.Invoke(Run, Run, () => { Console.WriteLine(""); }, () => { });
 
+            //线程同步的,相当容易，就是个Task.WaitAll，当然还有更高级的，但基本这个就够用了。
+            {
+                var sw = Stopwatch.StartNew();
+
+                //获取酒店数量、列表
+                var hotelCount = 0;
+                var getHotels = Task.Run(() =>
+                {
+                    Thread.Sleep(1234); //模拟查询酒店......
+                    hotelCount = 100;
+                });
+
+                //获取机票数量、列表
+                var flightCount = 0;
+                var getFlights = Task.Run(() =>
+                {
+                    Thread.Sleep(2000); //模拟查询机票......
+                    flightCount = 10;
+                });
+
+                Task.WaitAll(getHotels, getFlights); //等机票酒店都回来，什么？高大上的线程同步就是一句话？你以为呢？
+
+                //返回结果：
+                Console.WriteLine($"查询耗时{sw.ElapsedMilliseconds}ms,酒店{hotelCount}个，机票{flightCount}个，可供你选择");
+
+            }
 
             //以下是早期开线程的方法，不建议研究
 

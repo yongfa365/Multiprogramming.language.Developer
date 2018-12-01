@@ -22,12 +22,12 @@ public class AESHelper {
     public static String AESEncrypt(String input, String key, String iv) throws Exception {
         var bytesKey = Base64.getDecoder().decode(key);
         var bytesIV = Base64.getDecoder().decode(iv);
-        var bytesInput = input.getBytes("utf-8");
+        var inputBytes = input.getBytes("utf-8");
 
         var secretKey = new SecretKeySpec(bytesKey, "AES");
         var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(bytesIV));
-        var cipherByte = cipher.doFinal(bytesInput);
+        var cipherByte = cipher.doFinal(inputBytes);
 
         var result = Base64.getEncoder().encodeToString(cipherByte);
         return result;
@@ -37,12 +37,12 @@ public class AESHelper {
     public static String AESDecrypt(String input, String key, String iv) throws Exception {
         var bytesKey = Base64.getDecoder().decode(key);
         var bytesIV = Base64.getDecoder().decode(iv);
-        var bytesInput = Base64.getDecoder().decode(input);
+        var inputBytes = Base64.getDecoder().decode(input);
 
         var secretKey = new SecretKeySpec(bytesKey, "AES");
         var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(bytesIV));
-        var cipherByte = cipher.doFinal(bytesInput);
+        var cipherByte = cipher.doFinal(inputBytes);
 
         var result = new String(cipherByte, "utf-8");
         return result;

@@ -13,18 +13,22 @@ namespace ConsoleApp.BestPractices
         #region XmlSerializer
         public static string ToXml<T>(T obj)
         {
-
             var sb = new StringBuilder();
-            using (var writer = XmlWriter.Create(sb))
+            var settings = new XmlWriterSettings
+            {
+                Encoding = Encoding.UTF8,
+                Indent = true,
+                OmitXmlDeclaration = true
+            };
+            using (var writer = XmlWriter.Create(sb, settings))
             {
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "");
-
                 new XmlSerializer(obj.GetType()).Serialize(writer, obj, ns);
-
                 return sb.ToString();
             }
         }
+
 
         public static T FromXml<T>(string input)
         {

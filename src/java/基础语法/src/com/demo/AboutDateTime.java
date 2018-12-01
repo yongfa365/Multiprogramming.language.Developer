@@ -36,6 +36,7 @@ public class AboutDateTime {
 
 
             var now = ZonedDateTime.now();
+            var time2 = ZonedDateTime.now().toString(); //默认就是ISO标准，2018-12-01T16:58:20.972347500+08:00[Asia/Shanghai]
             var time3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n").format(now); //纳秒，C#可以指定1-7个f,java不能指定位数
             var time4 = now.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME); //2018-11-28T16:57:42.205617700+08:00 ★ISO8601，用这个哪都支持
 

@@ -7,8 +7,6 @@ namespace ConsoleApp.BestPractices
     {
         public static void RunDemo()
         {
-
-
             #region 最基础类型
             {
                 var a = 1; //int
@@ -51,6 +49,7 @@ namespace ConsoleApp.BestPractices
                 var p = new Person();
                 if (p?.Now?.Date == DateTime.Now.Date)
                 {
+                    //if里的语句原生写法如下，很长。
                     var isSame = p != null && p.Now != null && p.Now.Value.Date == DateTime.Now.Date;
                 }
             }
@@ -172,7 +171,7 @@ namespace ConsoleApp.BestPractices
             {
 
                 var du = Math.Ceiling(123.456m); //天花板
-                var dd = Math.Floor(123.456m); //天花板
+                var dd = Math.Floor(123.456m); //地板
 
                 // 四舍五入
                 var dd1 = Math.Round(1.44m, 1, MidpointRounding.AwayFromZero);

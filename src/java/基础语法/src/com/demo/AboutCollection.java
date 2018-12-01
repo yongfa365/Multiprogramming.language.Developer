@@ -12,6 +12,7 @@ public class AboutCollection {
         //https://blog.csdn.net/Gavid0124/article/details/44587209
         //https://blog.csdn.net/u011240877/article/details/47357107
         //https://beginnersbook.com/2013/12/how-to-initialize-an-arraylist/
+        //Java的Lambda的的实现方法就是定义一堆接口，让你写。
     }
 
 }

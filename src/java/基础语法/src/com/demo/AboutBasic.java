@@ -20,7 +20,7 @@ public class AboutBasic {
 
             //var m = 1.1m; //java没有decimal，有BigDecimal,BigInteger,但是没有重载操作符，所以+-*/%都没法用在BigDecimal上。效率低，奈它何
             var m = new BigDecimal("987654321".repeat(1000));
-            var m_1 = m.divide(new BigDecimal("3")); //TODO:需要再研究，c#：1m+1在java得写成：            new BigDecimal(1).add(new BigDecimal(1));
+            var m_1 = m.divide(new BigDecimal("3")); //c#：1m+1在java得写成：            new BigDecimal(1).add(new BigDecimal(1));
             var double_bad = 1.0 - 9 * 0.1; //0.09999999999999998  double 精度不够，一般不要用，
             var decimal_good = new BigDecimal("1.0").subtract(BigDecimal.valueOf(9 * 0.1)); //0.1 decimal 精度可以
             var decimal_all = new BigDecimal("1")
@@ -51,7 +51,7 @@ public class AboutBasic {
         {
             //java 没有Tuple,但有多重实现方法：https://stackoverflow.com/a/25615100/1879111 其中我感觉最好的还是lombok的方案
 
-            //java 没有Action<T>但有一堆别的：DoubleFunction,Supplier<T>,Consumer<T>   TODO：要看下有没有用
+            //java 没有Action<T>，Func<T>但有一堆别的：DoubleFunction,Supplier<T>,Consumer<T>   貌似都是用在lambda里的
             var int1 = 1;
             var str1 = "1";
             var person = new Person();
@@ -105,6 +105,7 @@ public class AboutBasic {
                 System.out.println(item);
             }
 
+            //TODO:Enum还没学。
             var str="a";
             switch (str) {
                 case "a":
@@ -126,7 +127,7 @@ public class AboutBasic {
         //region 数学方法 因业务系统只用BigDecimal所以只关注BigDecimal的,其他类型也可以转成BigDecimal用，直接用默认的Math.xxx不好用，不推荐
         {
             var du = new BigDecimal("123.456").setScale(0, RoundingMode.UP); //天花板
-            var dd = new BigDecimal("123.456").setScale(0, RoundingMode.DOWN); //天花板
+            var dd = new BigDecimal("123.456").setScale(0, RoundingMode.DOWN); //地板
 
             var d4 = Math.ceil(123.456d);
             var d5 = Math.floor(123.456d);

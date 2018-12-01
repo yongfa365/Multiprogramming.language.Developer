@@ -176,7 +176,6 @@ namespace ConsoleApp.BestPractices
                 var rsaKeys = RSAHelper.GetKeys();
                 var rsa_en = src.RSAEncrypt(rsaKeys.PublicKey);
                 var rsa_de = rsa_en.RSADecrypt(rsaKeys.PrivateKey);
-
             }
             #endregion
 

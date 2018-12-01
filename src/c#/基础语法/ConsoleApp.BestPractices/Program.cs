@@ -21,6 +21,7 @@ namespace ConsoleApp.BestPractices
 
             // AboutFile.RunDemo();
             //AboutHttp.RunDemo();
+            //AboutThread.RunDemo();
 
 
             #region 说明

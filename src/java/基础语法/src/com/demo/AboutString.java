@@ -1,7 +1,9 @@
 package com.demo;
 
 import com.demo.Helper.AESHelper;
+import com.demo.Helper.RSAHelper;
 import com.demo.Helper.SecurityHelper;
+
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -164,19 +166,17 @@ public class AboutString {
             var sha512 = SecurityHelper.ToSHA512(src);
 
             var aes_key_iv = AESHelper.GetKeys();
-            var aes_en = AESHelper.AESEncrypt(src, aes_key_iv[0],aes_key_iv[1]);
-            var aes_de = AESHelper.AESDecrypt(aes_en, aes_key_iv[0],aes_key_iv[1]);
+            var aes_en = AESHelper.AESEncrypt(src, aes_key_iv[0], aes_key_iv[1]);
+            var aes_de = AESHelper.AESDecrypt(aes_en, aes_key_iv[0], aes_key_iv[1]);
+
+            var rsa_keys = RSAHelper.GetKeys();
+            var rsa_en = RSAHelper.RSAEncrypt(src, rsa_keys[0]);
+            var rsa_de = RSAHelper.RSADecrypt(rsa_en, rsa_keys[1]);
+
 
             System.out.println("断点用");
-
-/*
-
-
-            var rsaKeys = RSAHelper.GetKeys();
-            var rsa_en = src.RSAEncrypt(rsaKeys.PublicKey);
-            var rsa_de = rsa_en.RSADecrypt(rsaKeys.PrivateKey);*/
-
         }
+
         //endregion
 
 

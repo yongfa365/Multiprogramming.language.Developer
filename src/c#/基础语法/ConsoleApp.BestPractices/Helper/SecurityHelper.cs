@@ -12,13 +12,15 @@ namespace ConsoleApp.BestPractices
 
         public static string ToBase64(this string input)
         {
-            var result = Convert.ToBase64String(Encoding.UTF8.GetBytes(input));
+            var inputBytes = Encoding.UTF8.GetBytes(input);
+            var result = Convert.ToBase64String(inputBytes);
             return result;
         }
 
         public static string FromBase64(this string input)
         {
-            var result = Encoding.UTF8.GetString(Convert.FromBase64String(input));
+            var inputBytes = Convert.FromBase64String(input);
+            var result = Encoding.UTF8.GetString(inputBytes);
             return result;
         }
 
@@ -29,9 +31,11 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string ToSHA1(this string input)
         {
-            using (var sha1 = new SHA1CryptoServiceProvider())
+            using (var provider = new SHA1CryptoServiceProvider())
             {
-                string result = BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(input)));
+                var inputBytes = Encoding.UTF8.GetBytes(input);
+                var hashbytes = provider.ComputeHash(inputBytes);
+                var result = BitConverter.ToString(hashbytes);
                 return result.Replace("-", "");
             }
         }
@@ -43,9 +47,11 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string ToSHA512(this string input)
         {
-            using (var sha = new SHA512Managed())
+            using (var provider = new SHA512Managed())
             {
-                string result = BitConverter.ToString(sha.ComputeHash(UTF8Encoding.UTF8.GetBytes(input)));
+                var inputBytes = Encoding.UTF8.GetBytes(input);
+                var hashbytes = provider.ComputeHash(inputBytes);
+                var result = BitConverter.ToString(hashbytes);
                 return result.Replace("-", "");
             }
         }
@@ -57,11 +63,9 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string To16bitMD5(this string input)
         {
-            using (var md5 = new MD5CryptoServiceProvider())
-            {
-                string result = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(input)), 4, 8);
-                return result.Replace("-", "");
-            }
+            var full = input.To32bitMD5();
+            var result = full.Substring(8, 24);
+            return result;
         }
 
         /// <summary>
@@ -71,9 +75,12 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string To32bitMD5(this string input)
         {
-            using (var md5 = new MD5CryptoServiceProvider())
+            using (var provider = new MD5CryptoServiceProvider())
             {
-                string result = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(input)));
+                var inputbytes = Encoding.UTF8.GetBytes(input);
+                var hashbytes = provider.ComputeHash(inputbytes);
+                //var result = BitConverter.ToString(hashbytes,4,8); //16位
+                var result = BitConverter.ToString(hashbytes);
                 return result.Replace("-", "");
             }
         }
@@ -136,13 +143,13 @@ namespace ConsoleApp.BestPractices
         {
             string result;
 
-            var bytes = Convert.FromBase64String(input);
+            var inputBytes = Convert.FromBase64String(input);
             var rgbKey = Convert.FromBase64String(key);
             var rgbIV = Convert.FromBase64String(iv);
 
             using (var provider = new AesCryptoServiceProvider())
             using (var crypto = provider.CreateDecryptor(rgbKey, rgbIV))
-            using (var ms = new MemoryStream(bytes))
+            using (var ms = new MemoryStream(inputBytes))
             using (var cs = new CryptoStream(ms, crypto, CryptoStreamMode.Read))
             {
                 using (var read = new StreamReader(cs))
@@ -162,15 +169,15 @@ namespace ConsoleApp.BestPractices
     {
         /// <summary>
         /// 实际使用时生成一对Key要记录好，PublicKey给调用方，PrivateKey自己保留好
+        /// 建议用这个工具生成：https://github.com/yongfa365/RsaKeyGen
         /// </summary>
         /// <returns></returns>
         internal static (string PublicKey, string PrivateKey) GetKeys()
         {
-            using (var rsa = new RSACryptoServiceProvider())
+            using (var provider = new RSACryptoServiceProvider())
             {
-
-                var publicKey = SerializeHelper.ToXml(rsa.ExportParameters(false)); // 公钥
-                var privateKey = SerializeHelper.ToXml(rsa.ExportParameters(true)); // 私钥
+                var publicKey = SerializeHelper.ToXml(provider.ExportParameters(false)); // 公钥
+                var privateKey = SerializeHelper.ToXml(provider.ExportParameters(true)); // 私钥
                 return (publicKey, privateKey);
             }
         }
@@ -183,11 +190,12 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string RSAEncrypt(this string input, string publicKey)
         {
-
-            using (var rsa = new RSACryptoServiceProvider())
+            var param = SerializeHelper.FromXml<RSAParameters>(publicKey);
+            var inputBytes = Encoding.UTF8.GetBytes(input);
+            using (var provider = new RSACryptoServiceProvider())
             {
-                rsa.ImportParameters(SerializeHelper.FromXml<RSAParameters>(publicKey));
-                var bytes = rsa.Encrypt(Encoding.UTF8.GetBytes(input), false);
+                provider.ImportParameters(param);
+                var bytes = provider.Encrypt(inputBytes, false);
                 var result = Convert.ToBase64String(bytes);
                 return result;
             }
@@ -202,10 +210,12 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string RSADecrypt(this string input, string privateKey)
         {
-            using (var rsa = new RSACryptoServiceProvider())
+            var param = SerializeHelper.FromXml<RSAParameters>(privateKey);
+            var inputBytes = Convert.FromBase64String(input);
+            using (var provider = new RSACryptoServiceProvider())
             {
-                rsa.ImportParameters(SerializeHelper.FromXml<RSAParameters>(privateKey));
-                var bytes = rsa.Decrypt(Convert.FromBase64String(input), false);
+                provider.ImportParameters(param);
+                var bytes = provider.Decrypt(inputBytes, false);
                 var result = Encoding.UTF8.GetString(bytes);
                 return result;
             }
