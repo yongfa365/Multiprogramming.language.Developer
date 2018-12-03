@@ -26,6 +26,9 @@ namespace ConsoleApp.BestPractices
                 var c = 'A';
                 var bb = 'A' > 26; //char是值类型的
 
+                var guid = Guid.NewGuid(); //"7e0d3fc3-5447-4cf2-accd-366e3ade0973"
+
+                var rnd = new Random().Next(0,10000); //获取随机数
 
                 var strs = new string[10];
                 string[] strs2 = { "A", "B" };
@@ -45,12 +48,11 @@ namespace ConsoleApp.BestPractices
                     var a2 = a1.Value;
                 }
                 var a3 = a1 ?? a11 ?? 0;//返回第一个不为null的或者返回null
-
                 var p = new Person();
-                if (p?.Now?.Date == DateTime.Now.Date)
+                if (p?.Birthday?.Date == DateTime.Now.Date)
                 {
                     //if里的语句原生写法如下，很长。
-                    var isSame = p != null && p.Now != null && p.Now.Value.Date == DateTime.Now.Date;
+                    var isSame = p != null && p.Birthday != null && p.Birthday.Value.Date == DateTime.Now.Date;
                 }
             }
             #endregion

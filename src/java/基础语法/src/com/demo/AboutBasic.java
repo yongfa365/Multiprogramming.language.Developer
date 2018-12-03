@@ -1,10 +1,13 @@
 package com.demo;
 
-import com.demo.Entity.Person;
+import com.demo.Entity.*;
 import com.demo.Helper.Helper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.ZonedDateTime;
+import java.util.Random;
+import java.util.UUID;
 import java.util.function.Function;
 
 
@@ -35,6 +38,9 @@ public class AboutBasic {
             var c = 'A';
             var bb = 'A' > 26; //char是值类型的
 
+            var guid = UUID.randomUUID(); //"7e0d3fc3-5447-4cf2-accd-366e3ade0973"
+
+            var rnd = new Random().nextInt(10000); //获取随机数
 
             var strs = new String[10];
             String[] strs2 = {"A", "B"};
@@ -43,9 +49,16 @@ public class AboutBasic {
         }
         //endregion
 
-        //java没有可空类型如：int? Nullable<int> 当然你可以比较容的写个Nullable<int>,但显然没有int?好用
-        //https://stackoverflow.com/questions/7504064/does-java-allow-nullable-types
+        //Java没有值类型之说，都是引用类型的，所以可以直接赋值null，所以没有C#里的可空类型：int? ,Nullable<int> ，
+        {
+            Integer int1 = null;
+            if (int1 == null) int1 = 123;
 
+
+            ZonedDateTime time1 = null;
+            if (time1 == null) time1 = ZonedDateTime.now();
+            System.out.println("断点用");
+        }
 
         //region 元组 Tuple<T1,T2,T3...T8> ,AnonymousType,Lambda表达式，Action<T1,T2..T8>, Func<T1,T2.T8..Tout> dynamic
         {
@@ -54,7 +67,7 @@ public class AboutBasic {
             //java 没有Action<T>，Func<T>但有一堆别的：DoubleFunction,Supplier<T>,Consumer<T>   貌似都是用在lambda里的
             var int1 = 1;
             var str1 = "1";
-            var person = new Person();
+            var person = new Person2();
             Helper.NoErrorInvoke(item ->
             {
                 person.Id = 1;//可以用,可以改
@@ -106,7 +119,7 @@ public class AboutBasic {
             }
 
             //TODO:Enum还没学。
-            var str="a";
+            var str = "a";
             switch (str) {
                 case "a":
                 case "b":

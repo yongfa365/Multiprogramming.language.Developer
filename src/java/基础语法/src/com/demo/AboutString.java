@@ -1,6 +1,8 @@
 package com.demo;
 
+import com.demo.Entity.*;
 import com.demo.Helper.AESHelper;
+import com.demo.Helper.CodeTimer;
 import com.demo.Helper.RSAHelper;
 import com.demo.Helper.SecurityHelper;
 
@@ -74,9 +76,13 @@ public class AboutString {
             // split 是用正则的，所以就一种写法，至多加个参数0可以移除后面的空item,没有像C#的移除所有 空item 的参数
             var split2 = "aa@bb|cc#dd$ee,ff".split("[@|#$,]");
 
-
             //region string的比较，要用equals而不要用==,因为equals是比较内容的，==是比较引用的，与C#不同
             {
+                var strb1 = "ABC".equals("abc"); //false 常用
+
+                var strb2 = "ABC".equalsIgnoreCase("abc"); //true 常用
+
+
                 // These two have the same value
                 var x = new String("test").equals("test"); // --> true
 
@@ -180,5 +186,41 @@ public class AboutString {
         //endregion
 
 
+        //region 序列化反序列化
+        //原生的找了一会，竟然没找到，那就算了吧，直接用第三方的fastXML吧
+        //endregion
+
+        //region 性能测试
+        {
+            CodeTimer.Time("StringBuilder性能测试", x ->
+            {
+                var sb = new StringBuilder();
+                for (int i = 0; i < 100000; i++) {
+                    sb.append(String.valueOf(i));
+                }
+                var result = sb.toString();
+                System.out.println("断点用");
+            }); //70ms ★StringBuilder快多了，在字符串大量连接时一定要用这个。与C#一样
+
+            CodeTimer.Time("string+测试", x ->
+            {
+                var result = "";
+                for (int i = 0; i < 100000; i++) {
+                    result += String.valueOf(i);
+                }
+                System.out.println("断点用");
+            });//5853ms 一般字符串连接就这个吧，最简单。
+
+            CodeTimer.Time("string.concat测试", x ->
+            {
+                var result = "";
+                for (int i = 0; i < 100000; i++) {
+                    result = result.concat(String.valueOf(i));
+                }
+                System.out.println("断点用");
+            });//4966ms 貌似没什么优势，一般不用。网上看到许多测试说这个性能好，那只是两个固定的字符串连接一次，而实际中是不同连接字符串
+
+        }
+        //endregion
     }
 }

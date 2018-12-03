@@ -94,9 +94,14 @@ namespace ConsoleApp.BestPractices
                 //还可以移除那些为空的数据,空格不是空，以下结果：["a","b","c"," "]
                 var split3 = " |||a|b,,c, ,, ".Trim().Split(new string[] { "|", "," }, StringSplitOptions.RemoveEmptyEntries);
 
-
                 #region string的比较，放心的用==及Equals吧 与java不同
                 {
+                    var strb0 = "ABC"=="abc"; //false 常用
+
+                    var strb1 = "ABC".Equals("abc"); //false 不常用 ，与java不同，java常用这个
+
+                    var strb2 = "ABC".Equals("abc", StringComparison.OrdinalIgnoreCase); //true 常用
+
                     var eq1 = "aaa" == "aaa"; //true
                     var eq2 = "aaa" == new string("aaa"); //true
                     var eq3 = "aaa" == "a".PadLeft(3, 'a'); //true 这串代码要是在java里就是false了。
@@ -204,32 +209,32 @@ namespace ConsoleApp.BestPractices
                 CodeTimer.Time("StringBuilder性能测试", () =>
                 {
                     var sb = new StringBuilder();
-                    for (int i = 0; i < 50000; i++)
+                    for (int i = 0; i < 100000; i++)
                     {
-                        sb.Append(i);
+                        sb.Append(i.ToString());
                     }
                     var result = sb.ToString();
-                }); //8ms ★StringBuilder快多了，在字符串大量连接时一定要用这个。
+                }); //15ms ★StringBuilder快多了，在字符串大量连接时一定要用这个。
 
                 CodeTimer.Time("string+测试", () =>
                 {
                     var result = string.Empty;
-                    for (int i = 0; i < 50000; i++)
+                    for (int i = 0; i < 100000; i++)
                     {
-                        result += i;
+                        result += i.ToString();
                     }
 
-                });//5457ms 一般字符串连接就这个吧，最简单。
+                });//21464ms 一般字符串连接就这个吧，最简单,但大量连接时一定不能用它(for,foreach,等)。
 
                 CodeTimer.Time("string.concat测试", () =>
                 {
                     var result = string.Empty;
-                    for (int i = 0; i < 50000; i++)
+                    for (int i = 0; i < 100000; i++)
                     {
-                        result = string.Concat(result, i);
+                        result = string.Concat(result, i.ToString());
                     }
 
-                });//5156ms 貌似没什么优势，一般不用。跟java不同
+                });//21588ms 貌似没什么优势，一般不用。
 
             }
             #endregion
