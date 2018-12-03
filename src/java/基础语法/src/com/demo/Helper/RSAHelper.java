@@ -28,7 +28,7 @@ public class RSAHelper {
     }
 
     public static String RSAEncrypt(String input, String publicKey) throws Exception {
-        var keyBytes = Base64.getDecoder().decode((publicKey.getBytes()));
+        var keyBytes = Base64.getDecoder().decode(publicKey.getBytes());
         var spec = new X509EncodedKeySpec(keyBytes);
         var keyGen = KeyFactory.getInstance("RSA");
         var key = keyGen.generatePublic(spec);
@@ -42,7 +42,7 @@ public class RSAHelper {
     }
 
     public static String RSADecrypt(String input, String privateKey) throws Exception {
-        var keyBytes = Base64.getDecoder().decode((privateKey.getBytes()));
+        var keyBytes = Base64.getDecoder().decode(privateKey.getBytes());
         var spec = new PKCS8EncodedKeySpec(keyBytes);
         var keyGen = KeyFactory.getInstance("RSA");
         var key = keyGen.generatePrivate(spec);
