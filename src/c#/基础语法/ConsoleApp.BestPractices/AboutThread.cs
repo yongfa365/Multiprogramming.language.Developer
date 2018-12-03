@@ -86,6 +86,10 @@ namespace ConsoleApp.BestPractices
 
             }
 
+            //有多线程就要考虑线程安全及锁，这个是锁的使用。线程安全的可以参考Collection相关
+            LockTest.Demo();
+
+
             //以下是早期开线程的方法，不建议研究
 
             var thread1 = new Thread(new ThreadStart(Run));
@@ -100,5 +104,40 @@ namespace ConsoleApp.BestPractices
         {
             Console.WriteLine($"ThreadId:{Thread.CurrentThread.ManagedThreadId}");
         }
+
+
+        class LockTest
+        {
+            public static readonly object objLock = new object();
+            public static void Demo()
+            {
+                var addSync = 0;
+                for (int i = 0; i < 10000; i++) //同步操作
+                {
+                    addSync += i;
+                }
+
+                var addAsync = 0;
+                Parallel.For(0, 10000, i => addAsync += i); //异步操作，没有使用lock时，最终的结果不对
+
+                var addAsyncWithLock = 0;
+                Parallel.For(0, 10000, i => //异步操作，使用lock，最终结果正确
+                {
+                    lock (objLock)
+                    {
+                        addAsyncWithLock += i;
+                    }
+                });
+
+                var nolock = addSync == addAsync;
+                var withlock = addSync == addAsyncWithLock;
+            }
+        }
+
+
     }
+
+
+
+
 }
