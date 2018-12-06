@@ -13,6 +13,7 @@ namespace ConsoleApp.BestPractices
     ///</summary>
     public class AboutCollection
     {
+
         public static void RunDemo()
         {
             //普通的集合都是非线程安全的，如果有多线程场景一定要使用线程安全的集合，否则可能出各种问题。
@@ -26,44 +27,64 @@ namespace ConsoleApp.BestPractices
         }
         private static void RunListDemo()
         {
-            var lst1 = new List<string> { "1", "2", "3", "3" }; //["1","2","3","3"]
-            lst1.AddRange(new string[] { "4", "5", "6" });
-
-            var lst2 = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "A", "a", "b" }; //["A","b"] 一般不用
-
-            var lst3 = new List<Person>
+            //演示：初始化的两种方法
+            var lstInit01 = new List<string>();
+            var lstInit02 = new List<string> { "1", "2", "3", "3" };
+            var lstInit03 = new List<Person>
             {
-                new Person{ Id=1,Name="A"},
-                new Person{ Id=2,Name="B"},
-                new Person{ Id=3,Name="B"},
+                new Person { Id = 1, Name= "A" },
+                new Person { Id = 2, Name= "B" },
+                new Person { Id = 3, Name= "B" },
             };
 
-            var lst4 = new List<Person>();
+            //演示：添加元素的方法，单个的，List的，实现IEnumerable<T>接口的
+            lstInit01.Add("A");
 
-            lst4.HasValue();//自己写的扩展方法
-            lst4.IsNullOrEmpty();//自己写的扩展方法
+            lstInit02.Add("B");
+            lstInit02.Add("C");
+            lstInit02.AddRange(new[] { "4", "5", "6" });
+            lstInit02.AddRange(lstInit01);
+
+
+            //演示：lst的各种方法
+            var lstData = new List<Person>();
+
+            var lsthas = lstData.HasValue();//自己写的扩展方法
+            var lstEmpty = lstData.IsNullOrEmpty();//自己写的扩展方法
 
             for (int i = 0; i < 100; i++)
             {
-                lst4.Add(new Person { Id = i, Name = $"Name.{i}", Birthday = DateTime.Now.AddDays(i), Height = i / 3m });
+                lstData.Add(new Person { Id = i, Name = $"Name.{i}", Birthday = DateTime.Now.AddDays(i), Height = i / 3m });
             }
 
-            var lst5 = lst4.Select(p => p.Id).ToList();
-            var lst6 = lst4.ConvertAll(p => p.Id);
-            var lst9 = lst4.First();
-            var lst10 = lst4.FirstOrDefault(p => p.Id > 10);
-
-            var lst7 = lst4
+            var lst01 = lstData.Select(p => p.Id).ToList(); //将Id组成新的List
+            var lst02 = lstData.ConvertAll(p => p.Id); //将Id组成新的List
+            var lst03 = lstData.Max(p => p.Id);
+            var lst04 = lstData.Min(p => p.Id);
+            var lst05 = lstData.First();
+            var lst06 = lstData.FirstOrDefault(p => p.Id > 10);
+            var lst07 = lstData.Last();
+            var lst08 = lstData.LastOrDefault();
+            var lst09 = lstData.Any(p => p.IsHuman);
+            var lst10 = lstData.All(p => p.IsHuman);
+            var lst11 = lstData.Union(lstData);
+            var lst12 = lstData.RemoveAll(p => p.Id > 80);
+            var lst13 = lstData
                 .Where(p => p.Birthday > DateTime.Now.AddDays(30) && p.Id < 50) //筛选
-                .OrderByDescending(p => p.Id) //排序
+                .OrderBy(p => p.Name).ThenByDescending(p => p.Id) //排序
                 .Skip(1) //跳过
                 .Take(10) //获取
                 .Select(p => new { p.Id, UserName = p.Name }) //转为匿名类
                 .ToDictionary(p => p.Id, p => p.UserName) //转为字典
                 ;
 
-            var lst8 = lst4.Take(10).GroupBy(p =>
+            var lst14 = lstData.Distinct((x, y) => x.Id == y.Id);//Distinct的2个默认扩展不好用，这个是自己写的扩展方法
+
+
+            //演示：GroupBy的更强大的实现
+            var lst15 = lstData.Take(10).GroupBy(p =>
             {
+                //这里的内容就是构造Key的，最终返回的Key相同的会放到同一组
                 if (p.Height > 2)
                 {
                     return "Height>2";
@@ -74,11 +95,12 @@ namespace ConsoleApp.BestPractices
                 }
             }).ToDictionary(p => p.Key, p => p.ToList());
 
+            var lst16 = lstData.AsReadOnly(); //变成只读集合
 
-
-            //线程安全的List
-            var conlist = new ConcurrentBag<Person>(lst4);
+            //演示：线程安全的List的常用操作
+            var conlist = new ConcurrentBag<Person>(lstData);
             conlist.Add(new Person { });
+            conlist.TryTake(out Person result);
 
         }
 
@@ -126,14 +148,14 @@ namespace ConsoleApp.BestPractices
 
 
 
-            var keys=dict.Keys.ToList();
+            var keys = dict.Keys.ToList();
             var valus = dict.Values.ToList();
 
 
             //线程安全的
             var condict = new ConcurrentDictionary<int, Person>();
             condict.TryAdd(1, new Person { Id = 1, Height = 1 });
-            condict.TryRemove(1,out Person resultTemp);
+            condict.TryRemove(1, out Person resultTemp);
             condict.TryGetValue(1, out Person resultTemp2);
 
 

@@ -13,7 +13,7 @@ namespace ConsoleApp.BestPractices
 
 
     /// <summary>
-    /// 这个是人的类
+    /// 这个是人的类,文档注释官方：https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/xml-documentation-comments
     /// </summary>
     // DebuggerDisplay官方：https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.debuggerdisplayattribute
     [DebuggerDisplay("Id:{Id}  Name:{Name} Birthday:{Birthday} Height:{Height}")] // 调试用 如果在List里，默认看不到里面的属性，可以这么暴露出来,当然为了解析这个速度会比较慢
@@ -41,13 +41,14 @@ namespace ConsoleApp.BestPractices
         }
 
         /// <summary>
-        /// 这个是说话的方法
+        /// 这个是写字的方法
+        /// 泛型的详细介绍：https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/
         /// </summary>
-        /// <param name="input">这个是说话的内容，微软的很多参数名就叫input</param>
+        /// <param name="comparator">可以指定个比较器</param>
         /// <returns>返回值是xxx</returns>
-        public bool Speak(string input)
+        public bool IsHighter<T>(T comparator) where T : IComparable<decimal> //where T:XX这些是限定操作符 
         {
-            Console.WriteLine(input);
+            comparator.CompareTo(Height);
             return true;
         }
     }

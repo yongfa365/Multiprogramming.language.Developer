@@ -28,10 +28,15 @@ namespace ConsoleApp.BestPractices
 
                 var guid = Guid.NewGuid(); //"7e0d3fc3-5447-4cf2-accd-366e3ade0973"
 
-                var rnd = new Random().Next(0,10000); //获取随机数
+                var rnd = new Random().Next(0, 10000); //获取随机数
 
+                //数组的各种操作跟集合差不多，有集合后就很少用数组了
                 var strs = new string[10];
                 string[] strs2 = { "A", "B" };
+                var strs3 = new string[] { "A", "B" };
+                var strs4 = new[] { "A", "B" };
+                var str5 = strs4[0];
+
 
                 var isTrue = a == 2 ? "True" : "False";
             }
@@ -60,20 +65,26 @@ namespace ConsoleApp.BestPractices
 
             #region 元组 Tuple<T1,T2,T3...T8> ,AnonymousType,Lambda表达式，Action<T1,T2..T8>, Func<T1,T2.T8..Tout> dynamic
             {
+                //Tuple ，初始化后，属性不能改，是ReadOnly的
                 var t1 = new Tuple<string, int, DateTime>("1", 1, DateTime.Now);
                 var t_1 = t1.Item1 + t1.Item2 + t1.Item3;
+                //t1.Item1 = ""; //编译报错，不能改
 
                 var t2 = Tuple.Create("1", 1, DateTime.Now);
 
                 var t3 = ("1", 1, DateTime.Now);
 
+
+                //本地变量
                 (string FirstName, string LastName) t4 = ("永法", "柳");
                 var t_4 = t4.FirstName;
+                t4.FirstName = "柳";//可以改。
 
                 var t5 = (FirstName: "永法", LastName: "柳");
                 var t_5 = t5.FirstName;
 
-
+                //虽然Java与C#都有匿名类，但完全不同，Java的匿名类是“实现方法的”，C#是“构造属性的”。
+                //匿名类，初始化后，属性不能改，是ReadOnly的。
                 var ta3 = new { A = "1", B = 1, C = DateTime.Now, E = true, F = new Person() };
 
                 var actiontestInt = 1;

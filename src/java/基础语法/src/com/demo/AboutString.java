@@ -9,6 +9,7 @@ import com.demo.Helper.SecurityHelper;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -32,7 +33,7 @@ public class AboutString {
             var strFormat1 = String.format("%1$s %2$s %1$s %3$s", "hello", 123, LocalDateTime.now());
 
             // java 没有PadLeft及PadRight，但可以左右pad空格, 有repeat,也可以用org.apache.commons.lang.StringUtils#rightPad
-            var strPad = "@1A".repeat(100);
+            var strRepeat = "@1A".repeat(100);
             var strPadLeft = String.format("%10s", "foo").replace(' ', '*'); //*******foo
             var strPadRight = String.format("%-10s", "bar").replace(' ', '*'); //bar*******
 
@@ -69,7 +70,7 @@ public class AboutString {
 
             var strStrip = "\r\n\t   　 　  12 12　 　  \r\n\t".strip(); //“12 12”， ★前后有中英文空格及tab回车换行, 与C#的trim行为相同。
 
-            var lstTemp = Arrays.asList("A", "BC", "DEF");
+            var lstTemp = List.of("A", "BC", "DEF");
             var sjoin = String.join(",", lstTemp); //A,BC,DEF
 
 

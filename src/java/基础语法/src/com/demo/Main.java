@@ -14,8 +14,8 @@ public class Main {
         //一下一个一个的F10看吧
         //AboutBasic.RunDemo();
         //AboutDateTime.RunDemo();
-        AboutString.RunDemo();
-        //AboutCollection.RunDemo();
+        //AboutString.RunDemo();
+        AboutCollection.RunDemo();
 
         //AboutFile.RunDemo();
         //AboutHttp.RunDemo();

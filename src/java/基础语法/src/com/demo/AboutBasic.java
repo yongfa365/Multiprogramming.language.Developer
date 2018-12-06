@@ -3,6 +3,7 @@ package com.demo;
 import com.demo.Entity.*;
 import com.demo.Helper.Helper;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
@@ -25,12 +26,16 @@ public class AboutBasic {
             var m = new BigDecimal("987654321".repeat(1000));
             var m_1 = m.divide(new BigDecimal("3")); //c#：1m+1在java得写成：            new BigDecimal(1).add(new BigDecimal(1));
             var double_bad = 1.0 - 9 * 0.1; //0.09999999999999998  double 精度不够，一般不要用，
+
+            //BigDecimal初始化保证精度的两种方法：new BigDecimal("0.9")   或 BigDecimal.valueOf(0.9)
             var decimal_good = new BigDecimal("1.0").subtract(BigDecimal.valueOf(9 * 0.1)); //0.1 decimal 精度可以
             var decimal_all = new BigDecimal("1")
                     .add(new BigDecimal("1"))
                     .subtract(new BigDecimal("1"))
                     .multiply(new BigDecimal("1"))
                     .divide(new BigDecimal("3"), 2, RoundingMode.HALF_UP); //除不尽会报错，所以要设置保留位数，C#的decimal不会
+
+            var decimal_compare = new BigDecimal("1").compareTo(BigDecimal.valueOf(3)) > 0; //其实就类似：前面的-后面的，结果>0说明前面的大
 
             var l = 1L; //long
             var d = true;
@@ -44,6 +49,9 @@ public class AboutBasic {
 
             var strs = new String[10];
             String[] strs2 = {"A", "B"};
+            var strs3 = new String[]{"A", "B"};
+            //var strs4 = new [] { "A", "B" }; 不支持这种写法
+            var str5 = strs3[0];
 
             var isTrue = a == 2 ? "True" : "False";
         }

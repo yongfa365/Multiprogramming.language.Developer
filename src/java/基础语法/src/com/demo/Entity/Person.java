@@ -11,7 +11,19 @@ public class Person {
     private BigDecimal height = new BigDecimal("1.78"); //设置默认值
     private Boolean isHuman = true; //要想变只读，不给他设置set就行了,有了默认值，也就总是返回true了。
 
+
+    public <T extends Comparable<BigDecimal>> Boolean IsHighter(T comparator) {
+        comparator.compareTo(height);
+        return true;
+    }
+
+    //以下内容都是点点点，自动生成的，各IDE都有这功能，但用Lombok更方便，就不用写下面的内容了，他会在编译时生成的二进制文件里。
     public Person() {
+    }
+
+    public Person(Integer id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Person(Integer id, String name, LocalDateTime birthday, Boolean isMan, BigDecimal height, Boolean isHuman) {
@@ -23,17 +35,21 @@ public class Person {
         this.isHuman = isHuman;
     }
 
-    /*
-     * 这个是方法的注释
-     * 不是注释到属性上的
-     * @author  柳永法
-     *
-     *
-     * */
+
     public Integer getId() {
         return id;
     }
 
+    /**
+     * <h1>这个是方法的注释,<span style="color:red">竟然可以写html</span></h1>
+     * 更多参见：<a href="http://wiki.jikexueyuan.com/project/java/documentation.html">极客学院.Java 文件注释</a>
+     *
+     * @param id 是个id吧
+     * @return void
+     * @author 柳永法
+     * @version 1.0
+     * @since 2018-12-05
+     */
     public void setId(Integer id) {
         this.id = id;
     }
@@ -70,6 +86,7 @@ public class Person {
         this.height = height;
     }
 
+    //自动生成的时候把is去掉了
     public Boolean getHuman() {
         return isHuman;
     }
@@ -115,6 +132,5 @@ public class Person {
         result = 31 * result + (isHuman != null ? isHuman.hashCode() : 0);
         return result;
     }
-
 
 }
