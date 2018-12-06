@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace ConsoleApp.BestPractices
 {
@@ -37,6 +37,10 @@ namespace ConsoleApp.BestPractices
                 new Person { Id = 3, Name= "B" },
             };
 
+            var lstInit04 = Enumerable.Range(1, 100).ToList();
+            var lstInit05 = Enumerable.Repeat("ABC", 10).ToList();
+            var lstInit06 = Enumerable.Repeat(new Person { Id = 1, Name = "A" }, 10).ToList();
+
             //演示：添加元素的方法，单个的，List的，实现IEnumerable<T>接口的
             lstInit01.Add("A");
 
@@ -57,6 +61,7 @@ namespace ConsoleApp.BestPractices
                 lstData.Add(new Person { Id = i, Name = $"Name.{i}", Birthday = DateTime.Now.AddDays(i), Height = i / 3m });
             }
 
+
             var lst01 = lstData.Select(p => p.Id).ToList(); //将Id组成新的List
             var lst02 = lstData.ConvertAll(p => p.Id); //将Id组成新的List
             var lst03 = lstData.Max(p => p.Id);
@@ -71,7 +76,7 @@ namespace ConsoleApp.BestPractices
             var lst12 = lstData.RemoveAll(p => p.Id > 80);
             var lst13 = lstData
                 .Where(p => p.Birthday > DateTime.Now.AddDays(30) && p.Id < 50) //筛选
-                .OrderBy(p => p.Name).ThenByDescending(p => p.Id) //排序
+                .OrderBy(p => p.Name).ThenByDescending(p => p.Id) //级联排序
                 .Skip(1) //跳过
                 .Take(10) //获取
                 .Select(p => new { p.Id, UserName = p.Name }) //转为匿名类

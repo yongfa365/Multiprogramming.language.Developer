@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,6 +29,8 @@ namespace ConsoleApp.BestPractices
 
                 var strFormat = string.Format("{0} {1} {0} {2:o}", "hello", 123, DateTime.Now); //hello 123 hello 2018-11-22T11:04:58.3648022+08:00
 
+
+                var strRepeat = Enumerable.Repeat("ABC", 10);
                 //AA@BBB之所以只有2个A是因为Pad的数字是最终总的长度,一般测试性能时会用到
                 var strPad = "@".PadLeft(3, 'A').PadRight(6, 'B');
 
@@ -90,13 +93,13 @@ namespace ConsoleApp.BestPractices
 
                 //各种split
                 var split1 = "a|b|c".Split('|');
-                var split2 = "aa@bb|cc#dd$ee,ff".Split('@', '|','#','$',',');
+                var split2 = "aa@bb|cc#dd$ee,ff".Split('@', '|', '#', '$', ',');
                 //还可以移除那些为空的数据,空格不是空，以下结果：["a","b","c"," "]
                 var split3 = " |||a|b,,c, ,, ".Trim().Split(new string[] { "|", "," }, StringSplitOptions.RemoveEmptyEntries);
 
                 #region string的比较，放心的用==及Equals吧 与java不同
                 {
-                    var strb0 = "ABC"=="abc"; //false 常用
+                    var strb0 = "ABC" == "abc"; //false 常用
 
                     var strb1 = "ABC".Equals("abc"); //false 不常用 ，与java不同，java常用这个
 
