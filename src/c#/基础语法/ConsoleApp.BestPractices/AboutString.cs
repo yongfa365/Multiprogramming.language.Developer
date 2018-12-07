@@ -181,9 +181,32 @@ namespace ConsoleApp.BestPractices
                 var aes_en = src.AESEncrypt(aesKeys.Key, aesKeys.IV);
                 var aes_de = aes_en.AESDecrypt(aesKeys.Key, aesKeys.IV);
 
-                var rsaKeys = RSAHelper.GetKeys();
-                var rsa_en = src.RSAEncrypt(rsaKeys.PublicKey);
-                var rsa_de = rsa_en.RSADecrypt(rsaKeys.PrivateKey);
+
+
+
+
+                //RSA是非对称加密算法，公钥可以解密私钥加密的内容，私钥也可以解密公钥加密的内容。
+                //那就是说也可以公开私钥，保密公钥？错！因为：用私钥可以算出公钥！
+                //如果你看了各自的XML会发现PrivateKey直接包含PublicKey的原文
+                var rsaKeys = RSAHelper.GenPublicKeyAndPrivateKey();
+                var rsaPublicKeyByPrivateKey = RSAHelper.GetPublicKeyByPrivateKey(rsaKeys.PrivateKey);
+                var privateKeyCanGenPublicKey = rsaKeys.PublicKey == rsaPublicKeyByPrivateKey;
+
+                //RSA的用途之一：公钥加密，私钥解密，通讯时用
+                var rsa_en = src.RSAEncrypt(rsaKeys.PublicKey); //公钥加密
+                var rsa_de = rsa_en.RSADecrypt(rsaKeys.PrivateKey); //私钥解密
+
+                //RSA的用途之二：私钥加密，公钥验证，数字签名用
+                //Step 1：原内容取hash
+                var srcHash = src.ToSHA1();
+
+                //Step 2：私钥加密hash 【实现签名】
+                var rsa_Signature = srcHash.RSASingnature(rsaKeys.PrivateKey);
+
+                //Step 3：公钥解密出hash，与原文hash对比 【检验】
+                var rsa_check = rsa_Signature.RSASingnatureCheck(srcHash, rsaKeys.PublicKey);
+
+
             }
             #endregion
 

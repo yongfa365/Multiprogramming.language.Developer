@@ -176,10 +176,29 @@ public class AboutString {
             var aes_en = AESHelper.AESEncrypt(src, aes_key_iv[0], aes_key_iv[1]);
             var aes_de = AESHelper.AESDecrypt(aes_en, aes_key_iv[0], aes_key_iv[1]);
 
-            var rsa_keys = RSAHelper.GetKeys();
-            var rsa_en = RSAHelper.RSAEncrypt(src, rsa_keys[0]);
-            var rsa_de = RSAHelper.RSADecrypt(rsa_en, rsa_keys[1]);
+            //RSA是非对称加密算法，公钥可以解密私钥加密的内容，私钥也可以解密公钥加密的内容。
+            //那就是说也可以公开私钥，保密公钥？错！因为：用私钥可以算出公钥！
+            //如果你看了各自的XML会发现PrivateKey直接包含PublicKey的原文
+            var rsa_keys = RSAHelper.GenPublicKeyAndPrivateKey();
+            var rsaPublicKey = rsa_keys[0];
+            var rsaPrivateKey = rsa_keys[1];
 
+            var rsaPublicKeyByPrivateKey = RSAHelper.GetPublicKeyByPrivateKey(rsaPrivateKey);
+            var privateKeyCanGenPublicKey = rsaPublicKey.equals(rsaPublicKeyByPrivateKey);
+
+            //RSA的用途之一：公钥加密，私钥解密，通讯时用
+            var rsa_en = RSAHelper.RSAEncrypt(src, rsaPublicKey); //公钥加密
+            var rsa_de = RSAHelper.RSADecrypt(rsa_en, rsaPrivateKey); //私钥解密
+
+            //RSA的用途之二：私钥加密，公钥验证，数字签名用
+            //Step 1：原内容取hash
+            var srcHash = SecurityHelper.ToSHA1(src);
+
+            //Step 2：私钥加密hash 【实现签名】
+            var rsa_Signature = RSAHelper.RSASingnature(srcHash, rsaPrivateKey);
+
+            //Step 3：公钥解密出hash，与原文hash对比 【检验】
+            var rsa_check = RSAHelper.RSASingnatureCheck(srcHash, rsaPublicKey, rsa_Signature);
 
             System.out.println("断点用");
         }

@@ -40,6 +40,16 @@ namespace ConsoleApp.BestPractices
             }
         }
 
+        public static byte[] ToBytes(this string hex)
+        {
+            var bytes = new byte[hex.Length / 2];
+            for (int i = 0; i < hex.Length; i += 2)
+            { 
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+            return bytes;
+        }
+
         /// <summary>
         /// 采用SHA512算法对字符串加密
         /// </summary>
@@ -172,13 +182,29 @@ namespace ConsoleApp.BestPractices
         /// 建议用这个工具生成：https://github.com/yongfa365/RsaKeyGen
         /// </summary>
         /// <returns></returns>
-        internal static (string PublicKey, string PrivateKey) GetKeys()
+        internal static (string PublicKey, string PrivateKey) GenPublicKeyAndPrivateKey()
         {
             using (var provider = new RSACryptoServiceProvider())
             {
                 var publicKey = SerializeHelper.ToXml(provider.ExportParameters(false)); // 公钥
                 var privateKey = SerializeHelper.ToXml(provider.ExportParameters(true)); // 私钥
                 return (publicKey, privateKey);
+            }
+        }
+
+        /// <summary>
+        /// 用私钥生成公钥
+        /// </summary>
+        /// <param name="privateKey"></param>
+        /// <returns></returns>
+        public static string GetPublicKeyByPrivateKey(string privateKey)
+        {
+            var param = SerializeHelper.FromXml<RSAParameters>(privateKey);
+            using (var provider = new RSACryptoServiceProvider())
+            {
+                provider.ImportParameters(param);
+                var publicKey = SerializeHelper.ToXml(provider.ExportParameters(false));
+                return publicKey;
             }
         }
 
@@ -217,6 +243,41 @@ namespace ConsoleApp.BestPractices
                 provider.ImportParameters(param);
                 var bytes = provider.Decrypt(inputBytes, false);
                 var result = Encoding.UTF8.GetString(bytes);
+                return result;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        public static string RSASingnature(this string srcHash, string privateKey)
+        {
+            var hashBytes = srcHash.ToBytes();
+            var param = SerializeHelper.FromXml<RSAParameters>(privateKey);
+            using (var provider = new RSACryptoServiceProvider())
+            {
+                provider.ImportParameters(param);
+                var bytes = provider.SignHash(hashBytes, "SHA1");
+                var result = Convert.ToBase64String(bytes);
+                return result;
+            }
+        }
+
+
+        public static bool RSASingnatureCheck(this string input, string srcHash, string publicKey)
+        {
+            var hashBytes = srcHash.ToBytes();
+            var param = SerializeHelper.FromXml<RSAParameters>(publicKey);
+            var inputBytes = Convert.FromBase64String(input);
+            using (var provider = new RSACryptoServiceProvider())
+            {
+                provider.ImportParameters(param);
+                var result = provider.VerifyHash(hashBytes, "SHA1", inputBytes);
                 return result;
             }
         }
