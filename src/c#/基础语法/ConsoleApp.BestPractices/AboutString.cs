@@ -30,7 +30,7 @@ namespace ConsoleApp.BestPractices
                 var strFormat = string.Format("{0} {1} {0} {2:o}", "hello", 123, DateTime.Now); //hello 123 hello 2018-11-22T11:04:58.3648022+08:00
 
 
-                var strRepeat = Enumerable.Repeat("ABC", 10);
+                var strRepeat = string.Concat(Enumerable.Repeat("ABC", 1000000)); //复制1百万次50ms,相当快呀
                 //AA@BBB之所以只有2个A是因为Pad的数字是最终总的长度,一般测试性能时会用到
                 var strPad = "@".PadLeft(3, 'A').PadRight(6, 'B');
 

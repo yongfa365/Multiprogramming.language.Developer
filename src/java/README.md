@@ -26,6 +26,7 @@ Jackson|https://github.com/FasterXML/jackson-databind/|json序列化与反序列
 
 ## 写Demo消耗时间
 以下是具体某一项功能研究时间，实际时间比这个要多一些，因为要学习相关周边功能。
+
 内容|耗时|说明
 ----|----|----
 Basic|1天|主要是BigDecimal的与C#不同，花了写时间。

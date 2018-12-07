@@ -9,22 +9,24 @@ namespace ConsoleApp.BestPractices
         {
             #region 最基础类型
             {
-                var a = 1; //int
-                var b = 1.1; //double
-                var f = 1.1f; //float
-                var m = 1.1m; //decimal 没有java里的BigDecimal
-
-                var b_1 = BigInteger.Parse("987654321".PadRight(10000, '9')); //不学java，10年了都不知道还有这么号人物
+                var intValue = 1; //int
+                var int64value = 2147483647000; //Int64
+                var b_1 = BigInteger.Parse(new string('9',10000)); //不学java，10年了都不知道还有这么号人物
                 var b_2 = BigInteger.Divide(b_1, 3);
+
+                var doubleValue = 1.1; //double
+                var floatValue = 1.1f; //float
+                var decimalValue = 1.1m; //decimal 没有java里的BigDecimal
+
                 var double_bad = 1.0 - 9 * 0.1; //0.099999999999999978  double 精度不够，一般不要用，
                 var decimal_good = 1.0m - 9 * 0.1m; //0.1 decimal 精度可以
                 var decimal_all = (1 + 1 - 1) * 1 / 3m; //只要一个有m标识，整个就是decimal 的,当然也可以都加上
 
-                var l = 1L; //long  
-                var d = true;
-                var e = false;
-                var c = 'A';
-                var bb = 'A' > 26; //char是值类型的
+                var longValue = 1L; //long  
+                var booltrue = true;
+                var boolfalse = false;
+                var charValue = 'A';
+                var charisValue = 'A' > 26; //char是值类型的
 
                 var guid = Guid.NewGuid(); //"7e0d3fc3-5447-4cf2-accd-366e3ade0973"
 
@@ -38,7 +40,7 @@ namespace ConsoleApp.BestPractices
                 var str5 = strs4[0];
 
 
-                var isTrue = a == 2 ? "True" : "False";
+                var isTrue = intValue == 2 ? "True" : "False";
             }
             #endregion
 

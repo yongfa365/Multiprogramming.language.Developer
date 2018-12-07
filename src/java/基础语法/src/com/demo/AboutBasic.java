@@ -5,6 +5,7 @@ import com.demo.Helper.Helper;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.Random;
@@ -18,13 +19,14 @@ public class AboutBasic {
 
         //region 最基础类型
         {
-            var a = 1; //int
-            var b = 1.1; //double
-            var f = 1.1f; //float
+            var intValue = 1; //int
+            var bigintValue = new BigInteger("2147483647".repeat(10000));
+            var doubleValue = 1.1; //double
+            var floatValue = 1.1f; //float
 
             //var m = 1.1m; //java没有decimal，有BigDecimal,BigInteger,但是没有重载操作符，所以+-*/%都没法用在BigDecimal上。效率低，奈它何
-            var m = new BigDecimal("987654321".repeat(1000));
-            var m_1 = m.divide(new BigDecimal("3")); //c#：1m+1在java得写成：            new BigDecimal(1).add(new BigDecimal(1));
+            var bigdecimalValue = new BigDecimal("987654321".repeat(1000));
+            var m_1 = bigdecimalValue.divide(new BigDecimal("3")); //c#：1m+1在java得写成：            new BigDecimal(1).add(new BigDecimal(1));
             var double_bad = 1.0 - 9 * 0.1; //0.09999999999999998  double 精度不够，一般不要用，
 
             //BigDecimal初始化保证精度的两种方法：new BigDecimal("0.9")   或 BigDecimal.valueOf(0.9)
@@ -37,11 +39,11 @@ public class AboutBasic {
 
             var decimal_compare = new BigDecimal("1").compareTo(BigDecimal.valueOf(3)) > 0; //其实就类似：前面的-后面的，结果>0说明前面的大
 
-            var l = 1L; //long
-            var d = true;
-            var e = false;
-            var c = 'A';
-            var bb = 'A' > 26; //char是值类型的
+            var longValue = 1L; //long
+            var booltrue = true;
+            var boolfalse = false;
+            var charValue = 'A';
+            var charisValue = 'A' > 26; //char是值类型的
 
             var guid = UUID.randomUUID(); //"7e0d3fc3-5447-4cf2-accd-366e3ade0973"
 
@@ -53,7 +55,7 @@ public class AboutBasic {
             //var strs4 = new [] { "A", "B" }; 不支持这种写法
             var str5 = strs3[0];
 
-            var isTrue = a == 2 ? "True" : "False";
+            var isTrue = intValue == 2 ? "True" : "False";
         }
         //endregion
 
