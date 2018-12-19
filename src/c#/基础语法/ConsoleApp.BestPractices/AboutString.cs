@@ -201,10 +201,10 @@ namespace ConsoleApp.BestPractices
                 var srcHash = src.ToSHA1();
 
                 //Step 2：私钥加密hash 【实现签名】
-                var rsa_Signature = srcHash.RSASingnature(rsaKeys.PrivateKey);
+                var rsa_Signature = RSAHelper.RSASingnature(srcHash, rsaKeys.PrivateKey);
 
                 //Step 3：公钥解密出hash，与原文hash对比 【检验】
-                var rsa_check = rsa_Signature.RSASingnatureCheck(srcHash, rsaKeys.PublicKey);
+                var rsa_check = RSAHelper.RSASingnatureCheck(rsa_Signature, srcHash, rsaKeys.PublicKey);
 
 
             }

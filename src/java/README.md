@@ -33,3 +33,6 @@ Basic|1天|主要是BigDecimal的与C#不同，花了写时间。
 DateTime|2天|场景多，不灵活，要不停调试。
 String|3天|场景多，加解密算法2天：调试C#与Java，使其互通，用C#加密再用Java解密，及反向操作。
 Collection|？|List花了1天，因为集合的通用操作都是用List演示的。其他还没开始
+
+
+java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个，不存在装箱拆箱，C#一般只在int->string->int时才涉及到。

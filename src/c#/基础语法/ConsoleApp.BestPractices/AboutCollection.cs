@@ -64,6 +64,11 @@ namespace ConsoleApp.BestPractices
 
             var lst01 = lstData.Select(p => p.Id).ToList(); //将Id组成新的List
             var lst02 = lstData.ConvertAll(p => p.Id); //将Id组成新的List
+
+            var lstTemp = lstData.Select(p => p.Id);
+            var lstTemp1 = lstTemp.Max();
+            var lstTemp2 = lstTemp.Min(); //IEnumerable可以多次使用，而Java的Stream只能用一次
+
             var lst03 = lstData.Max(p => p.Id);
             var lst04 = lstData.Min(p => p.Id);
             var lst05 = lstData.First();
@@ -102,10 +107,16 @@ namespace ConsoleApp.BestPractices
 
             var lst16 = lstData.AsReadOnly(); //变成只读集合
 
-            //演示：线程安全的List的常用操作
+            //演示：线程安全的List的常用操作,一般不用这个集合
             var conlist = new ConcurrentBag<Person>(lstData);
-            conlist.Add(new Person { });
-            conlist.TryTake(out Person result);
+            if (conlist.IsEmpty)
+            {
+                conlist.Add(new Person { });
+                conlist.TryTake(out Person result);
+            }
+
+            //集合“并行”执行
+            Enumerable.Range(1, 100).ToList().AsParallel().ForAll(Console.WriteLine);
 
         }
 
@@ -164,13 +175,13 @@ namespace ConsoleApp.BestPractices
             condict.TryGetValue(1, out Person resultTemp2);
 
 
+            //集合“并行”执行
+            Enumerable.Range(1, 100).ToDictionary(p => p, p => p).AsParallel().ForAll(item => Console.WriteLine($"{item.Key} {item.Value}"));
         }
 
 
         private static void RunHashSetDemo()
         {
-            Console.WriteLine("\r\n★★★★★★HashSet<T>★★★★★★");
-
             var hs1 = new HashSet<string> { "1", "2", "3", "3" }; //["1","2","3"]
 
             var hs2 = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "A", "a", "b" }; //["A","b"]
@@ -193,6 +204,9 @@ namespace ConsoleApp.BestPractices
             var hs4 = hs3.Where(p => p > 1).ToHashSet();
 
             //HashSet<T>没有线程安全的版本，可以用ConcurrentDictionary<T,T>代替
+
+            //集合“并行”执行
+            Enumerable.Range(1, 100).ToHashSet().AsParallel().ForAll(Console.WriteLine);
         }
 
 

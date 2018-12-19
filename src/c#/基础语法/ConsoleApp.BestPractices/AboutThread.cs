@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ConsoleApp.BestPractices
 {
@@ -54,7 +55,8 @@ namespace ConsoleApp.BestPractices
             //并行foreach
             var lst = new List<int> { 1, 2, 3, 4, 5 };
             Parallel.ForEach(lst, item => Console.WriteLine(item));
-
+            Parallel.ForEach(lst, Console.WriteLine);
+            lst.AsParallel().ForAll(Console.WriteLine); //数组、集合都可以.AsParallel()
 
             //并行调用多个方法
             Parallel.Invoke(Run, Run, () => { Console.WriteLine(""); }, () => { });
