@@ -137,7 +137,7 @@ namespace ConsoleApp.BestPractices
                 sp1.Start();
                 sp1.Stop();
 
-            } 
+            }
             #endregion
 
 
@@ -153,7 +153,7 @@ namespace ConsoleApp.BestPractices
                 {
                     Console.WriteLine($"Timer Runing {timer.Interval++}");
                 };
-            } 
+            }
             #endregion
 
         }

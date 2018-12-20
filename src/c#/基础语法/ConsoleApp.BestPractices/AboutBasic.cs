@@ -11,7 +11,7 @@ namespace ConsoleApp.BestPractices
             {
                 var intValue = 1; //int
                 var int64value = 2147483647000; //Int64
-                var b_1 = BigInteger.Parse(new string('9',10000)); //不学java，10年了都不知道还有这么号人物
+                var b_1 = BigInteger.Parse(new string('9', 10000)); //不学java，10年了都不知道还有这么号人物
                 var b_2 = BigInteger.Divide(b_1, 3);
 
                 var doubleValue = 1.1; //double

@@ -36,7 +36,7 @@ namespace ConsoleApp.BestPractices
             using (var client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-  
+
                 //Request Headers
 
                 client.Headers.Add(HttpRequestHeader.Accept, "application/json, text/plain, */*");//有一堆枚举可用

@@ -1,7 +1,6 @@
 package com.demo.Helper;
 
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class CodeTimer {
     public static void Time(String name, Consumer action) {

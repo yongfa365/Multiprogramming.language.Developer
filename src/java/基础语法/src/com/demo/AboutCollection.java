@@ -2,7 +2,6 @@ package com.demo;
 
 import com.demo.Entity.Person;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -11,7 +10,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -26,12 +24,13 @@ import java.util.stream.Stream;
 
 public class AboutCollection {
 
-    public static void RunDemo() {
+    public static void RunDemo() throws Exception {
         //jdk9对List,Set,Map都加了.of(),来生成只读的集合
         RunStreamDemo();
-        RunListDemo();
-        RunHashSetDemo();
+        //RunListDemo();
+        //RunHashSetDemo();
     }
+
 
     public static void RunStreamDemo() {
         //C#.Linq与Java.Stream不同。Java有必要单独介绍下Stream()
@@ -60,6 +59,9 @@ public class AboutCollection {
 
         // 得到一个无限循环的 IntStream, 值为 1, 3, 5, 7 ...
         IntStream infinite = IntStream.iterate(1, p -> p + 2);
+
+        // 得到一个有限循环的 IntStream, 值为 1, 3, 5, 7 9
+        IntStream finite = IntStream.iterate(1, p -> p < 10, p -> p + 2);
 
         //随机10个
         IntStream randomint01 = new Random().ints(10);
@@ -314,11 +316,6 @@ public class AboutCollection {
 
 
 class ComparatorHelper {
-    @FunctionalInterface
-    interface BooleanFunction<T> {
-        Boolean go(T a, T b);
-    }
-
     public static <T> Comparator<T> bool(BooleanFunction<T> func) {
         return (x, y) -> func.go(x, y) ? 0 : 1;
     }
@@ -327,7 +324,12 @@ class ComparatorHelper {
     //https://howtodoinjava.com/java8/stream-distinct-by-multiple-fields/
     public static <T> Predicate<T> distinct(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
-        return p -> seen.add(keyExtractor.apply(p));
+        return p -> seen.add(keyExtractor.apply(p)); //lambda代替Predicate<T>
+    }
+
+    @FunctionalInterface
+    interface BooleanFunction<T> {
+        Boolean go(T a, T b);
     }
 }
 

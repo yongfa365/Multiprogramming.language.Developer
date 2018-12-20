@@ -1,4 +1,4 @@
-package com.demo.Helper;
+package com.demo.Helper.Security;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -40,7 +40,7 @@ public class SecurityHelper {
 
 
     public static String To16bitMD5(String input) throws Exception {
-        var full=To32bitMD5(input);
+        var full = To32bitMD5(input);
         var result = full.substring(8, 24);
         return result;
     }

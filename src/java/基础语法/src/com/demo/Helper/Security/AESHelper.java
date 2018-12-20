@@ -1,4 +1,4 @@
-package com.demo.Helper;
+package com.demo.Helper.Security;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

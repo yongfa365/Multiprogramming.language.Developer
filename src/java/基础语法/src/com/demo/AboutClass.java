@@ -1,4 +1,4 @@
 package com.demo;
 
-public   class AboutClass {
+public class AboutClass {
 }

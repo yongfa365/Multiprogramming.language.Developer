@@ -14,7 +14,7 @@ namespace ConsoleApp.BestPractices
             Time("", 1, () => { });
         }
 
-        public static void Time(string name,Action action)
+        public static void Time(string name, Action action)
         {
             var timer = Stopwatch.StartNew();
             action();

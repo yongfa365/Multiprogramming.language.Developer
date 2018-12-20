@@ -120,9 +120,9 @@ namespace ConsoleApp.BestPractices
         /// <param name="count">复制1百万次50ms,相当快呀</param>
         /// <returns></returns>
         public static string Repeat(this string input, int count)
-        { 
+        {
             var temp = Enumerable.Repeat(input, count);
-            var result= string.Concat(temp);
+            var result = string.Concat(temp);
             return result;
         }
 

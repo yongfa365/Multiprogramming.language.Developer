@@ -12,11 +12,6 @@ public class Person {
     private Boolean isHuman = true; //要想变只读，不给他设置set就行了,有了默认值，也就总是返回true了。
 
 
-    public <T extends Comparable<BigDecimal>> Boolean IsHighter(T comparator) {
-        comparator.compareTo(height);
-        return true;
-    }
-
     //以下内容都是点点点，自动生成的，各IDE都有这功能，但用Lombok更方便，就不用写下面的内容了，他会在编译时生成的二进制文件里。
     public Person() {
     }
@@ -35,6 +30,10 @@ public class Person {
         this.isHuman = isHuman;
     }
 
+    public <T extends Comparable<BigDecimal>> Boolean IsHighter(T comparator) {
+        comparator.compareTo(height);
+        return true;
+    }
 
     public Integer getId() {
         return id;

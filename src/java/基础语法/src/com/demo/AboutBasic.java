@@ -1,9 +1,8 @@
 package com.demo;
 
-import com.demo.Entity.*;
+import com.demo.Entity.Person2;
 import com.demo.Helper.Helper;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
