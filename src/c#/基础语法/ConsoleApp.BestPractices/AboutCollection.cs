@@ -20,8 +20,8 @@ namespace ConsoleApp.BestPractices
             //Linq使集合如虎添翼，Linq是懒加载的，所以在没有ToXXX或用之前，他只是表达式。
 
             RunListDemo();
-            RunDictionaryDemo();
             RunHashSetDemo();
+            RunDictionaryDemo();
             RunQueueDemo();
             RunStackDemo();
         }
@@ -116,69 +116,9 @@ namespace ConsoleApp.BestPractices
             }
 
             //集合“并行”执行
-            Enumerable.Range(1, 100).ToList().AsParallel().ForAll(Console.WriteLine);
+            Enumerable.Range(1, 10).ToList().AsParallel().ForAll(Console.WriteLine);
 
         }
-
-
-        private static void RunDictionaryDemo()
-        {
-            var dict1 = new Dictionary<int, string>
-            {
-                { 1, "111" },
-                { 2, "222" },
-                { 3, "333" },
-            };
-
-            var dict2 = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                { "A","111"},
-                { "a","222"},
-                { "b","333"},
-            };
-
-            //自定义比较器
-            var dict3 = new Dictionary<Person, int>(new PredicateEqualityComparer<Person>((x, y) => x.Id == y.Id))
-            {
-                { new Person{ Id=1,Name="A"} ,1},
-                { new Person{ Id=2,Name="B"} ,2},
-                { new Person{ Id=1,Name="B" } ,3},
-            };
-
-            var dict = new Dictionary<string, int>();
-            dict.Add("1", 2);//添加赋值
-            dict["a"] = 1; //直接赋值
-            dict.Add("2", 2);
-            //dict3.Add("2", 2);//key重复会报错
-            var dd = dict.TryAdd("2", 2);//不会报错，会返回false
-
-            if (dict.ContainsKey("a"))
-            {
-                Console.WriteLine(dict["a"]);
-            }
-
-            if (dict.TryGetValue("2", out int getResult))
-            {
-                Console.WriteLine(getResult);
-            }
-
-
-
-            var keys = dict.Keys.ToList();
-            var valus = dict.Values.ToList();
-
-
-            //线程安全的
-            var condict = new ConcurrentDictionary<int, Person>();
-            condict.TryAdd(1, new Person { Id = 1, Height = 1 });
-            condict.TryRemove(1, out Person resultTemp);
-            condict.TryGetValue(1, out Person resultTemp2);
-
-
-            //集合“并行”执行
-            Enumerable.Range(1, 100).ToDictionary(p => p, p => p).AsParallel().ForAll(item => Console.WriteLine($"{item.Key} {item.Value}"));
-        }
-
 
         private static void RunHashSetDemo()
         {
@@ -206,9 +146,71 @@ namespace ConsoleApp.BestPractices
             //HashSet<T>没有线程安全的版本，可以用ConcurrentDictionary<T,T>代替
 
             //集合“并行”执行
-            Enumerable.Range(1, 100).ToHashSet().AsParallel().ForAll(Console.WriteLine);
+            Enumerable.Range(1, 10).ToHashSet().AsParallel().ForAll(Console.WriteLine);
         }
 
+
+        private static void RunDictionaryDemo()
+        {
+            var dict1 = new Dictionary<int, string>
+            {
+                { 1, "111" },
+                { 2, "222" },
+                { 3, "333" },
+            };
+
+            var dict2 = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "A","111"},
+                //{ "a","222"}, //因为忽略大小写的，所以这个会报错
+                { "b","333"},
+            };
+
+            //自定义比较器
+            var dict3 = new Dictionary<Person, int>(new PredicateEqualityComparer<Person>((x, y) => x.Id == y.Id))
+            {
+                { new Person{ Id=1,Name="A"} ,1},
+                { new Person{ Id=2,Name="B"} ,2},
+                //{ new Person{ Id=1,Name="B" } ,3}, //有比较规则，所以这个会报错
+            };
+
+            var dict = new Dictionary<string, int>();
+            dict.Add("1", 2);//添加赋值
+            dict["a"] = 1; //直接赋值
+            dict.Add("2", 2);
+            //dict3.Add("2", 2);//key重复会报错
+            var dd = dict.TryAdd("2", 2);//不会报错，会返回false
+
+            if (dict.ContainsKey("a"))
+            {
+                Console.WriteLine(dict["a"]);
+            }
+
+            if (dict.TryGetValue("2", out int getResult))
+            {
+                Console.WriteLine(getResult);
+            }
+
+
+
+            var keys = dict.Keys.ToList();
+            var values = dict.Values.ToList();
+
+
+            //线程安全的
+            var condict = new ConcurrentDictionary<int, Person>();
+            condict.TryAdd(1, new Person { Id = 1, Height = 1 });
+            condict.TryRemove(1, out Person resultTemp);
+            condict.TryGetValue(1, out Person resultTemp2);
+            condict.TryAdd(2, new Person { Id = 2, Height = 2 });
+
+
+            //集合“并行”执行
+            Enumerable.Range(1, 10).ToDictionary(p => p, p => p).AsParallel().ForAll(item => Console.WriteLine($"{item.Key} {item.Value}"));
+        }
+
+
+     
 
 
         private static void RunQueueDemo()

@@ -4,7 +4,7 @@ namespace ConsoleApp.BestPractices
 {
     public static class AboutClass
     {
-
+        //委托，事件
 
         public static void RunDemo()
         {

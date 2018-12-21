@@ -32,7 +32,7 @@ Jackson|https://github.com/FasterXML/jackson-databind/|json序列化与反序列
 Basic|1天|主要是BigDecimal的与C#不同，花了写时间。
 DateTime|2天|场景多，不灵活，要不停调试。
 String|3天|场景多，加解密算法2天：调试C#与Java，使其互通，用C#加密再用Java解密，及反向操作。
-Collection|？|List花了1天，因为集合的通用操作都是用List演示的。其他还没开始
+Collection|4天|List花了1天，因为集合的通用操作都是用List演示的。Stream，Lambda，FunctionInterface，AnonymousClass等一堆周边东西，因与C#不同都要学习花了3天
 
 
 java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个，不存在装箱拆箱，C#一般只在int->string->int时才涉及到。

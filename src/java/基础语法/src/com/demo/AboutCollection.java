@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -27,12 +29,14 @@ public class AboutCollection {
     public static void RunDemo() throws Exception {
         //jdk9对List,Set,Map都加了.of(),来生成只读的集合
         RunStreamDemo();
-        //RunListDemo();
-        //RunHashSetDemo();
+        RunListDemo();
+        Run_HashSet_TreeSet_Demo();
+        Run_HashMap_TreeMap_Demo();
+        RunQueueDemo();
     }
 
 
-    public static void RunStreamDemo() {
+    private static void RunStreamDemo() {
         //C#.Linq与Java.Stream不同。Java有必要单独介绍下Stream()
 
         //演示：Stream初始化的几种方法
@@ -204,90 +208,22 @@ public class AboutCollection {
 
     }
 
-
-    private static void RunHashMapDemo() {
-        var map1 = new HashMap<Integer, String>();
-        map1.put(1, "111");
-        map1.put(2, "222");
-        map1.put(3, "333");
-
-
-        var map1_1 = new HashMap<Integer, String>() {{
-            put(1, "111");
-            put(2, "222");
-            put(3, "333");
-        }};
-
-
-
-
-
-/*
-
-        var dict2 = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            { "A","111"},
-            { "a","222"},
-            { "b","333"},
-        };
-
-        //自定义比较器
-        var dict3 = new Dictionary<Person, int>(new PredicateEqualityComparer<Person>((x, y) => x.Id == y.Id))
-        {
-            { new Person{ Id=1,Name="A"} ,1},
-            { new Person{ Id=2,Name="B"} ,2},
-            { new Person{ Id=1,Name="B" } ,3},
-        };
-
-        var dict = new Dictionary<string, int>();
-        dict.Add("1", 2);//添加赋值
-        dict["a"] = 1; //直接赋值
-        dict.Add("2", 2);
-        //dict3.Add("2", 2);//key重复会报错
-        var dd = dict.TryAdd("2", 2);//不会报错，会返回false
-
-        if (dict.ContainsKey("a"))
-        {
-            Console.WriteLine(dict["a"]);
-        }
-
-        if (dict.TryGetValue("2", out int getResult))
-        {
-            Console.WriteLine(getResult);
-        }
-
-
-
-        var keys = dict.Keys.ToList();
-        var valus = dict.Values.ToList();
-
-
-        //线程安全的
-        var condict = new ConcurrentDictionary<int, Person>();
-        condict.TryAdd(1, new Person { Id = 1, Height = 1 });
-        condict.TryRemove(1, out Person resultTemp);
-        condict.TryGetValue(1, out Person resultTemp2);
-        */
-
-
-    }
-
-    public static void RunHashSetDemo() {
-        var hsInit1 = new HashSet<String>(); //C#可以指定比较器，Java.HashSet不能指定。
+    private static void Run_HashSet_TreeSet_Demo() {
+        //C#的HashSet<T>可以指定比较器，Java.HashSet不能，得用TreeSet<T>
+        var hsInit1 = new HashSet<String>();
         var hsInit2 = new HashSet<String>(List.of("1", "2", "3", "3"));
 
-        var tsInit1 = new TreeSet<String>();
+        //TreeSet<T>使用方法与HashSet<T>类似，但必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeSet<T>初始化时指定个Comparator
         var tsInit2 = new TreeSet<String>(List.of("1", "2", "3", "3"));
         var tsInit3 = new TreeSet<String>(String::compareToIgnoreCase);
         tsInit3.addAll(List.of("A", "a", "b")); //["A","b"]
-
 
         //自定义比较器
         var tsInit4 = new TreeSet<Person>(Comparator.comparing(Person::getId));
         var tsInit5 = new TreeSet<Person>((x, y) -> x.getId() == y.getId() && x.getName() == y.getName() ? 0 : 1);
         var tsInit6 = new TreeSet<Person>(ComparatorHelper.bool((x, y) -> x.getId() == y.getId() && x.getName().equalsIgnoreCase(y.getName())));
 
-        var tsTest = tsInit5;
+        var tsTest = tsInit4;  //可以切换成tsInit5,tsInit6试试看最终的结果
         tsTest.add(new Person(1, "A"));
         tsTest.add(new Person(1, "A"));
         tsTest.add(new Person(1, "B"));
@@ -302,12 +238,115 @@ public class AboutCollection {
 
         var b1 = h3.contains(3);
         var h4 = h3.stream().filter(p -> p > 1).collect(Collectors.toSet());
+
+        //TODO:并行实现
+
+        //集合“并行”执行
+        h3.stream().parallel().forEach(System.out::println);
+
         System.out.println("断点用");
 
     }
 
-    public static void RunQueueDemo() {
 
+    private static void Run_HashMap_TreeMap_Demo() {
+        //C#的Dictionary<K,V>可以指定比较器，Java.HashMap不能，得用TreeMap
+        var hashMap1 = new HashMap<Integer, String>();
+        hashMap1.put(1, "111");
+        hashMap1.put(2, "222");
+        hashMap1.put(3, "333");
+
+
+        var hashMap2 = new HashMap<Integer, String>() {{
+            put(1, "111");
+            put(2, "222");
+            put(3, "333");
+        }};
+
+        //TreeMap使用方法与HashMap类似，但必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeMap初始化时指定个Comparator
+        var treeMap2 = new TreeMap<String, String>(String::compareToIgnoreCase) {{
+            put("A", "111");
+            put("a", "222");
+            put("B", "333");
+        }};
+
+        //自定义比较器
+        var tmInit4 = new TreeMap<Person, Integer>(Comparator.comparing(Person::getId));
+        var tmInit5 = new TreeMap<Person, Integer>((x, y) -> x.getId() == y.getId() && x.getName() == y.getName() ? 0 : 1);
+        var tmInit6 = new TreeMap<Person, Integer>(ComparatorHelper.bool((x, y) -> x.getId() == y.getId() && x.getName().equalsIgnoreCase(y.getName())));
+
+        var tsTest = tmInit4;  //可以切换成tsInit5,tsInit6试试看最终的结果
+        tsTest.put(new Person(1, "A"), 1);
+        tsTest.put(new Person(1, "A"), 1);
+        tsTest.put(new Person(1, "B"), 1);
+        tsTest.put(new Person(2, "B"), 1);
+
+
+        var dict = new HashMap<String, Integer>();
+        dict.put("1", 2);//添加赋值
+        dict.replace("1", 3);       // dict["a"] = 1; //Java不能这么写，C#可以
+        dict.put("2", 2);
+        dict.put("2", 3);//key重复不会报错，直接替换了，与C#不同
+
+
+        if (dict.containsKey("a")) {
+            System.out.println(dict.get("a"));
+        }
+
+        var keys = dict.keySet();
+        var values = dict.values();
+
+        //线程安全的
+        var condict = new ConcurrentHashMap<Integer, Person>();
+        condict.put(1, new Person(1, "111"));
+        condict.putIfAbsent(1, new Person(1, "222"));
+        condict.put(1, new Person(1, "333")); //key重复不会报错，直接替换了，与C#不同
+        condict.remove(1);
+        condict.put(1, new Person(2, "444"));
+
+
+        //集合“并行”执行
+        hashMap1.entrySet().stream().parallel().forEach(System.out::println);
+        condict.entrySet().stream().parallel().forEach(System.out::println); //这个println比C#好用，会调用obj.toString();
+        System.out.println("断点用");
+
+    }
+
+
+    private static void RunQueueDemo() {
+        var queue = new ArrayDeque<Person>();
+        IntStream.range(1, 10).forEach(p -> queue.add(new Person(p, String.valueOf(p).repeat(3))));
+        //既然是双向队列，那就可以两边操作
+        queue.addFirst(new Person(11, "111"));
+        queue.addLast(new Person(33, "333"));
+
+        var count = queue.size();
+
+        //这一堆弹出的操作，没有值会返回null,不会报错
+        var item1 = queue.pop();
+        var item2 = queue.poll();
+        var item3 = queue.pollFirst();
+        var item4 = queue.pollLast();
+
+        queue.removeFirstOccurrence(queue.getLast());
+
+
+        //线程安全的双向队列ConcurrentLinkedDeque<T>
+        var conQueue = new ConcurrentLinkedDeque<Person>();
+        IntStream.range(1, 10).forEach(p -> conQueue.add(new Person(p, String.valueOf(p).repeat(3))));
+        //既然是双向队列，那就可以两边操作
+        conQueue.addFirst(new Person(11, "111"));
+        conQueue.addLast(new Person(33, "333"));
+        var item5 = conQueue.pop();
+        conQueue.clear();
+        IntStream.range(1, 10).parallel().forEach(p -> conQueue.add(new Person(p, String.valueOf(p).repeat(3))));
+
+        //线程安全的队列ConcurrentLinkedDeque<T>
+        var conQueue2 = new ConcurrentLinkedQueue<Person>();
+        conQueue2.add(new Person());
+        var item6 = conQueue2.poll();
+        IntStream.range(1, 10).parallel().forEach(p -> conQueue2.add(new Person(p, String.valueOf(p).repeat(3))));
+        conQueue2.stream().forEach(System.out::println);
 
     }
 
