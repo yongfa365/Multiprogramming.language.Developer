@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -357,8 +358,8 @@ public class AboutCollection {
 
 
 class ComparatorHelper {
-    public static <T> Comparator<T> bool(BooleanFunction<T> func) {
-        return (x, y) -> func.go(x, y) ? 0 : 1;
+    public static <T> Comparator<T> bool(BiPredicate<T, T> func) {
+        return (x, y) -> func.test(x, y) ? 0 : 1;
     }
 
     //TODO:为什么?不能用别的替代？
@@ -366,11 +367,6 @@ class ComparatorHelper {
     public static <T> Predicate<T> distinct(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return p -> seen.add(keyExtractor.apply(p)); //lambda代替Predicate<T>
-    }
-
-    @FunctionalInterface
-    interface BooleanFunction<T> {
-        Boolean go(T a, T b);
     }
 }
 
