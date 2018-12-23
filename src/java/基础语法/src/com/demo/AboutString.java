@@ -32,6 +32,8 @@ public class AboutString {
 
             // java 没有PadLeft及PadRight，但可以左右pad空格, 有repeat,也可以用org.apache.commons.lang.StringUtils#rightPad
             var strRepeat = "@1A".repeat(100);
+            var strPadLeft1 = String.format("%10s", "foo");     // 共10个字符，左边补齐："       foo"
+            var strPadRight1 = String.format("%-10s", "foo"); // 共10个字符，右边补齐："foo       "
             var strPadLeft = String.format("%10s", "foo").replace(' ', '*'); //*******foo
             var strPadRight = String.format("%-10s", "bar").replace(' ', '*'); //bar*******
 
