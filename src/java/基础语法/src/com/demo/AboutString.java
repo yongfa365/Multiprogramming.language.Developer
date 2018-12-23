@@ -129,7 +129,8 @@ public class AboutString {
             var str5 = p.split("a111b222C");
             var str6 = p.matcher("a111b222C").replaceAll("_");
 
-            var match0 = Pattern.matches(",", "a@b,c"); // true
+            var match0 = "a@b,c".matches(","); // true
+            var match1 = Pattern.matches(",", "a@b,c"); // true
 
             // 匹配一个 就是find()一次
             var match = Pattern.compile("(\\d+).(\\d+)").matcher("a111b222c");

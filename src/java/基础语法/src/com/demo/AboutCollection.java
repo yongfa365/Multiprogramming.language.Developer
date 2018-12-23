@@ -213,8 +213,9 @@ public class AboutCollection {
         var hsInit1 = new HashSet<String>();
         var hsInit2 = new HashSet<String>(List.of("1", "2", "3", "3"));
 
-        //TreeSet<T>使用方法与HashSet<T>类似，但必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeSet<T>初始化时指定个Comparator
-        var tsInit2 = new TreeSet<String>(List.of("1", "2", "3", "3"));
+        //TreeSet<T>使用方法与HashSet<T>类似，但★他是有序的，★必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeSet<T>初始化时指定个Comparator
+        //TreeSet<T>性能比HashSet<T>差一点
+        var tsInit2 = new TreeSet<String>(List.of("C", "A", "B", "C")); //[A, B, C] 排序了
         var tsInit3 = new TreeSet<String>(String::compareToIgnoreCase);
         tsInit3.addAll(List.of("A", "a", "b")); //["A","b"]
 
@@ -223,7 +224,7 @@ public class AboutCollection {
         var tsInit5 = new TreeSet<Person>((x, y) -> x.getId() == y.getId() && x.getName() == y.getName() ? 0 : 1);
         var tsInit6 = new TreeSet<Person>(ComparatorHelper.bool((x, y) -> x.getId() == y.getId() && x.getName().equalsIgnoreCase(y.getName())));
 
-        var tsTest = tsInit4;  //可以切换成tsInit5,tsInit6试试看最终的结果
+        var tsTest = tsInit6;  //可以切换成tsInit5,tsInit6试试看最终的结果
         tsTest.add(new Person(1, "A"));
         tsTest.add(new Person(1, "A"));
         tsTest.add(new Person(1, "B"));
@@ -263,12 +264,13 @@ public class AboutCollection {
             put(3, "333");
         }};
 
-        //TreeMap使用方法与HashMap类似，但必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeMap初始化时指定个Comparator
+        //TreeMap使用方法与HashMap类似，但★他是有序的，必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeMap初始化时指定个Comparator
+        //TreeMap性能比HashMap差一点
         var treeMap2 = new TreeMap<String, String>(String::compareToIgnoreCase) {{
+            put("B", "333");
             put("A", "111");
             put("a", "222");
-            put("B", "333");
-        }};
+        }}; //{A=222, B=333} 奇怪吧，key相同的再次添加时将Value更新了，而不是整个更新，也不是不更新。
 
         //自定义比较器
         var tmInit4 = new TreeMap<Person, Integer>(Comparator.comparing(Person::getId));
