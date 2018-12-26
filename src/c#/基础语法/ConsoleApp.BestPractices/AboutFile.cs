@@ -17,8 +17,16 @@ namespace ConsoleApp.BestPractices
             var lstContext = new List<string> { "A", "B" };
             var byteContext = Encoding.UTF8.GetBytes(context);
 
+            //仅当前目录
+            var files1 = Directory.GetFiles("C:\\Windows\\", "*.exe");
 
-            var files = Directory.GetFiles("C:\\Windows\\", "*.exe");
+            //包括子目录，可以指定多种筛选规则
+            var files2 = Directory.GetFiles("C:\\Windows\\", "*.EXE", new EnumerationOptions
+            {
+                RecurseSubdirectories = true,
+                MatchCasing = MatchCasing.PlatformDefault,
+                AttributesToSkip = FileAttributes.Normal
+            });
 
             Directory.CreateDirectory("C:\\FileTest\\haha"); //存在不报错
 

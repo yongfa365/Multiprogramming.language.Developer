@@ -13,9 +13,15 @@ public class AboutFile {
         var byteContext = context.getBytes(StandardCharsets.UTF_8);
 
 
-        var files1 = Files.list(Path.of("C:\\Windows\\")).filter(p -> p.toString().toLowerCase().endsWith("*.exe")); //list是个Stream所以不必担心性能
-        var files3 = Files.walk(Path.of("C:\\Windows\\"), 10); //可以指定层次
-        var files4 = Files.find(Path.of("C:\\Windows\\"), 10, (filePath, fileAttr) -> filePath.toString().endsWith(".exe") && fileAttr.isRegularFile()); //可以指定filter
+        //仅当前目录
+        var files1 = Files.list(Path.of("C:\\Windows\\")).filter(p -> p.toString().toLowerCase().endsWith(".exe"));
+
+        //包括子目录，可以指定层次
+        var files2 = Files.walk(Path.of("C:\\Windows\\"), 10);
+
+        //包括子目录，可以指定层次，可以指定filter
+        var files3 = Files.find(Path.of("C:\\Windows\\"), 10, (filePath, fileAttr) -> filePath.toString().endsWith(".exe") && fileAttr.isRegularFile());
+
 
         Files.createDirectories(Path.of("C:\\FileTest\\haha")); // createDirectories 如果目录已经存在不会报错
 
