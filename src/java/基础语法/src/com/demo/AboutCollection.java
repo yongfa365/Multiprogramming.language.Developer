@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 //https://www.oracle.com/technetwork/articles/java/ma14-java-se-8-streams-2177646.html
 //https://www.oracle.com/technetwork/articles/java/architect-streams-pt2-2227132.html
 //https://blog.lahteenmaki.net/java-streams-vs-c-linq-vs-java6-updated.html
-//Java的Lambda的的实现方法就是定义一堆接口，让你写。
+//Java的Lambda用的是函数接口。C#的Lambda用的是用委托
 
 public class AboutCollection {
 

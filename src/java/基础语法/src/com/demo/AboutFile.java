@@ -1,4 +1,61 @@
 package com.demo;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.util.List;
+
+//io与nio的不同要写下，因为同时存在。我现在看到的是：nio已经可以很方便的满足我的要求了，没必要研究旧io了
 public class AboutFile {
+    public static void RunDemo() throws Exception {
+        var filepath = "C:\\FileTest\\haha\\1.txt";
+        var context = "内容";
+        var lstContext = List.of("A", "B");
+        var byteContext = context.getBytes(StandardCharsets.UTF_8);
+
+
+        var files1 = Files.list(Path.of("C:\\Windows\\")).filter(p -> p.toString().toLowerCase().endsWith("*.exe")); //list是个Stream所以不必担心性能
+        var files3 = Files.walk(Path.of("C:\\Windows\\"), 10); //可以指定层次
+        var files4 = Files.find(Path.of("C:\\Windows\\"), 10, (filePath, fileAttr) -> filePath.toString().endsWith(".exe") && fileAttr.isRegularFile()); //可以指定filter
+
+        Files.createDirectories(Path.of("C:\\FileTest\\haha")); // createDirectories 如果目录已经存在不会报错
+
+
+        if (!Files.exists(Path.of(filepath))) {
+            //xx
+        }
+
+        Files.write(Path.of(filepath), context.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE, StandardOpenOption.APPEND); //不存在则创建，存在则附加
+
+        Files.write(Path.of(filepath), context.getBytes(StandardCharsets.UTF_8));
+        Files.write(Path.of(filepath), lstContext);
+
+        //快速写大量内容
+        try (var writer = Files.newBufferedWriter(Path.of("C:\\bigtest.txt"), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            var temp = "12345".repeat(1024);
+            for (int i = 0; i < 100000; i++) {
+                writer.append(temp);
+                writer.newLine();
+            }
+        }
+        Files.delete(Path.of("C:\\bigtest.txt"));
+
+        var cnt1 = Files.readString(Path.of(filepath));
+        var cnt2 = Files.readAllLines(Path.of(filepath));
+        var cnt3 = Files.readAllBytes(Path.of(filepath));
+
+        Files.copy(Path.of(filepath), Path.of(filepath + ".txt"), StandardCopyOption.REPLACE_EXISTING);
+        Files.delete(Path.of(filepath));
+
+
+        var tempPath = Path.of("C:", "a", "b", "c.txt"); //C:\a\b\c.txt
+        var filename = tempPath.getFileName();
+        var fullpath = tempPath.toAbsolutePath();
+
+        //获取扩展名没有像C#里的Path.GetExtension(tempPath);
+        // Guava：Files.getFileExtension(filepath);
+        // Apache Commons IO：FilenameUtils.getExtension(filepath);
+        int dotIndex = filepath.lastIndexOf('.');
+        var extend = (dotIndex == -1) ? "" : filepath.substring(dotIndex + 1);
+
+    }
 }

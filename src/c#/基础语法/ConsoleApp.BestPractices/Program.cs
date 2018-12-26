@@ -16,9 +16,9 @@ namespace ConsoleApp.BestPractices
             //AboutBasic.RunDemo();
             //AboutDateTime.RunDemo();
             //AboutString.RunDemo();
-            AboutCollection.RunDemo();
+            // AboutCollection.RunDemo();
 
-            // AboutFile.RunDemo();
+            AboutFile.RunDemo();
             //AboutHttp.RunDemo();
             //AboutThread.RunDemo();
 

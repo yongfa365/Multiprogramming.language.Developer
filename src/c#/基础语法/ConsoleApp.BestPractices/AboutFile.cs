@@ -34,6 +34,20 @@ namespace ConsoleApp.BestPractices
             File.WriteAllLines(filepath, lstContext);
             File.WriteAllBytes(filepath, byteContext);
 
+            //文件在用时无权删除，如果要删除则需要包装下kernel32.dll
+
+            //http://www.jeremyshanks.com/fastest-way-to-write-text-files-to-disk-in-c/
+            using (var writer = new StreamWriter("C:\\bigtest.txt", true, Encoding.UTF8, 65536))
+            {
+                var temp = "12345".Repeat(1024);
+                for (int i = 0; i < 1000000; i++)
+                {
+                    writer.WriteLine(temp);
+                }
+            }
+            File.Delete("C:\\bigtest.txt");
+
+
             var cnt1 = File.ReadAllText(filepath);
             var cnt2 = File.ReadAllLines(filepath);
             var cnt3 = File.ReadAllBytes(filepath);
