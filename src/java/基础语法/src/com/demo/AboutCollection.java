@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 public class AboutCollection {
 
     public static void RunDemo() throws Exception {
-        //jdk9对List,Set,Map都加了.of(),来生成只读的集合
+        //jdk9对80多个类增加了200多个.of(),来生成不可变的对象。
         RunStreamDemo();
         RunListDemo();
         Run_HashSet_TreeSet_Demo();

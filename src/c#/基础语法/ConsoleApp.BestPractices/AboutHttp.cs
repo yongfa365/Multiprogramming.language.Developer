@@ -29,6 +29,10 @@ namespace ConsoleApp.BestPractices
                 client.UploadString(url, body);
                 client.UploadData(url, Encoding.UTF8.GetBytes(body));
                 client.UploadFile(url, filename);
+
+                //Async
+                client.DownloadStringTaskAsync(new Uri(url))
+                    .ContinueWith(p => Console.Write(p.Result));
             }
 
 
@@ -40,20 +44,20 @@ namespace ConsoleApp.BestPractices
                 //Request Headers
 
                 client.Headers.Add(HttpRequestHeader.Accept, "application/json, text/plain, */*");//有一堆枚举可用
-                //client.Headers.Add("Host", "account.geekbang.org"); //有些不能设置
-                //client.Headers.Add("Connection", " keep-alive");
-                //client.Headers.Add("Content-Length", " 113");
-                client.Headers.Add("Accept", " application/json, text/plain, */*");
-                client.Headers.Add("Origin", " https://www.baidu.com");
-                client.Headers.Add("User-Agent", " Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36");
-                client.Headers.Add("Content-Type", " application/json");
-                client.Headers.Add("Referer", " https://www.cnblogs.com/");
-                client.Headers.Add("Accept-Encoding", " gzip, deflate, br");
-                client.Headers.Add("Accept-Language", " zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7");
-                client.Headers.Add("Cookie", "a=b;c=3");
+                //client.Headers.Add("Host", "www.cnblogs.com"); //有些不能设置
+                //client.Headers.Add("Connection", "keep-alive");
+                //client.Headers.Add("Content-Length", "113");
+                client.Headers.Add("Accept", "application/json, text/plain, */*");
+                client.Headers.Add("Origin", "https://www.baidu.com");
+                client.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36");
+                client.Headers.Add("Content-Type", "application/json");
+                client.Headers.Add("Referer", "https://www.cnblogs.com/");
+                client.Headers.Add("Accept-Encoding", "gzip, deflate, br");
+                client.Headers.Add("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7");
+                client.Headers.Add("Cookie", "a=1;b=3");
 
                 //Response Headers
-                var str = client.ResponseHeaders["Set-Cookie"];
+                var str = client.ResponseHeaders?["Set-Cookie"];
             }
 
 
