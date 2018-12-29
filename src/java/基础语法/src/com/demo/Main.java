@@ -18,8 +18,8 @@ public class Main {
         //AboutCollection.RunDemo();
 
         // AboutFile.RunDemo();
-        AboutHttp.RunDemo();
-
+        //AboutHttp.RunDemo();
+        AboutThread.RunDemo();
 
         //region Jet Brains IDEA has this feature
         { //这个花括号只是为了隔离用，可以忽略

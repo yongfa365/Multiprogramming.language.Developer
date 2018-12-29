@@ -6,11 +6,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -316,7 +315,7 @@ public class AboutCollection {
     }
 
 
-    private static void RunQueueDemo() {
+    private static void RunQueueDemo() throws Exception {
         var queue = new ArrayDeque<Person>();
         IntStream.range(1, 10).forEach(p -> queue.add(new Person(p, String.valueOf(p).repeat(3))));
         //既然是双向队列，那就可以两边操作
@@ -351,6 +350,18 @@ public class AboutCollection {
         IntStream.range(1, 10).parallel().forEach(p -> conQueue2.add(new Person(p, String.valueOf(p).repeat(3))));
         conQueue2.stream().forEach(System.out::println);
 
+
+        var delayQ = new DelayQueue<DelayedTask>();
+        var now = LocalDateTime.now();
+        delayQ.add(new DelayedTask(now, "立即处理"));
+        delayQ.add(new DelayedTask(now.plusSeconds(3), "延迟3s处理"));
+        delayQ.add(new DelayedTask(now.plusSeconds(5), "延迟5s处理"));
+
+        while (delayQ.size() > 0) {
+            var item = delayQ.take();
+            System.out.println(LocalTime.now().toString() + item);
+        }
+
     }
 
 
@@ -367,6 +378,41 @@ class ComparatorHelper {
     public static <T> Predicate<T> distinct(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return p -> seen.add(keyExtractor.apply(p)); //lambda代替Predicate<T>
+    }
+
+
+}
+
+
+class DelayedTask implements Delayed {
+    private LocalDateTime expireTime;
+    private String msg;
+
+    public DelayedTask(LocalDateTime expireTime, String msg) {
+        this.expireTime = expireTime;
+        this.msg = msg;
+    }
+
+    /**
+     * 剩余时间=到期时间-当前时间
+     */
+    @Override
+    public long getDelay(TimeUnit unit) {
+        var result = unit.convert(ChronoUnit.MILLIS.between(LocalDateTime.now(), expireTime), TimeUnit.MILLISECONDS);
+        return result;
+    }
+
+    /**
+     * 优先队列里面优先级规则
+     */
+    @Override
+    public int compareTo(Delayed o) {
+        return (int) (this.getDelay(TimeUnit.MILLISECONDS) - o.getDelay(TimeUnit.MILLISECONDS));
+    }
+
+    @Override
+    public String toString() {
+        return String.format(" DelayedTask{expireTime=%s,  data='%s'}", DateTimeFormatter.ISO_TIME.format(expireTime), msg);
     }
 }
 
