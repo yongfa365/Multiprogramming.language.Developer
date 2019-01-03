@@ -217,9 +217,17 @@ namespace ConsoleApp.BestPractices
             }
             #endregion
 
+            InfinateParam(110, 120, 911);
+            InfinateParam(new []{ 111, 222, 333 });
         }
 
-
+        public static void InfinateParam(params int[] args)
+        {
+            foreach (var item in args)
+            {
+                Console.WriteLine(item);
+            }
+        }
 
 
 

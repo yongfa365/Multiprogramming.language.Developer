@@ -1,6 +1,5 @@
 package com.demo;
 
-import com.demo.Entity.EnumType.ColorType;
 import com.demo.Entity.EnumType.ProductType;
 import com.demo.Entity.Person2;
 import com.demo.Helper.Helper;
@@ -208,6 +207,16 @@ public class AboutBasic {
 
         }
         //endregion
+
+
+        infinateParam(110, 120, 911);
+        infinateParam(new Integer[]{111, 222, 333});
+    }
+
+    public static void infinateParam(Integer... args) {
+        for (var item : args) {
+            System.out.println(item);
+        }
     }
 
 
