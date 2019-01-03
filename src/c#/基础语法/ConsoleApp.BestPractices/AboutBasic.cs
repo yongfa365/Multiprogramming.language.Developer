@@ -9,38 +9,52 @@ namespace ConsoleApp.BestPractices
         {
             #region 最基础类型
             {
-                var intValue = 1; //int
-                var int64value = 2147483647000; //Int64
-                var b_1 = BigInteger.Parse(new string('9', 10000)); //不学java，10年了都不知道还有这么号人物
-                var b_2 = BigInteger.Divide(b_1, 3);
+                int intValue = 1;
+                Int64 int64value = 2147483647000; //Int64别名long,Int32别名int
+                long longValue = 1L;
+                double doubleValue = 1.1;
+                float floatValue = 1.1f;
+                bool booltrue = true;
+                bool boolfalse = false;
+                char charValue = 'A';
+                bool charisValue = 'A' > 26; //char是值类型的
 
-                var doubleValue = 1.1; //double
-                var floatValue = 1.1f; //float
-                var decimalValue = 1.1m; //decimal 没有java里的BigDecimal
 
-                var double_bad = 1.0 - 9 * 0.1; //0.099999999999999978  double 精度不够，一般不要用，
-                var decimal_good = 1.0m - 9 * 0.1m; //0.1 decimal 精度可以
-                var decimal_all = (1 + 1 - 1) * 1 / 3m; //只要一个有m标识，整个就是decimal 的,当然也可以都加上
+                //不学java，10年了都不知道还有这么号人物
+                BigInteger b_1 = BigInteger.Parse("123".Repeat(100));
+                BigInteger b_2 = BigInteger.Divide(b_1, 3);
+                BigInteger b_3 = b_1 / 3;
 
-                var longValue = 1L; //long  
-                var booltrue = true;
-                var boolfalse = false;
-                var charValue = 'A';
-                var charisValue = 'A' > 26; //char是值类型的
+                //decimal对应java里的BigDecimal，并且有重载运算符，所以更方便
+                decimal decimalValue = 1.1m;
 
-                var guid = Guid.NewGuid(); //"7e0d3fc3-5447-4cf2-accd-366e3ade0973"
+                //0.099999999999999978  double 精度不够
+                double double_bad = 1.0 - 0.9;
 
-                var rnd = new Random().Next(0, 10000); //获取随机数
+                //decimal精度够，企业级应用都用这个，而不用float,double
+                decimal decimal_good = 1.0m - 0.9m;
+
+                //只要一个有m标识，整个就是decimal 的,当然也可以都加上
+                decimal decimal_all = (1 + 1 - 1) * 1 / 3m;
+
+                bool decimal_compare = 1m > 3m;
+
+                //生成一个GUID,如："7e0d3fc3-5447-4cf2-accd-366e3ade0973"
+                Guid guid = Guid.NewGuid();
+                Guid guid2 = Guid.Parse("7e0d3fc3-5447-4cf2-accd-366e3ade0973");
+
+                //获取随机数
+                int rnd = new Random().Next(0, 10000); 
 
                 //数组的各种操作跟集合差不多，有集合后就很少用数组了
-                var strs = new string[10];
+                string[] strs = new string[10];
                 string[] strs2 = { "A", "B" };
-                var strs3 = new string[] { "A", "B" };
-                var strs4 = new[] { "A", "B" };
-                var str5 = strs4[0];
+                string[] strs3 = new string[] { "A", "B" };
+                string[] strs4 = new[] { "A", "B" };
+                string str5 = strs4[0];
 
-
-                var isTrue = intValue == 2 ? "True" : "False";
+                //三元运算符
+                string isTrue = intValue == 2 ? "True" : "False";
             }
             #endregion
 

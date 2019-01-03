@@ -13,14 +13,14 @@ namespace ConsoleApp.BestPractices
 
             //类相关的，直接看Entity目录下的内容吧
             //一下一个一个的F10看吧
-            //AboutBasic.RunDemo();
-            //AboutDateTime.RunDemo();
-            //AboutString.RunDemo();
-            // AboutCollection.RunDemo();
+            AboutBasic.RunDemo();
+            AboutDateTime.RunDemo();
+            AboutString.RunDemo();
+            AboutCollection.RunDemo();
 
-           // AboutFile.RunDemo();
+            AboutFile.RunDemo();
             AboutHttp.RunDemo();
-            //AboutThread.RunDemo();
+            AboutThread.RunDemo();
 
 
             #region 说明
