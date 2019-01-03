@@ -1,5 +1,7 @@
 package com.demo;
 
+import com.demo.Entity.EnumType.ColorType;
+import com.demo.Entity.EnumType.ProductType;
 import com.demo.Entity.Person2;
 import com.demo.Helper.Helper;
 
@@ -11,7 +13,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.function.Function;
 
-
+//此文件时最基础功能的展示，所以都用的是具体类型，没有用var,而平时用基本都是var
 public class AboutBasic {
     public static void RunDemo() {
 
@@ -159,15 +161,24 @@ public class AboutBasic {
                 System.out.println(item);
             }
 
-            //TODO:Enum还没学。
-            String str = "a";
-            switch (str) {
-                case "a":
-                case "b":
-                    System.out.println("a");
+            var ptype = ProductType.FLIGHT;
+            var ptypes = ProductType.FLIGHT.getValue() | ProductType.BUS.getValue() | ProductType.HOTEL.getValue();
+            //true 没有像C#的HasFlag所以得用原生的
+            var ptypeHasFlag = (ptype.getValue() & ProductType.FLIGHT.getValue()) > 0;
+
+            //不能像C#的快捷键一样快速生成case
+            switch (ptype) {
+                case DEFAULT:
                     break;
-                case "c":
-                    System.out.println("c");
+                case HOTEL:
+                    break;
+                case FLIGHT:
+                    break;
+                case BUS:
+                    break;
+                case FLIGHT_HOTEL:
+                    break;
+                case BUS_HOTEL:
                     break;
                 default:
                     break;

@@ -23,7 +23,7 @@ namespace ConsoleApp.BestPractices
         Hotel = 1 << 0, //1
         Flight = 1 << 1, //2
         Bus = 1 << 2, //4
-        HotelFlight = Hotel | Flight, //3
-        FlightBus = Flight | Bus //6
+        FlightHotel =Flight|Hotel, //3
+        BusHotel = Bus | Hotel //5
     }
 }

@@ -3,6 +3,7 @@ using System.Numerics;
 
 namespace ConsoleApp.BestPractices
 {
+    //此文件时最基础功能的展示，所以都用的是具体类型，没有用var,而平时用基本都是var
     public class AboutBasic
     {
         public static void RunDemo()
@@ -44,7 +45,7 @@ namespace ConsoleApp.BestPractices
                 Guid guid2 = Guid.Parse("7e0d3fc3-5447-4cf2-accd-366e3ade0973");
 
                 //获取随机数
-                int rnd = new Random().Next(0, 10000); 
+                int rnd = new Random().Next(0, 10000);
 
                 //数组的各种操作跟集合差不多，有集合后就很少用数组了
                 string[] strs = new string[10];
@@ -172,6 +173,7 @@ namespace ConsoleApp.BestPractices
                 }
 
                 var ptype = ProductType.Flight;
+                var ptypes = ProductType.Flight|ProductType.Bus|ProductType.Hotel;
                 var ptypeHasFlag = ptype.HasFlag(ProductType.Flight); //true
 
                 //输入switch后按tab,再输入ptype，再按enter，就自动生成一下内容了
@@ -185,9 +187,9 @@ namespace ConsoleApp.BestPractices
                         break;
                     case ProductType.Bus:
                         break;
-                    case ProductType.HotelFlight:
+                    case ProductType.FlightHotel:
                         break;
-                    case ProductType.FlightBus:
+                    case ProductType.BusHotel:
                         break;
                     default:
                         break;
