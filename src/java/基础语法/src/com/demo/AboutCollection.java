@@ -183,7 +183,7 @@ public class AboutCollection {
 
 
         //Distinct的默认扩展不适合复杂类型，这个是自己写的方法
-        var lst14 = lstData.stream().filter(ComparatorHelper.distinct(p -> p.getId())).collect(Collectors.toList());
+        var lst14 = lstInit03.stream().filter(ComparatorHelper.distinct(p -> p.getId())).collect(Collectors.toList());
 
         //演示：GroupBy的更强大的实现
         var lst15 = lstData.stream().limit(10).collect(Collectors.groupingBy(p -> {
@@ -239,8 +239,6 @@ public class AboutCollection {
 
         var b1 = h3.contains(3);
         var h4 = h3.stream().filter(p -> p > 1).collect(Collectors.toSet());
-
-        //TODO:并行实现
 
         //集合“并行”执行
         h3.stream().parallel().forEach(System.out::println);
@@ -373,11 +371,12 @@ class ComparatorHelper {
         return (x, y) -> func.test(x, y) ? 0 : 1;
     }
 
-    //TODO:为什么?不能用别的替代？
+    //https://stackoverflow.com/a/27872852/1879111
     //https://howtodoinjava.com/java8/stream-distinct-by-multiple-fields/
     public static <T> Predicate<T> distinct(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
-        return p -> seen.add(keyExtractor.apply(p)); //lambda代替Predicate<T>
+        //最终有用的就是这个lambda,所以这里的seen其实是通用的，而不是每次都会new
+        return item -> seen.add(keyExtractor.apply(item));
     }
 
 

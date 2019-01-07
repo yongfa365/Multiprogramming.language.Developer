@@ -66,9 +66,15 @@ public class AboutString {
                     .split("|") //split只支持正则
                     ;
 
-            var strTrim = "\r\n\t   　 　  12 12　 　  \r\n\t".trim(); //“　 　  12 12　 　”， 前后有中英文空格及tab回车换行，有些替换不了
+            //“　 　  12 12　 　”， 前后有中英文空格及tab回车换行，有些替换不了
+            var strTrim = "\r\n\t   　 　  12 12　 　  \r\n\t".trim();
 
-            var strStrip = "\r\n\t   　 　  12 12　 　  \r\n\t".strip(); //“12 12”， ★前后有中英文空格及tab回车换行, 与C#的trim行为相同。
+            //“12 12”， ★前后有中英文空格及tab回车换行, 与C#的trim行为相同。
+            var strStrip = "\r\n\t   　 　  12 12　 　  \r\n\t".strip();
+
+            var strWhiteSpace = "\r\n\t　 "; //回车符、换行符、制表符、中文空格、英文空格
+            var isEmpty = strWhiteSpace.isEmpty(); //false
+            var isBlank = strWhiteSpace.isBlank(); //true
 
             var lstTemp = List.of("A", "BC", "DEF");
             var sjoin = String.join(",", lstTemp); //A,BC,DEF

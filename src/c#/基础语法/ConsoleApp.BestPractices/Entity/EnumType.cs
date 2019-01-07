@@ -17,13 +17,13 @@ namespace ConsoleApp.BestPractices
     }
 
     [Flags]
-    public enum ProductType
+    public enum ProductType : long
     {
         Default = 0,
         Hotel = 1 << 0, //1
         Flight = 1 << 1, //2
         Bus = 1 << 2, //4
-        FlightHotel =Flight|Hotel, //3
+        FlightHotel = Flight | Hotel, //3
         BusHotel = Bus | Hotel //5
     }
 }

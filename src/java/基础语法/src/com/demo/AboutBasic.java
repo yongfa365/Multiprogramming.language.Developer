@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.UUID;
 import java.util.function.Function;
@@ -160,24 +161,21 @@ public class AboutBasic {
                 System.out.println(item);
             }
 
-            var ptype = ProductType.FLIGHT;
-            var ptypes = ProductType.FLIGHT.getValue() | ProductType.BUS.getValue() | ProductType.HOTEL.getValue();
-            //true 没有像C#的HasFlag所以得用原生的
-            var ptypeHasFlag = (ptype.getValue() & ProductType.FLIGHT.getValue()) > 0;
 
+            //Java的Enum跟其他语言如C#不同。也没有运算符重载如:逻辑或“|”,所以这些逻辑操作不方便也没有HasFlag()，可以用HashSet变相实现。
+            var ptypes = new HashSet<ProductType>() {{
+                add(ProductType.FLIGHT);
+                add(ProductType.BUS);
+                add(ProductType.HOTEL);
+            }};
+            var hasFlag = ptypes.contains(ProductType.FLIGHT);
+
+            var ptype = ProductType.FLIGHT;
             //不能像C#的快捷键一样快速生成case
             switch (ptype) {
                 case DEFAULT:
                     break;
                 case HOTEL:
-                    break;
-                case FLIGHT:
-                    break;
-                case BUS:
-                    break;
-                case FLIGHT_HOTEL:
-                    break;
-                case BUS_HOTEL:
                     break;
                 default:
                     break;

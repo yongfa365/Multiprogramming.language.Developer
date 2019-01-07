@@ -86,7 +86,14 @@ namespace ConsoleApp.BestPractices
                     .Replace("a", "aa")
                     .Split('|');
 
-                var strTrim = "\r\n\t   　 　  12 12　 　  \r\n\t".Trim(); //“12 12”， 前后有中英文空格及tab回车换行
+                //“12 12”， 前后有中英文空格及tab回车换行
+                var strTrim = "\r\n\t   　 　  12 12　 　  \r\n\t".Trim();
+
+                var strWhiteSpace = "\r\n\t　 "; //回车符、换行符、制表符、中文空格、英文空格
+                var isEmpty = string.IsNullOrEmpty(strWhiteSpace); //false
+                var isBlank = string.IsNullOrWhiteSpace(strWhiteSpace); //true
+
+
                 var lstTemp = new List<string> { "A", "BC", "DEF" };
                 var sjoin = string.Join(",", lstTemp);//A,BC,DEF
 
