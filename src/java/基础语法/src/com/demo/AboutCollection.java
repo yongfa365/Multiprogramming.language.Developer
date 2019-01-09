@@ -125,6 +125,12 @@ public class AboutCollection {
             add(new Person(2, "B"));
             add(new Person(2, "B"));
         }};
+        //这种初始化方法跟C#有的一拼：
+        var lstInit04 = List.of(
+                new Person(1, "A"),
+                new Person(2, "B"),
+                new Person(2, "B")
+        );
 
         //演示：添加元素的方法，单个的，List的，实现IEnumerable<T>接口的
         lstInit01.add("A");
@@ -371,6 +377,7 @@ class ComparatorHelper {
         return (x, y) -> func.test(x, y) ? 0 : 1;
     }
 
+    //泛型类型限定符，上限：? extends T  下限：? supper T
     //https://stackoverflow.com/a/27872852/1879111
     //https://howtodoinjava.com/java8/stream-distinct-by-multiple-fields/
     public static <T> Predicate<T> distinct(Function<? super T, ?> keyExtractor) {
