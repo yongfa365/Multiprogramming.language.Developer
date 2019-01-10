@@ -6,10 +6,16 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.Scanner;
 
 //io与nio的不同要写下，因为同时存在。我现在看到的是：nio已经可以很方便的满足我的要求了，没必要研究旧io了
 public class AboutFile {
     public static void RunDemo() throws Exception {
+        System.out.println("控制台输入输出，随便输入个，回车结束:");
+        var input = new Scanner(System.in).nextLine();
+        System.out.println("你输入了：" + input);
+
+
         var filepath = "C:\\FileTest\\haha\\1.txt";
         var context = "内容";
         var lstContext = List.of("A", "B");

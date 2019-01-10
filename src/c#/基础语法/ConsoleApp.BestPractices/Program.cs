@@ -7,10 +7,6 @@ namespace ConsoleApp.BestPractices
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine("Please input your name, then press enter:");
-            //var input = Console.ReadLine();
-            //Console.WriteLine($"Hello {input}");
-
             //类相关的，直接看Entity目录下的内容吧
             //一下一个一个的F10看吧
             AboutBasic.RunDemo();

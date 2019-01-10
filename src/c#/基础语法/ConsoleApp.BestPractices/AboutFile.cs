@@ -12,6 +12,12 @@ namespace ConsoleApp.BestPractices
     {
         public static void RunDemo()
         {
+            Console.WriteLine("控制台输入输出，随便输入个，回车结束:");
+            var input = Console.ReadLine();
+            Console.WriteLine($"你输入了：{input}");
+
+
+
             var filepath = "C:\\FileTest\\haha\\1.txt";
             var context = "内容";
             var lstContext = new List<string> { "A", "B" };
