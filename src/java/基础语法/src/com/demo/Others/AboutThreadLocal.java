@@ -1,6 +1,9 @@
 package com.demo.Others;
 
+import com.demo.Helper.Helper;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,7 +18,7 @@ public class AboutThreadLocal {
         for (int i = 0; i < 100; i++) {
             final var x = i;
             new Thread(() -> {
-                var date = new Date(2019, 1, x);
+                Date date= Helper.GetDate(LocalDate.now().plusDays(x));
                 var date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
                 var date2 = formatter.format(date);
                 if (!date1.equals(date2)) {
@@ -29,9 +32,9 @@ public class AboutThreadLocal {
         for (int i = 0; i < 100; i++) {
             final var x = i;
             new Thread(() -> {
-                var date = new Date(2019, 1, x);
+                Date date= Helper.GetDate(LocalDate.now().plusDays(x));
                 var date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-                var date2 = DateFormat.format(date);
+                var date2 = DateFormatter.format(date);
                 if (!date1.equals(date2)) {
                     System.out.println(String.format("安全的%s====%s\t", date1, date2));
                 }
@@ -66,7 +69,7 @@ public class AboutThreadLocal {
 
 
 //Demo 1：解决SimpleDateFormat线程不安全的问题
-class DateFormat {
+class DateFormatter {
     // SimpleDateFormat is not thread-safe, so give one to each thread
     private static final ThreadLocal<SimpleDateFormat> formatter =
             ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
