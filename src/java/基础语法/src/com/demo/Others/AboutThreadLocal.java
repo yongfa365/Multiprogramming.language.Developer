@@ -8,9 +8,17 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AboutThreadLocal {
-    //ThreadLocal和线程池一起使用？
-    //ThreadLocal对象的生命周期跟线程的生命周期一样长，那么如果将ThreadLocal对象和线程池一起使用，就可能会遇到这种情况：一个线程的ThreadLocal对象会和其他线程的ThreadLocal对象串掉，一般不建议将两者一起使用。
+    // ThreadLocal的get,set里会涉及初始化的操作：
+    //     声明时用：new ThreadLocal<>()，则：初始化创建的内容是默认的null，
+    //     声明时用：ThreadLocal.withInitial(()->{})，则：初始化创建的内容是lambda返回的。
+    // 在某个Thread里get或set时，就是针对那个Thread的字段的操作，所以根本不用锁。
+    // Thread里的字段的定义：ThreadLocal.ThreadLocalMap threadLocals=null
 
+
+    // ThreadLocal和线程池一起使用？NO！
+    // ThreadLocal对象的生命周期跟线程的生命周期一样长，
+    // 那么如果将ThreadLocal对象和线程池一起使用，就可能会遇到这种情况：
+    // 一个线程的ThreadLocal对象会和其他线程的ThreadLocal对象串掉，一般不建议将两者一起使用。
     public static void main(String[] args) {
 
         //Demo SimpleDateFormat 有问题的场景
