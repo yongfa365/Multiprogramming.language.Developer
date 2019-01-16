@@ -11,6 +11,7 @@ public class AboutThreadLocal {
     //ThreadLocal和线程池一起使用？
     //ThreadLocal对象的生命周期跟线程的生命周期一样长，那么如果将ThreadLocal对象和线程池一起使用，就可能会遇到这种情况：一个线程的ThreadLocal对象会和其他线程的ThreadLocal对象串掉，一般不建议将两者一起使用。
 
+
     public static void main(String[] args) {
 
         //Demo SimpleDateFormat 有问题的场景
@@ -18,7 +19,7 @@ public class AboutThreadLocal {
         for (int i = 0; i < 100; i++) {
             final var x = i;
             new Thread(() -> {
-                Date date= Helper.GetDate(LocalDate.now().plusDays(x));
+                Date date = Helper.GetDate(LocalDate.now().plusDays(x));
                 var date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
                 var date2 = formatter.format(date);
                 if (!date1.equals(date2)) {
@@ -32,7 +33,7 @@ public class AboutThreadLocal {
         for (int i = 0; i < 100; i++) {
             final var x = i;
             new Thread(() -> {
-                Date date= Helper.GetDate(LocalDate.now().plusDays(x));
+                Date date = Helper.GetDate(LocalDate.now().plusDays(x));
                 var date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
                 var date2 = DateFormatter.format(date);
                 if (!date1.equals(date2)) {

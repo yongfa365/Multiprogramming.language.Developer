@@ -1,4 +1,4 @@
-package com.demo;
+package com.demo; //没有命名空间，按包来分的。
 
 import com.demo.Entity.Person;
 
