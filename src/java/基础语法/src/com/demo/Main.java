@@ -3,11 +3,13 @@ package com.demo;
 import java.util.Scanner;
 
 public class Main {
-    //C#只能有一个Main方法，而Java可以有多个
+
     //https://docs.oracle.com/javase/specs/index.html
     public static void main(String[] args) throws Exception {
-        //类相关的，直接看Entity目录下的内容吧
-        //一下一个一个的F10看吧
+        //可以像C#一样，如下，一个一个进入看
+        // ★也可以进入类内部运行各自的main.
+        // C#与Java都允许有多个main方法，Java的IDEA在每个main左边都放了个运行的图标，点击后就可以运行，很方法。但vs没这么方便。
+
         AboutBasic.RunDemo();
         AboutDateTime.RunDemo();
         AboutString.RunDemo();

@@ -25,6 +25,9 @@ import java.util.stream.Stream;
 //Java的Lambda用的是函数接口。C#的Lambda用的是用委托
 
 public class AboutCollection {
+    public static void main(String[] args) throws Exception {
+        RunDemo();
+    }
 
     public static void RunDemo() throws Exception {
         //jdk9对80多个类增加了200多个.of(),来生成不可变的对象。

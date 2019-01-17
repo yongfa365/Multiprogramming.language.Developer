@@ -15,6 +15,10 @@ import java.util.function.Function;
 
 //此文件时最基础功能的展示，所以都用的是具体类型，没有用var,而平时用基本都是var
 public class AboutBasic {
+    public static void main(String[] args) throws Exception {
+        RunDemo();
+    }
+
     public static void RunDemo() {
 
         //region 最最基础类型

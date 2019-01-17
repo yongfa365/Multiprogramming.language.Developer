@@ -9,6 +9,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class AboutDateTime {
+    public static void main(String[] args) throws Exception {
+        RunDemo();
+    }
+
     public static void RunDemo() throws Exception {
 
         //region 相关类 与C#大不同,研究这个花了一天多时间

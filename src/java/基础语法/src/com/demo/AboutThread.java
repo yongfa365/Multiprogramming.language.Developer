@@ -8,6 +8,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 public class AboutThread {
+    public static void main(String[] args) throws Exception {
+        RunDemo();
+    }
+
     public static void RunDemo() throws Exception {
 
         RunOldThreadDemo();

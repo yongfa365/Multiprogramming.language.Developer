@@ -19,6 +19,10 @@ import java.util.zip.GZIPInputStream;
 // 也许-javaagent是不错的选择。https://stackoverflow.com/questions/33631419/replace-a-class-within-the-java-class-library-with-a-custom-version
 // https://blog.csdn.net/wild46cat/article/details/78917647
 public class AboutHttp {
+    public static void main(String[] args) throws Exception {
+        RunDemo();
+    }
+
     public static void RunDemo() throws Exception {
         GetDemo();
         PostDemo();

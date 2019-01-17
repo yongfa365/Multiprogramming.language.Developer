@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
 
 
 public class AboutString {
+    public static void main(String[] args) throws Exception {
+        RunDemo();
+    }
 
     public static void RunDemo() throws Exception {
 
