@@ -15,7 +15,8 @@ import java.util.zip.GZIPInputStream;
 // 使用Fiddler监控Java的http,https请求:
 //      http://note.youdao.com/noteshare?id=b4301bb2f5309498818f3edf5ca84514&sub=8A5FF02CF58D418E9717C35527247A3B
 //
-// ★★★★★如果header不需要Origin，Referer，那自带的功能还可以，如果你有采集的需求、爬虫的需求则得用http://hc.apache.org/了
+// ★★★★★如果header不需要Origin，Referer，那自带的功能还可以
+// 如果你有采集的需求、爬虫的需求则得用http://hc.apache.org/了，或者等之后的版本，有人在后续版本改了这个bug
 // 也许-javaagent是不错的选择。https://stackoverflow.com/questions/33631419/replace-a-class-within-the-java-class-library-with-a-custom-version
 // https://blog.csdn.net/wild46cat/article/details/78917647
 public class AboutHttp {

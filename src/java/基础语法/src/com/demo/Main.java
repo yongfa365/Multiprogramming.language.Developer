@@ -29,7 +29,7 @@ public class Main {
 
         //以下内容不要注释，否则异步时看不到效果
         System.out.println("Console测试结束，Press Enter Exit");
-        new Scanner(System.in).nextLine();
+        System.in.read();
     }
 
 

@@ -33,23 +33,27 @@ public class AboutFile {
         var files2 = Files.walk(Path.of("C:\\Windows\\"), 10);
 
         //包括子目录，可以指定层次，可以指定filter
-        var files3 = Files.find(Path.of("C:\\Windows\\"), 10, (filePath, fileAttr) -> filePath.toString().endsWith(".exe") && fileAttr.isRegularFile());
+        var files3 = Files.find(Path.of("C:\\Windows\\"), 10,
+                (filePath, fileAttr) -> filePath.toString().endsWith(".exe") && fileAttr.isRegularFile());
 
-
-        Files.createDirectories(Path.of("C:\\FileTest\\haha")); // createDirectories 如果目录已经存在不会报错
+        // createDirectories 如果目录已经存在不会报错
+        Files.createDirectories(Path.of("C:\\FileTest\\haha"));
 
 
         if (!Files.exists(Path.of(filepath))) {
             //xx
         }
 
-        Files.write(Path.of(filepath), context.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE, StandardOpenOption.APPEND); //不存在则创建，存在则附加
+        Files.write(Path.of(filepath), context.getBytes(StandardCharsets.UTF_8),
+                //不存在则创建，存在则附加。
+                StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
         Files.write(Path.of(filepath), context.getBytes(StandardCharsets.UTF_8));
         Files.write(Path.of(filepath), lstContext);
 
         //快速写大量内容
-        try (var writer = Files.newBufferedWriter(Path.of("C:\\bigtest.txt"), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+        try (var writer = Files.newBufferedWriter(Path.of("C:\\bigtest.txt"),
+                StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
             var temp = "12345".repeat(1024);
             for (int i = 0; i < 100000; i++) {
                 writer.append(temp);
