@@ -2,7 +2,7 @@ package com.demo.Others;
 
 import java.util.List;
 import java.util.Optional;
-
+//https://blog.kaaass.net/archives/764
 //https://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html
 //https://howtodoinjava.com/java8/java-8-optionals-complete-reference/
 class AboutOptional {
