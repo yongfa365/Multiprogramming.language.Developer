@@ -9,6 +9,7 @@ public class Main {
         //可以像C#一样，如下，一个一个进入看
         // ★也可以进入类内部运行各自的main.
         // C#与Java都允许有多个main方法，Java的IDEA在每个main左边都放了个运行的图标，点击后就可以运行，很方法。但vs没这么方便。
+        //有些非主线故事情节，可以到Others里自己点，这里就不引用了。
 
         AboutBasic.RunDemo();
         AboutDateTime.RunDemo();
@@ -18,7 +19,6 @@ public class Main {
         AboutFile.RunDemo();
         AboutHttp.RunDemo();
         AboutThread.RunDemo();
-        AboutClass.RunDemo();
 
 
         //region Jet Brains IDEA has this feature

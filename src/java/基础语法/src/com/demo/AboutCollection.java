@@ -128,7 +128,8 @@ public class AboutCollection {
             add(new Person(2, "B"));
             add(new Person(2, "B"));
         }};
-        //这种初始化方法跟C#有的一拼：
+
+        //★这种初始化方法跟C#有的一拼：
         var lstInit04 = List.of(
                 new Person(1, "A"),
                 new Person(2, "B"),
@@ -217,10 +218,14 @@ public class AboutCollection {
 
     }
 
+
     private static void Run_HashSet_TreeSet_Demo() {
         //C#的HashSet<T>可以指定比较器，Java.HashSet不能，得用TreeSet<T>
         var hsInit1 = new HashSet<String>();
         var hsInit2 = new HashSet<String>(List.of("1", "2", "3", "3"));
+
+        //★这种初始化方法跟C#有的一拼：
+        var hsInit3 = Set.of("1", "2", "3"); //如果有重复项，运行时会报错
 
         //TreeSet<T>使用方法与HashSet<T>类似，但★他是有序的，★必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeSet<T>初始化时指定个Comparator
         //TreeSet<T>性能比HashSet<T>差一点
@@ -270,6 +275,21 @@ public class AboutCollection {
             put(2, "222");
             put(3, "333");
         }};
+
+        //★这种初始化方法跟C#有的一拼：可以接受10对
+        var hashMap3 = Map.of(
+                1, "111",
+                2, "222",
+                3, "333"
+        );
+
+        //可以接受N对
+        var hashMap4 = Map.ofEntries(
+                Map.entry(1, "111"),
+                Map.entry(2, "222"),
+                Map.entry(3, "333")
+        );
+
 
         //TreeMap使用方法与HashMap类似，但★他是有序的，必须有比较器否则运行时报错，如：类继承自Comparable<T> 或 TreeMap初始化时指定个Comparator
         //TreeMap性能比HashMap差一点

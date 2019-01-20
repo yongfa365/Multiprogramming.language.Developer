@@ -128,9 +128,5 @@ class ContextUser {
 
         Session() {
         }
-
-
     }
-
-
 }

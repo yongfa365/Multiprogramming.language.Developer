@@ -7,10 +7,10 @@ import java.util.Optional;
 //https://howtodoinjava.com/java8/java-8-optionals-complete-reference/
 class AboutOptional {
     public static void main(String[] args) {
-        RunDemo();
+        new AboutOptional().RunDemo();
     }
 
-    public static void RunDemo() {
+    public void RunDemo() {
         var computer = new Computer();
         var version = "";
 
@@ -48,8 +48,8 @@ class AboutOptional {
 
         //java 1.9有了if else写法:
         Optional.ofNullable(version).ifPresentOrElse(
-                p -> System.out.println(p), //存在
-                () -> System.out.println("null") //不存在
+                p -> System.out.println(p), //存在则执行
+                () -> System.out.println("null") //不存在则执行
         );
 
         //java 1.9有了stream()
@@ -57,29 +57,29 @@ class AboutOptional {
         lst = null;
         Optional.ofNullable(lst).stream().forEach(System.out::println);
     }
-}
 
 
-class Computer {
-    private Soundcard soundcard;
+    class Computer {
+        private Soundcard soundcard;
 
-    public Soundcard getSoundcard() {
-        return soundcard;
+        public Soundcard getSoundcard() {
+            return soundcard;
+        }
     }
-}
 
-class Soundcard {
-    private USB usb;
+    class Soundcard {
+        private USB usb;
 
-    public USB getUSB() {
-        return usb;
+        public USB getUSB() {
+            return usb;
+        }
     }
-}
 
-class USB {
-    private String version;
+    class USB {
+        private String version;
 
-    public String getVersion() {
-        return version;
+        public String getVersion() {
+            return version;
+        }
     }
 }
