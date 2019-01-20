@@ -14,13 +14,13 @@ class AboutOptional {
         var computer = new Computer();
         var version = "";
 
-        //理想中是这么写(没判断null会有问题)：
+        //理想中是这么写（没判断null会有问题）：
         //version = computer.getSoundcard().getUSB().getVersion();
 
-        //kotlin与C#是这么写(很优雅的解决了空引用的问题)：
+        //据说kotlin是这么写的（很优雅的解决了空引用的问题）：
         //version = computer?.getSoundcard()?.getUSB()?.getVersion();
 
-        //其实C#是这么写的(调用属性，而不是方法，更简洁)：
+        //C#是这么写的（调用属性，而不是方法，更简洁）：
         //version = computer?.Soundcard?.USB?.Version;
 
         //现实是，你在用古董java！所以：
