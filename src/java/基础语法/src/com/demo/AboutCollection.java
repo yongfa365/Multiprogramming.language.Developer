@@ -186,8 +186,10 @@ public class AboutCollection {
                 .filter(p -> p.getBirthday().isAfter(LocalDateTime.now().plusDays(30)) && p.getId() < 50)//筛选
                 //级联排序 https://www.concretepage.com/java/jdk-8/java-8-stream-sorted-example
                 .sorted(Comparator.comparing(Person::getName).thenComparing(Person::getId).reversed())
+                //.sorted((x, y) -> x.getId() > y.getId() ? 1 : -1) //这种写法看着简单，但不严谨，几十个项时就会报错，因 Comparator<T>契约要求：compare(x,y)==-compare(y,x)
+                //.sorted((x, y) -> x.getId() > y.getId() ? 1 : x.getId() < y.getId() ? -1 : 0) //要这么写
                 .skip(1) //跳过
-                .limit(10) //获取
+                .limit(10) //限制
                 .map(p -> new Person(p.getId(), p.getName())) //没有类似C#的匿名类，所以还是转为原生的吧
                 .collect(Collectors.toMap(p -> p.getId(), p -> p)); //转为map
 
@@ -196,7 +198,7 @@ public class AboutCollection {
         var lst14 = lstInit03.stream().filter(ComparatorHelper.distinct(p -> p.getId())).collect(Collectors.toList());
 
         //演示：GroupBy的更强大的实现
-        var lst15 = lstData.stream().limit(10).collect(Collectors.groupingBy(p -> {
+        Map<String, List<Person>> lst15 = lstData.stream().limit(10).collect(Collectors.groupingBy(p -> {
             //这里的内容就是构造Key的，最终返回的Key相同的会放到同一组
             if (p.getHeight().compareTo(BigDecimal.valueOf(2)) > 0) {
                 return "Height>2";

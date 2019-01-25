@@ -62,6 +62,8 @@ public class AboutFile {
         }
         Files.delete(Path.of("C:\\bigtest.txt"));
 
+        //读取utf-8 with bom文件后，字符串开头自动加了个不可见的字符。
+        //如有需要请自行去掉原文件的bom或者读取后替换下：tmp.replace("\uFEFF", "")，JDK不解决此问题
         var cnt1 = Files.readString(Path.of(filepath));
         var cnt2 = Files.readAllLines(Path.of(filepath));
         var cnt3 = Files.readAllBytes(Path.of(filepath));
