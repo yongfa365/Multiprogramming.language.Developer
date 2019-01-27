@@ -195,6 +195,7 @@ public class AboutBasic {
             BigDecimal du = new BigDecimal("123.456").setScale(0, RoundingMode.UP); //天花板
             BigDecimal dd = new BigDecimal("123.456").setScale(0, RoundingMode.DOWN); //地板
 
+            // 不能设置保留几位小数，需要转成BigDecimal才行
             Double d4 = Math.ceil(123.456d);
             Double d5 = Math.floor(123.456d);
 

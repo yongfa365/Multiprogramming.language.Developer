@@ -15,10 +15,8 @@ import java.util.zip.GZIPInputStream;
 // 使用Fiddler监控Java的http,https请求:
 //      http://note.youdao.com/noteshare?id=b4301bb2f5309498818f3edf5ca84514&sub=8A5FF02CF58D418E9717C35527247A3B
 //
-// ★★★★★如果header不需要Origin，Referer，那自带的功能还可以
-// 如果你有采集的需求、爬虫的需求则得用http://hc.apache.org/了，或者等之后的版本，有人在后续版本改了这个bug
-// 也许-javaagent是不错的选择。https://stackoverflow.com/questions/33631419/replace-a-class-within-the-java-class-library-with-a-custom-version
-// https://blog.csdn.net/wild46cat/article/details/78917647
+// 11.0.1及之前的几个版本header禁止Origin、Referer不好用可以用http://hc.apache.org/替代。
+// 11.0.2解决了这个bug,按官方的说法他比apache的httpclient更好，与lambda结合也更好
 public class AboutHttp {
     public static void main(String[] args) throws Exception {
         RunDemo();
@@ -46,10 +44,10 @@ public class AboutHttp {
                 //.header("Connection", "keep-alive") //禁止设置
                 //.header("Content-Length", "113") //禁止设置
                 .header("Accept", "application/json, text/plain, */*")
-                //  .header("Origin", "https://www.baidu.com") //禁止设置Origin★★★★★不让爬别人网站？
+                .header("Origin", "https://www.baidu.com") //11.0.2之前的几个版本禁止设置？
                 .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36")
                 .header("Content-Type", "application/json")
-                //   .header("Referer", "https://www.cnblogs.com/") //禁止设置Referer★★★★★不让爬别人网站？
+                .header("Referer", "https://www.cnblogs.com/") //11.0.2之前的几个版本禁止设置？
                 .header("Accept-Encoding", "gzip, deflate, br")
                 .header("Accept-Language", " zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
                 .header("Cookie", "a=1;b=3")
@@ -89,10 +87,10 @@ public class AboutHttp {
                 //.header("Connection", "keep-alive") //禁止设置
                 //.header("Content-Length", "113") //禁止设置
                 .header("Accept", "application/json, text/plain, */*")
-                //  .header("Origin", "https://www.baidu.com") //禁止设置Origin★★★★★不让爬别人网站？
+                .header("Origin", "https://www.baidu.com") //11.0.2之前的几个版本禁止设置？
                 .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36")
                 .header("Content-Type", "application/json")
-                //   .header("Referer", "https://www.cnblogs.com/") //禁止设置Referer★★★★★,不让爬别人网站？
+                .header("Referer", "https://www.cnblogs.com/") //11.0.2之前的几个版本禁止设置？
                 // .header("Accept-Encoding", "gzip, deflate, br")
                 .header("Accept-Language", " zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
                 .header("Cookie", "a=1;b=3")

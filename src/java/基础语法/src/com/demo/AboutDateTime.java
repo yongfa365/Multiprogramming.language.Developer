@@ -170,19 +170,24 @@ public class AboutDateTime {
 
         //region java8之前的Date、Calendar,不推荐使用
         {
-            var time123 = Calendar.getInstance();
-            time123.set(2018, 11, 28); //设置后不是立即生效的
-            time123.getTime(); //调用后才生效。
-            var time234 = time123;
-            time123.set(2019, 11, 28);
-            time123.getTime(); //改了123，234也变了
+            var cal = Calendar.getInstance();
+            cal.set(2018, 11, 28); //设置后不是立即生效的
+            cal.getTime(); //调用后才生效。
 
-            var time__01 = new Date(2018, 12, 13);
-            var xxxxx = time__01.getTime();
-            var time__02 = time__01;
-            time__01.setTime(123456789);
-            time__01.getTime();
-            var xxxxxx = time__01.getTime();
+            var cal2 = cal;
+
+            cal.set(2019, 11, 28);
+            cal.getTime(); //改了123，234也变了
+
+
+            var oldDate = new Date(2018, 12, 13);
+            var xxxxx = oldDate.getTime();
+
+            var time__02 = oldDate;
+
+            oldDate.setTime(123456789);
+            oldDate.getTime();
+            var xxxxxx = oldDate.getTime();
         }
         //endregion
 

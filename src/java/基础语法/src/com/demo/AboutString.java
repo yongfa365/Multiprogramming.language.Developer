@@ -21,8 +21,9 @@ public class AboutString {
 
         //region 构造个string
         {
-            // 平时使用最多的
-            var strCommon = "c:\\a\\b"; //要转义，貌似比较麻烦，其实你在Paste及Copy时idea会自动转义或自动去掉转义，还是挺方便的，
+            // 平时使用最多的,要转义，貌似比较麻烦，其实你在Paste及Copy时idea会自动转义或自动去掉转义，还是挺方便的
+            // 这里贴的字符串的长度不能超过64K，动态生成的或读取文件的不受限制。
+            var strCommon = "c:\\a\\b";
             var strEmpty = "";
             var strNormal = "now";
             var strPlus = 1 + "2" + ZonedDateTime.now() + true + "3"; // 如果不是string的会使用object.ToString()后连接在一起。
