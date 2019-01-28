@@ -35,7 +35,7 @@ Jackson|https://github.com/FasterXML/jackson-databind/|json序列化与反序列
 Basic|1天|主要是BigDecimal的与C#不同，花了些时间。
 DateTime|2天|场景多，不灵活，要不停调试。
 String|3天|场景多，加解密算法2天：调试C#与Java，使其互通，用C#加密再用Java解密，及反向操作。
-Collection|5天|List花了1天，因为集合的通用操作都是用List演示的。Stream，Lambda，FunctionalInterface，AnonymousClass等一堆周边东西，因与C#不同都要学习花了3天，自带的FunctionalInterface理解断断续续也花了1天时间
+Collection|5天|List花了1天，因为集合的通用操作都是用List演示的。Stream，Lambda，FunctionalInterface，AnonymousClass等一堆周边东西，因与C#不同都要学习花了3天，自带的FunctionalInterface理解断断续续也花了1天时间, [我汇总的函数式接口](http://note.youdao.com/noteshare?id=75ff9d93ea4d3dd3ec0352a03968a214&sub=ACCAAACB664D4D338D96D086A1B10AEB)
 File|1天|简单过了下，能实现自己要的功能。文件不存在则创建存在则Append花了些时间
 Thread|1天|简单功能模仿C#一会就搞定了，但不同的比较多，需要细看下。
 IDE学习|3天|常用配置,Font，Color，Theme，忽略大小写,滚动改变字体大小，Live Templates，Document URL，GIT刷新显示外部改动，仿VisualStudio改各种快捷键

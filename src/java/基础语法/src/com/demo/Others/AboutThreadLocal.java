@@ -14,6 +14,11 @@ public class AboutThreadLocal {
     // 在某个Thread里get或set时，就是针对那个Thread的字段的操作，所以根本不用锁。
     // Thread里的字段的定义：ThreadLocal.ThreadLocalMap threadLocals=null
 
+    // 内部实现：
+    // ThreadLocalMap.table是个数组，默认有16个槽位，也就是最多能存16个ThreadLocal变量，
+    // 如果冲突了则会先遍历槽位，并清理没引用的，然后将本次冲突的对象放到一个非自己的空的槽位上，
+    // 获取时也是在自己的槽位找不到时则遍历其他槽位找。当槽位达到2/3时会扩容为之前的两倍，并对旧数据重新分配槽位。
+
 
     // ThreadLocal和线程池一起使用？NO！
     // ThreadLocal对象的生命周期跟线程的生命周期一样长，
