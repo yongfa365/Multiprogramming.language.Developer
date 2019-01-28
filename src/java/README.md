@@ -6,7 +6,7 @@ id|url|desc
 3|Language and VM  有html及pdf可下载|https://docs.oracle.com/javase/specs/
 4|教程|https://docs.oracle.com/javase/tutorial/
 5|API Documentation 各包的介绍|https://docs.oracle.com/en/java/javase/11/docs/api/index.html
-6|jshell|https://docs.oracle.com/javase/10/jshell/ https://docs.oracle.com/javase/10/tools/jshell.htm .net没有官方的，LinqPad类似java的这个
+6|jshell|https://docs.oracle.com/javase/10/jshell/ <br> https://docs.oracle.com/javase/10/tools/jshell.htm <br>.net没有官方的，LinqPad类似java的这个
 
 ## 所谓的：生态
 **C#**：默认组件已经做的相当出色了，假如算100分。他已经做的这么好了，就算你有个更好的想法可能只是不停的+1,但只是+1力度不大，你的组件就不容易出名，最终看起来好像就是周边发展的不行。一言以蔽之：**月明星稀**。
@@ -23,8 +23,8 @@ Java在IDEA里F12可以直接看到源代码，很容易了解内部实现，有
 Name|URL|Desc
 ----|----|----
 Apache Commons Lang|https://commons.apache.org/|Commons的开发者会尽其所能地减少组件与其它开发库的依赖，让部署这些组件更加容易。除此之外，Commons组件还会尽可能保持接口的稳定，让Apache的用户（包括使用Commons的其它Apache项目）可以使用时无需担心未来可能的变化。内容包括：二进制，各种编码，字符串操作，集合扩展与增强，压缩解压，文件操作等。
-Apache HttpComponents|https://hc.apache.org/|HttpClient,操作网络就用这个啦，跟java11差不多，但header没有限制，如：Origin，Referer在java11里是不让加的。
-Google Guava|https://github.com/google/guava/wiki http://ifeve.com/google-guava/|Guava工程包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。 所有这些工具每天都在被Google的工程师应用在产品服务中。
+Apache HttpComponents|https://hc.apache.org/|HttpClient,**以前这个很方便，但java 11里有了自己的httpclient后，他的这个优势被削弱了**
+Google Guava|https://github.com/google/guava/wiki http://ifeve.com/google-guava/|Guava工程包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。 所有这些工具每天都在被Google的工程师应用在产品服务中。 **guava以前有优势，但被java8收编了一些核心功能（抄袭）后，guava已经没那么必要了TODO：要研究下**
 Jackson|https://github.com/FasterXML/jackson-databind/|json序列化与反序列化的
 
 ## 写Demo消耗时间
@@ -35,7 +35,7 @@ Jackson|https://github.com/FasterXML/jackson-databind/|json序列化与反序列
 Basic|1天|主要是BigDecimal的与C#不同，花了些时间。
 DateTime|2天|场景多，不灵活，要不停调试。
 String|3天|场景多，加解密算法2天：调试C#与Java，使其互通，用C#加密再用Java解密，及反向操作。
-Collection|4天|List花了1天，因为集合的通用操作都是用List演示的。Stream，Lambda，FunctionalInterface，AnonymousClass等一堆周边东西，因与C#不同都要学习花了3天
+Collection|5天|List花了1天，因为集合的通用操作都是用List演示的。Stream，Lambda，FunctionalInterface，AnonymousClass等一堆周边东西，因与C#不同都要学习花了3天，自带的FunctionalInterface理解断断续续也花了1天时间
 File|1天|简单过了下，能实现自己要的功能。文件不存在则创建存在则Append花了些时间
 Thread|1天|简单功能模仿C#一会就搞定了，但不同的比较多，需要细看下。
 IDE学习|3天|常用配置,Font，Color，Theme，忽略大小写,滚动改变字体大小，Live Templates，Document URL，GIT刷新显示外部改动，仿VisualStudio改各种快捷键
