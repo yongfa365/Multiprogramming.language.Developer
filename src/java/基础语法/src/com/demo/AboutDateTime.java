@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class AboutDateTime {
     public static void main(String[] args) throws Exception {
@@ -155,15 +157,18 @@ public class AboutDateTime {
 
         //region timer
         {
+            //方法1:
             var timer = new Timer("我是个Timer", true);
-
             timer.schedule(new TimerTask() {
                 public void run() {
                     System.out.println(LocalTime.now().toString() + "Timer Runing ");
                 }
-
             }, 1000 * 1, 1000 * 1);
 
+            //方法2：
+            Executors.newScheduledThreadPool(10).scheduleAtFixedRate(() -> {
+                System.out.println("执行任务A:" + LocalDateTime.now());
+            }, 0, 3, TimeUnit.SECONDS);
         }
         //endregion
 
