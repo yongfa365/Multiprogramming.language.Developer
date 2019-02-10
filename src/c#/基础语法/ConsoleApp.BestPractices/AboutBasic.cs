@@ -30,10 +30,10 @@ namespace ConsoleApp.BestPractices
                 decimal decimalValue = 1.1m;
 
                 //0.099999999999999978  double 精度不够
-                double double_bad = 1.0 - 0.9;
+                double double_bad = 1.0 - 9 * 0.1;
 
                 //decimal精度够，企业级应用都用这个，而不用float,double
-                decimal decimal_good = 1.0m - 0.9m;
+                decimal decimal_good = 1.0m - 9 * 0.1m;
 
                 //只要一个有m标识，整个就是decimal 的,当然也可以都加上
                 decimal decimal_all = (1 + 1 - 1) * 1 / 3m;
