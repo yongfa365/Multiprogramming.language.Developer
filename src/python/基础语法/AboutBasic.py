@@ -1,18 +1,20 @@
 import sys
 import uuid
-from decimal import *
-from random import *
+from decimal import Decimal
+from random import randrange
+
+#所有操作符：https://docs.python.org/3.7/library/operator.html
 
 #region Numeric Types 只用这三种 int, float, complex
-#所有的NumericTypes都支持+,-,*,/,//取整,%等操作，decimal
+#所有的NumericTypes都支持+,-,*,/,//取整,%等操作符，但没有++,--操作符，decimal。TODO：哪怕你自己定义的类只要实现了某些方法，也同样可以用这些运算符。
 
-#python只有一个整数类型，长度不限，代表了int,long,biginteger,Int32,Int64
+#整数类型只有一个int，没有长度限制，代表了int,long,biginteger,Int32,Int64
 intValue = 9223372036854775807 ** 2014
 
-#代表了float及double,查看其精度的方法：sys.float_info
+#浮点数也只有一个float，代表了float及double,查看其精度的方法：sys.float_info，TODO：那decimal算什么？
 floatValue = 1.1  
 
-#bool是integer的子类
+#bool是integer的子类，TODO:什么意思
 boolTrue = True
 boolFalse = False
 

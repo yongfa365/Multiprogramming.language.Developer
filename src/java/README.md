@@ -26,6 +26,7 @@ Apache Commons Lang|https://commons.apache.org/|Commons的开发者会尽其所�
 Apache HttpComponents|https://hc.apache.org/|HttpClient,**以前这个很方便，但java 11里有了自己的httpclient后，他的这个优势被削弱了**
 Google Guava|https://github.com/google/guava/wiki http://ifeve.com/google-guava/|Guava工程包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。 所有这些工具每天都在被Google的工程师应用在产品服务中。 **guava以前有优势，但被java8收编了一些核心功能（抄袭）后，guava已经没那么必要了TODO：要研究下**
 Jackson|https://github.com/FasterXML/jackson-databind/|json序列化与反序列化的
+Caffeine|https://github.com/ben-manes/caffeine|据说比guava的cache好，TODO
 
 ## 写Demo消耗时间
 以下是具体某一项功能研究时间，实际时间比这个要多一些，因为要学习相关周边功能。
