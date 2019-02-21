@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AboutConfiguration": {
+      "commandName": "Project",
+      "commandLineArgs": "ABC=1 DEF=2 这个是Properties.Debug里模拟CommandLine的Key=\"这个是 值\"",
+      "environmentVariables": {
+        "这个是在项目的Properties.Debug里设置的环境变量": "这个是值"
+      }
+    }
+  }
+}

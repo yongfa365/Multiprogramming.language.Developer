@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <logging enabled="True">
+        <level>Debug</level>
+    </logging>
+    <components>
+        <database connection="connection-string" />
+        <files path="/etc/path" />
+    </components>
+</root>

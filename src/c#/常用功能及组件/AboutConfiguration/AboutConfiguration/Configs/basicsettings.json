@@ -1,0 +1,35 @@
+{
+  "AppSettings": {
+    "Abacus.BFM.Api": "https://api.abacus.com/v1/",
+    "Abacus.Account": "CCTV",
+    "Abacus.Password": "******"
+  },
+
+  "ConnectionStrings": {
+    "HotelDB": "Data Source=VMS001\\dev;Initial Catalog=HotelDB;Persist Security Info=True;User ID=sa;Password=123456789",
+    "FlightDB": "server=127.0.0.1;database=FlightDB;persistsecurityinfo=True;user id=sa;password=123456789",
+
+    "Log_RabbitMQ_ErrorLog": "amqp://admin:admin@127.0.0.1:5672/Log",
+    "Log_RabbitMQ_DebugLog": "amqp://admin:admin@127.0.0.1:5672/Log"
+  },
+
+  "Persons": [
+    {
+      "Name": "aaa",
+      "Age": 36,
+      "Son": {
+        "Name": "aaa.son",
+        "Age": 2
+      }
+    },
+    {
+      "Name": "bbb",
+      "Age": 60,
+      "Son": {
+        "Name": "bbb.son",
+        "Age": 30
+      }
+    }
+  ]
+
+}

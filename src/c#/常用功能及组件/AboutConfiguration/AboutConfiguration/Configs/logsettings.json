@@ -1,0 +1,14 @@
+{
+  "logging": {
+    "enabled": true,
+    "level": "Debug"
+  },
+  "components": {
+    "database": {
+      "connection": "connection-string"
+    },
+    "files": {
+      "path": "/etc/path"
+    }
+  }
+}
