@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AboutConfiguration
 {
+    //这个Demo花了3天
     class Program
     {
         static void Main(string[] args)
