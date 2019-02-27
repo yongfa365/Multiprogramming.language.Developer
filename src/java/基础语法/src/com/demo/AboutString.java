@@ -26,11 +26,17 @@ public class AboutString {
             var strCommon = "c:\\a\\b";
             var strEmpty = "";
             var strNormal = "now";
-            var strPlus = 1 + "2" + ZonedDateTime.now() + true + "3"; // 如果不是string的会使用object.ToString()后连接在一起。
-            var strConcat = "1".concat(String.valueOf(true)).concat(LocalDateTime.now().toString()).concat(Double.toString(3.333)); // 1true2018-11-29T15:56:19.8074423003.333 concat只支持string,与C#不同。
 
+            // 如果不是string的会使用object.toString()后连接在一起。
+            var strPlus = 1 + "2" + ZonedDateTime.now() + true + "3";
+
+            // 1true2018-11-29T15:56:19.8074423003.333 concat只支持string,与C#不同。
+            var strConcat = "1".concat(String.valueOf(true)).concat(LocalDateTime.now().toString()).concat(Double.toString(3.333));
+
+            // String.format 介绍：https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Formatter.html
             // hello 123 2018-11-22T11:04:58.364802200 ，一般写法，按顺序的，C#能把这个秒成渣。
             var strFormat = String.format("%s %s %s", "hello", 123, LocalDateTime.now());
+
             // hello 123 hello 2018-11-22T11:04:58.364802200，格式化的写法，比较麻烦，还是按上一种写吧
             var strFormat1 = String.format("%1$s %2$s %1$s %3$s", "hello", 123, LocalDateTime.now());
 
@@ -41,7 +47,7 @@ public class AboutString {
             var strPadLeft = String.format("%10s", "foo").replace(' ', '*'); //*******foo
             var strPadRight = String.format("%-10s", "bar").replace(' ', '*'); //bar*******
 
-            // 大量字符串操作时+性能很差，要换成StringBuilder,没有类似C#的AppendLine,AppendFormat
+            // 大量字符串操作时"+"性能很差，要换成StringBuilder,没有类似C#的AppendLine,AppendFormat
             var sb = new StringBuilder();
             sb.append(1).append("2").append(true).append(ZonedDateTime.now());
             var sbresult = sb.toString();

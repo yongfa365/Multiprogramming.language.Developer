@@ -23,9 +23,20 @@ public class AboutHttp {
     }
 
     public static void RunDemo() throws Exception {
+        SimpleDemo();
         GetDemo();
         PostDemo();
     }
+
+    public static void SimpleDemo() throws Exception {
+
+        var client = HttpClient.newHttpClient();
+
+        var request = HttpRequest.newBuilder(URI.create("https://www.cnblogs.com")).build();
+
+        client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
 
     public static void PostDemo() throws Exception {
 

@@ -72,7 +72,7 @@ public class AboutDateTime {
             var time1 = LocalDate.of(2018, 11, 21);
             var time2 = ZonedDateTime.of(2018, 11, 21, 12, 23, 23, 123456700, ZoneId.of("+08:00"));
             var time3 = LocalTime.of(12, 23, 23, 123456700);
-            var time4 = LocalDateTime.of(2018, 11, 21, 12, 23, 23, 123456700);//有多个重载
+            var time4 = LocalDateTime.of(2018, 11, 21, 12, 23, 23, 123456700);//有多个重载,可能Java更推荐用这个吧
 
             //日期格式：https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/format/DateTimeFormatter.html
             //默认的parse只支持“对应的标准的ISO格式“，如果想支持别的，可以使用重载方法指定字符串类型
@@ -115,7 +115,7 @@ public class AboutDateTime {
             var period_D = period.getDays(); //3 只考虑天的数字，没有包含年及月
             var period_diff_d = period.toTotalMonths(); //14 这个是算总的
 
-            //Duration完整的日期时间去比较，结果都折算成时间，然后在时间维度考虑，如：
+            //Duration完整的日期时间去比较，结果都折算成Time（没有Year,Month），然后在Time维度考虑，如：
             var duration = Duration.between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(-1).plusHours(-2).plusMinutes(-3)); //PT-26H-3M
             var duration_D = duration.toDays(); //-1
             var duration_H = duration.toHours(); //-26 算的是总数，而不是只算Hour部分

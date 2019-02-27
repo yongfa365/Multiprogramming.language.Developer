@@ -32,7 +32,7 @@ public class AboutFile {
         //包括子目录，可以指定层次
         var files2 = Files.walk(Path.of("C:\\Windows\\"), 10);
 
-        //包括子目录，可以指定层次，可以指定filter
+        //包括子目录，可以指定层次，可以指定filter。path.endsWith与path.toString().endsWith不同
         var files3 = Files.find(Path.of("C:\\Windows\\"), 10,
                 (filePath, fileAttr) -> filePath.toString().endsWith(".exe") && fileAttr.isRegularFile());
 

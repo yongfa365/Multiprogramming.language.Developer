@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -61,7 +61,8 @@ public class AboutBasic {
             Double double_bad = 1.0 - 9 * 0.1;
 
             //BigDecimal精度够，企业级应用都用这个，而不用float,double
-            //BigDecimal初始化保证精度的两种方法：new BigDecimal("0.9")   或 BigDecimal.valueOf(0.9)，而不能：new BigDecimal(0.9)
+            //BigDecimal初始化保证精度的两种方法：new BigDecimal("0.9")   或 BigDecimal.valueOf(0.9)
+            // 不能这样初始化：new BigDecimal(0.9)，不信在jshell里试下
             BigDecimal decimal_good = new BigDecimal("1.0").subtract(BigDecimal.valueOf(0.9));
 
             BigDecimal decimal_all = new BigDecimal("1")
@@ -111,20 +112,21 @@ public class AboutBasic {
         {
             //java 没有Tuple,但有多重实现方法：https://stackoverflow.com/a/25615100/1879111 其中我感觉最好的还是lombok的方案
 
-            //java 没有Action<T>，Func<T>但有一堆别的：DoubleFunction,Supplier<T>,Consumer<T>   貌似都是用在lambda里的
+            //java 没有Action<T>，Func<T>但有一堆别的类似的FunctionalInterface：Predicate<T>,Supplier<T>,Consumer<T>
             int int1 = 1;
             String str1 = "1";
             Person2 person = new Person2();
             Helper.NoErrorInvoke(item ->
             {
-                person.Id = 1;//可以用,可以改
-                person.Name = "11111";//可以用,可以改
+                person.Id = 1;//实体里的对象或者类的字段，可以用,可以改
+                person.Name = "11111";
                 String x = "随便写" + int1 + str1;
-                // str1+="1";//可以用,但不能改,跟C#不同
-                //int1++;//可以用,但不能改,跟C#不同
+                // str1+="1";//上下文里的变量，可以用,但不能改,跟C#不同
+                //int1++;
             });
             int p = person.Id;
 
+            //java的func.apply(arg) == C#的func(arg)，至于apply,test,accept其实没什么意义只是需要个名字而已
             Function<Integer, String> func = x -> x + "1";
             String func_1 = func.apply(10);
 
@@ -160,18 +162,15 @@ public class AboutBasic {
             }
 
             int[] items = new int[]{1, 2, 3};
-            for (var item : items) //这就是所谓的foreach
+            for (var item : items) //这就是所谓的foreach，同时多数集合自带.forEach()
             {
                 System.out.println(item);
             }
 
 
-            //Java的Enum跟其他语言如C#不同。也没有运算符重载如:逻辑或“|”,所以这些逻辑操作不方便也没有HasFlag()，可以用HashSet变相实现。
-            var ptypes = new HashSet<ProductType>() {{
-                add(ProductType.FLIGHT);
-                add(ProductType.BUS);
-                add(ProductType.HOTEL);
-            }};
+            //Java的Enum跟其他语言如C#不同。也没有运算符重载如:逻辑或“|”,所以这些逻辑操作不方便，也没有HasFlag()，可以用Set变相实现。
+            var ptypes = Set.of(ProductType.FLIGHT, ProductType.BUS, ProductType.HOTEL);
+
             var hasFlag = ptypes.contains(ProductType.FLIGHT);
 
             var ptype = ProductType.FLIGHT;
