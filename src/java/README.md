@@ -1,5 +1,5 @@
 ## 官方网站
-id|url|desc
+id|desc|url
 --|----|----
 1|Oracle官方文档入口|https://docs.oracle.com/
 2|JavaSE文档入口 会跳转到当前版本|https://docs.oracle.com/javase/
@@ -7,6 +7,7 @@ id|url|desc
 4|教程|https://docs.oracle.com/javase/tutorial/
 5|API Documentation 各包的介绍|https://docs.oracle.com/en/java/javase/11/docs/api/index.html
 6|jshell|https://docs.oracle.com/javase/10/jshell/ <br> https://docs.oracle.com/javase/10/tools/jshell.htm <br>.net没有官方的，LinqPad类似java的这个
+7|springboot的各种配置|https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties
 
 ## 所谓的：生态
 **C#**：默认组件已经做的相当出色了，假如算100分。他已经做的这么好了，就算你有个更好的想法可能只是不停的+1,但只是+1力度不大，你的组件就不容易出名，最终看起来好像就是周边发展的不行。一言以蔽之：**月明星稀**。

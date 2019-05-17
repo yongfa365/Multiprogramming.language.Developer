@@ -10,6 +10,8 @@ import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+//日期格式：https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/format/DateTimeFormatter.html
+// S可以有0-9个，有几个S就表示从左到右截取几位纳秒
 public class AboutDateTime {
     public static void main(String[] args) throws Exception {
         RunDemo();
@@ -37,18 +39,30 @@ public class AboutDateTime {
         //region now 的各种输出
         {
             //日期时间类型比较多，都写上了，后面主要关注ZonedDateTime
-            var now_date = LocalDate.now(); //2018-11-28
+            //2018-11-28
+            var now_date = LocalDate.now();
             var now_time = LocalTime.now(); //16:57:42.205617700
             var now_datetime = LocalDateTime.now(); //2018-11-28T16:57:42.205617700
             var now_zoned = ZonedDateTime.now(); //2018-11-28T16:57:42.205617700+08:00[Asia/Shanghai]
             var now_instant = Instant.now(); //2018-11-28T08:57:42.206617700Z  减了8小时的,这个就是0时区的时间啦UtcNow。
 
 
+            //默认toString()就是ISO标准，2018-12-01T16:58:20.972347500+08:00[Asia/Shanghai]
+            var time0 = ZonedDateTime.now().toString();
+
             var now = ZonedDateTime.now();
-            var time2 = ZonedDateTime.now().toString(); //默认就是ISO标准，2018-12-01T16:58:20.972347500+08:00[Asia/Shanghai]
-            var time3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n").format(now); //纳秒，C#可以指定1-7个f,java不能指定位数
-            var time4 = now.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME); //2018-11-28T16:57:42.205617700+08:00 ★ISO8601，用这个哪都支持
-            var time5 = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")); //java8之前有个SimpleDateFormat，非线程安全的，不要用。
+
+            //以前大家都用SimpleDateFormat，但他是非线程安全的，java8后应该用DateTimeFormatter替换他。
+            var time1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n").format(now); //n是纳秒
+
+            //2018-11-28T16:57:42.205617700+08:00         ★ISO8601，用这个哪都支持
+            var time2 = now.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+
+            //2018-11-28 16:57:42.205617700
+            var time3 = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n"));
+
+            //2018-11-28 16:57:42.205         ★可以有0-9个S，有几个就截取几位，不会四舍五入
+            var time4 = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 
             var now_1 = now.toLocalDate();
             var now_2 = now.getYear();
@@ -74,7 +88,7 @@ public class AboutDateTime {
             var time3 = LocalTime.of(12, 23, 23, 123456700);
             var time4 = LocalDateTime.of(2018, 11, 21, 12, 23, 23, 123456700);//有多个重载,可能Java更推荐用这个吧
 
-            //日期格式：https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/format/DateTimeFormatter.html
+
             //默认的parse只支持“对应的标准的ISO格式“，如果想支持别的，可以使用重载方法指定字符串类型
             var tp_1 = LocalDate.parse("2018-11-21");
             var tp_4 = LocalDateTime.parse("2018-11-21T12:23:25");

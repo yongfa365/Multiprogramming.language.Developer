@@ -39,6 +39,8 @@ public class AboutString {
 
             // hello 123 hello 2018-11-22T11:04:58.364802200，格式化的写法，比较麻烦，还是按上一种写吧
             var strFormat1 = String.format("%1$s %2$s %1$s %3$s", "hello", 123, LocalDateTime.now());
+            // 123.46保留2位小数
+            var strFormat2 = String.format("%.2f", 123.456);
 
             // java 没有PadLeft及PadRight，但可以左右pad空格, 有repeat,也可以用org.apache.commons.lang.StringUtils#rightPad
             var strRepeat = "@1A".repeat(100);
