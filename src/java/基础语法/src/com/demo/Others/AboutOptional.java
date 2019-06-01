@@ -55,7 +55,7 @@ class AboutOptional {
         //java 1.9有了stream()
         var lst = List.of(1, 2, 3);
         lst = null;
-        Optional.ofNullable(lst).stream().forEach(System.out::println);
+        Optional.ofNullable(lst).ifPresent(System.out::println);
     }
 
 

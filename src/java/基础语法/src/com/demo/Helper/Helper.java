@@ -9,11 +9,11 @@ import java.util.stream.BaseStream;
 
 
 public class Helper {
-    public static void NoErrorInvoke(Consumer act) {
+    public static void NoErrorInvoke(Runnable action) {
         try {
-            act.accept("没办法Action呀，就是要写个参数");
+            action.run();
         } catch (Exception ex) {
-            System.out.println(ex); //写日志
+            ex.printStackTrace(); //实际中会写到日志库
         }
     }
 

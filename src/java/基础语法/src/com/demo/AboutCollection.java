@@ -145,7 +145,7 @@ public class AboutCollection {
         lstInit02.addAll(List.of("4", "5", "6")); //不能addAll数组，C#可以
         lstInit02.addAll(lstInit01);
 
-        //以下几个生成不可修改的List,add,remove会报错
+        //以下几个生成不可修改的List。当add,remove时会报错
         var lstInitNCopy = Collections.nCopies(10, "ABC"); //ABC COPY10份，这是测试用的功能吧
 
         var lst_ReadOnly_1 = Arrays.asList(new String[]{"1", "2", "3", "3"});

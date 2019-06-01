@@ -233,7 +233,7 @@ public class AboutString {
 
         //region 性能测试
         {
-            CodeTimer.Time("StringBuilder性能测试", x ->
+            CodeTimer.Time("StringBuilder性能测试", () ->
             {
                 var sb = new StringBuilder();
                 for (int i = 0; i < 100000; i++) {
@@ -243,7 +243,7 @@ public class AboutString {
                 System.out.println("断点用");
             }); //70ms ★StringBuilder快多了，在字符串大量连接时一定要用这个。与C#一样
 
-            CodeTimer.Time("string+测试", x ->
+            CodeTimer.Time("string+测试", () ->
             {
                 var result = "";
                 for (int i = 0; i < 100000; i++) {
@@ -252,7 +252,7 @@ public class AboutString {
                 System.out.println("断点用");
             });//5853ms 一般字符串连接就这个吧，最简单。
 
-            CodeTimer.Time("string.concat测试", x ->
+            CodeTimer.Time("string.concat测试", () ->
             {
                 var result = "";
                 for (int i = 0; i < 100000; i++) {

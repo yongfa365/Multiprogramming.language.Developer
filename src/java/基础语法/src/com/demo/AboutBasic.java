@@ -15,7 +15,7 @@ import java.util.function.Function;
 
 //此文件时最基础功能的展示，所以都用的是具体类型，没有用var,而平时用基本都是var
 public class AboutBasic {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         RunDemo();
     }
 
@@ -116,7 +116,7 @@ public class AboutBasic {
             int int1 = 1;
             String str1 = "1";
             Person2 person = new Person2();
-            Helper.NoErrorInvoke(item ->
+            Helper.NoErrorInvoke(() ->
             {
                 person.Id = 1;//实体里的对象或者类的字段，可以用,可以改
                 person.Name = "11111";

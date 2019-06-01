@@ -4,6 +4,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -22,7 +23,7 @@ public class AESHelper {
     public static String AESEncrypt(String input, String key, String iv) throws Exception {
         var bytesKey = Base64.getDecoder().decode(key);
         var bytesIV = Base64.getDecoder().decode(iv);
-        var inputBytes = input.getBytes("utf-8");
+        var inputBytes = input.getBytes(StandardCharsets.UTF_8);
 
         var secretKey = new SecretKeySpec(bytesKey, "AES");
         var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -44,7 +45,7 @@ public class AESHelper {
         cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(bytesIV));
         var cipherByte = cipher.doFinal(inputBytes);
 
-        var result = new String(cipherByte, "utf-8");
+        var result = new String(cipherByte, StandardCharsets.UTF_8);
         return result;
     }
 
