@@ -17,16 +17,20 @@ public class BestPractice2 {
                 .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
                 .build();
 
-        OkHttpClient client = HttpClient.trustAllSslOkHttpClient();
+        OkHttpClient httpClient = HttpClient.trustAllSslOkHttpClient();
+        //httpClient = new OkHttpClient(); //原生client，默认会校验证书
+
+        Call call = httpClient.newCall(request);
 
 
-        Call call = client.newCall(request);
+        //enqueue是异步调用
         call.enqueue(new Callback() {
             //这两个里都会返回，要么直接报错，要么是500返回之类的
             @Override
             public void onFailure(Call call, IOException e) {
                 //证书错、dns错、等其他错误
                 String xxxx = e.getMessage();
+                e.printStackTrace();
             }
 
             //只要是Server响应了，就会进入这里，包括：400,403,404,500,502,503等

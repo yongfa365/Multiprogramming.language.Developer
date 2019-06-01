@@ -20,10 +20,11 @@ public class BestPractice1 {
                 .build();
 
         OkHttpClient httpClient = HttpClient.trustAllSslOkHttpClient();
+        //httpClient = new OkHttpClient(); //原生client，默认会校验证书
 
         try {
             //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-            Response response = httpClient.newCall(request).execute();
+            Response response = httpClient.newCall(request).execute(); //同步调用
             String body = response.body() != null ? response.body().string() : null;
             if (response.isSuccessful()) {
                 //200响应的进这里
@@ -35,6 +36,7 @@ public class BestPractice1 {
         } catch (IOException e) {
             //证书错、dns错、等其他错误
             String xxxx = e.getMessage();
+            e.printStackTrace();
         }
     }
 }
