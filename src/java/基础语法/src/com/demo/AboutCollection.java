@@ -1,14 +1,18 @@
 package com.demo;
 
+import com.demo.Entity.EnumType.ColorType;
 import com.demo.Entity.Person;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -36,6 +40,8 @@ public class AboutCollection {
         Run_HashSet_TreeSet_Demo();
         Run_HashMap_TreeMap_Demo();
         RunQueueDemo();
+
+        RunOthersDemo();
     }
 
 
@@ -394,6 +400,18 @@ public class AboutCollection {
     }
 
 
+    private static void RunOthersDemo() {
+        getList().forEach(System.out::println);
+    }
+
+    private static List<Color> getList() {
+        if (123 == 213) {
+            return List.of(Color.BLACK, Color.GREEN);
+        } else {
+            //如果返回为null则调用方还要判断,jdk自带了几个immutable的默认的空集合,Collections.EMPTY_MAP;Collections.EMPTY_SET
+            return Collections.EMPTY_LIST;
+        }
+    }
 }
 
 
