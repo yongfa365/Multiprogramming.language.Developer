@@ -1,14 +1,18 @@
 package com.demo;
 
+import com.demo.Entity.EnumType.ColorType;
 import com.demo.Entity.Person;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -36,6 +40,8 @@ public class AboutCollection {
         Run_HashSet_TreeSet_Demo();
         Run_HashMap_TreeMap_Demo();
         RunQueueDemo();
+
+        RunOthersDemo();
     }
 
 
@@ -145,7 +151,7 @@ public class AboutCollection {
         lstInit02.addAll(List.of("4", "5", "6")); //不能addAll数组，C#可以
         lstInit02.addAll(lstInit01);
 
-        //以下几个生成不可修改的List,add,remove会报错
+        //以下几个生成不可修改的List。当add,remove时会报错
         var lstInitNCopy = Collections.nCopies(10, "ABC"); //ABC COPY10份，这是测试用的功能吧
 
         var lst_ReadOnly_1 = Arrays.asList(new String[]{"1", "2", "3", "3"});
@@ -394,6 +400,18 @@ public class AboutCollection {
     }
 
 
+    private static void RunOthersDemo() {
+        getList().forEach(System.out::println);
+    }
+
+    private static List<Color> getList() {
+        if (123 == 213) {
+            return List.of(Color.BLACK, Color.GREEN);
+        } else {
+            //如果返回为null则调用方还要判断,jdk自带了几个immutable的默认的空集合,Collections.EMPTY_MAP;Collections.EMPTY_SET
+            return Collections.EMPTY_LIST;
+        }
+    }
 }
 
 

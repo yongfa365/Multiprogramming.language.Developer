@@ -1,6 +1,7 @@
 package com.demo.Helper.Security;
 
 import javax.crypto.Cipher;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -120,7 +121,7 @@ public class RSAHelper {
 
     //region Core
     private static String Encrypt(String input, Key key) throws Exception {
-        var inputBytes = input.getBytes("utf-8");
+        var inputBytes = input.getBytes(StandardCharsets.UTF_8);
         var cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, key);
         var resultBytes = cipher.doFinal(inputBytes);
@@ -133,7 +134,7 @@ public class RSAHelper {
         var cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, key);
         var resultBytes = cipher.doFinal(inputBytes);
-        var result = new String(resultBytes, "utf-8");
+        var result = new String(resultBytes, StandardCharsets.UTF_8);
         return result;
     }
     //endregion
