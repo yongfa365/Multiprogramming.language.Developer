@@ -48,7 +48,7 @@ java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个�
 原则上是用到哪个就把哪个搞明白，确定下来，同一类一个确定后，以后换别的就参照着实现一遍，以便做到全覆盖。
 完成的标识是：在github上写了demo及在微信公众号及今日头条写了文章。
 TODO:从思维导图拿过来所有的
-- [x]Java 11
+- [x] Java 11
     - [x] Basic(8个原始类型|BigDecimal|uuid|Random|if|else|do|while|for|swith|enum|接口默认实现|匿名类|内部类)
     - [x] DateTime (LocalDateTime|Period|Duration|ChronoUnit|Timer)
     - [x] String(equals|regex|contains|isBlank|strip|StringBuilder)
@@ -56,6 +56,7 @@ TODO:从思维导图拿过来所有的
     - [x] Http(HttpClient|Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
     - [x] Collection(List|Set|Map|Queue|Stream|FunctionalInterface)
     - [x] Thread(野线程|ThreadPoolExecutor|parallel)
+    - [x] Security(RSA|MD5|SHA|Base64|AES|DES)
 
 - [x] Intellij IDEA
     - [x] 常用(滚动改变字体大小|悬停提示|去掉大小写敏感)
@@ -63,10 +64,10 @@ TODO:从思维导图拿过来所有的
     - [x] live template(sout,cw)
     - [x] postfix（person.new.var）
     - [x] Keymap(同时融合Visual Studio的快捷键，两边使用同一套|全文搜索)
-    - [x] Maven（mirror.aliyun|repository.dir|自行搭建仓库|各种命令）
-    - [ ] Gradle
     - [x] git(Checkout|Merge|Branch|pull|push)
     - [x] plugin(lombok|Alibaba Java Coding Guidelines|Grep Console)
+    - [x] Maven（mirror.aliyun|repository.dir|自行搭建仓库|各种命令）
+    - [ ] Gradle
     
 - [ ] JSON(嵌套引用|enum|null|DateTime|pretty|性能)
     - [ ] fastJson
