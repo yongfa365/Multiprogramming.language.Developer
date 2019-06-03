@@ -1,0 +1,4 @@
+<!--psvm不走Spring,所以还是要在这里设置下-->
+<configuration>
+    <root level="INFO" />
+</configuration>
