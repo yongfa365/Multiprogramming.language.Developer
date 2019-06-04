@@ -184,7 +184,8 @@ namespace ConsoleApp.BestPractices
                 var sha1 = src.ToSHA1();
                 var sha512 = src.ToSHA512();
 
-                var aesKeys = AESHelper.GetKeys();
+                //var aesKeys = AESHelper.GetKeys();
+                var aesKeys = AESHelper.FixedKeys;
                 var aes_en = src.AESEncrypt(aesKeys.Key, aesKeys.IV);
                 var aes_de = aes_en.AESDecrypt(aesKeys.Key, aesKeys.IV);
 

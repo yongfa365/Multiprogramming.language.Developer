@@ -73,9 +73,7 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string To16bitMD5(this string input)
         {
-            var full = input.To32bitMD5();
-            var result = full.Substring(8, 24);
-            return result;
+            return input.ToMD5(true);
         }
 
         /// <summary>
@@ -85,12 +83,21 @@ namespace ConsoleApp.BestPractices
         /// <returns></returns>
         public static string To32bitMD5(this string input)
         {
+            return input.ToMD5(false);
+        }
+
+        /// <summary>
+        /// MD5
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string ToMD5(this string input, bool is16bit)
+        {
             using (var provider = new MD5CryptoServiceProvider())
             {
                 var inputbytes = Encoding.UTF8.GetBytes(input);
                 var hashbytes = provider.ComputeHash(inputbytes);
-                //var result = BitConverter.ToString(hashbytes,4,8); //16位
-                var result = BitConverter.ToString(hashbytes);
+                var result = is16bit ? BitConverter.ToString(hashbytes, 4, 8) : BitConverter.ToString(hashbytes);
                 return result.Replace("-", "");
             }
         }
@@ -103,6 +110,11 @@ namespace ConsoleApp.BestPractices
 
     public static class AESHelper
     {
+        /// <summary>
+        /// 写死的Key及IV
+        /// </summary>
+        internal static (string Key, string IV) FixedKeys = ("ll7uz0DREVGBA9IJxmnwoEsJoQtgpGPqXQOzmYgaS6o=", "yuntM97GbF5ISjSsx0qKqA==");
+
 
         /// <summary>
         /// 实际使用时生成Key及IV后保存起来

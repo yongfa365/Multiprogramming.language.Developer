@@ -193,7 +193,8 @@ public class AboutString {
             var sha1 = SecurityHelper.ToSHA1(src);
             var sha512 = SecurityHelper.ToSHA512(src);
 
-            var aes_key_iv = AESHelper.GetKeys();
+            //var aes_key_iv = AESHelper.GetKeys();
+            var aes_key_iv = AESHelper.GetFixedKeys();
             var aes_en = AESHelper.AESEncrypt(src, aes_key_iv[0], aes_key_iv[1]);
             var aes_de = AESHelper.AESDecrypt(aes_en, aes_key_iv[0], aes_key_iv[1]);
 

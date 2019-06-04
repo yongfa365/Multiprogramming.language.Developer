@@ -9,9 +9,13 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 public class AESHelper {
+    public static String[] GetFixedKeys() throws Exception {
+        return new String[]{"ll7uz0DREVGBA9IJxmnwoEsJoQtgpGPqXQOzmYgaS6o=", "yuntM97GbF5ISjSsx0qKqA=="};
+    }
+
     public static String[] GetKeys() throws Exception {
         var keyGen = KeyGenerator.getInstance("AES");
-        keyGen.init(128);  //默认128，获得无政策权限后可为192或256
+        keyGen.init(2048);  //默认128，获得无政策权限后可为192或256
         var secretKey = keyGen.generateKey();
         var byteKey = secretKey.getEncoded();
         var key = Base64.getEncoder().encodeToString(byteKey);
