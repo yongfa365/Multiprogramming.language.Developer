@@ -11,7 +11,7 @@ application-prod.yml
 
 解决方法是：将敏感信息单独存放在另一个profile如：application-prod-**secret**.yml，这个配置文件不会提交到git（dev除外，要不怎么调试？），一般人也看不到里面的内容，只在部署时用工具如jenkins放入目标位置，这样就可以保证不泄密啦！？。
 
-然后在启动时的命令行参数指定：spring.profiles.active=**prod ,prod-secret**，或者在application-prod.yml里指定：
+然后在启动时的命令行参数指定：spring.profiles.active=**prod,prod-secret**，或者在application-prod.yml里指定：
 ```
 spring.profiles.include:
   - prod-secret
