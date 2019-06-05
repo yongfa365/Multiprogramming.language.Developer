@@ -1,0 +1,3 @@
+#可以使用spring.profiles.include引入其他多个配置，在spring.profiles.active=prod也还是只指定一个就行。
+spring.profiles.include:
+  - prod-secret
