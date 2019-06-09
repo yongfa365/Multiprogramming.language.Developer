@@ -26,7 +26,7 @@ public class BestPractice1 {
             //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
             Response response = httpClient.newCall(request).execute(); //同步调用
             String body = response.body() != null ? response.body().string() : null;
-            if (response.isSuccessful()) {
+            if (response.isSuccessful()) { // 200<=statusCode<300
                 //200响应的进这里
                 System.out.println("正常返回的Body:\n" + body);
             } else {
@@ -35,7 +35,7 @@ public class BestPractice1 {
             }
         } catch (IOException e) {
             //证书错、dns错、等其他错误
-            String xxxx = e.getMessage();
+            System.out.println("没有返回,报错：\n");
             e.printStackTrace();
         }
     }
