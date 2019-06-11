@@ -15,7 +15,7 @@ public class AESHelper {
 
     public static String[] GetKeys() throws Exception {
         var keyGen = KeyGenerator.getInstance("AES");
-        keyGen.init(2048);  //默认128，获得无政策权限后可为192或256
+        keyGen.init(256);
         var secretKey = keyGen.generateKey();
         var byteKey = secretKey.getEncoded();
         var key = Base64.getEncoder().encodeToString(byteKey);
@@ -23,34 +23,55 @@ public class AESHelper {
         return new String[]{key, iv};
     }
 
-
+    /**
+     * 原文String-->使用utf8编码成byte[]-->加密成byte[]-->使用Base64转码成String-->密文String
+     *
+     * @param input 原文
+     * @param key
+     * @param iv
+     * @return
+     * @throws Exception
+     */
     public static String AESEncrypt(String input, String key, String iv) throws Exception {
-        var bytesKey = Base64.getDecoder().decode(key);
-        var bytesIV = Base64.getDecoder().decode(iv);
         var inputBytes = input.getBytes(StandardCharsets.UTF_8);
 
-        var secretKey = new SecretKeySpec(bytesKey, "AES");
         var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(bytesIV));
+        cipher.init(Cipher.ENCRYPT_MODE, getKeySpec(key), getIvSpec(iv));
         var cipherByte = cipher.doFinal(inputBytes);
 
         var result = Base64.getEncoder().encodeToString(cipherByte);
         return result;
     }
 
-
+    /**
+     * 密文String-->使用Base64转码成byte[]-->解密成byte[]-->使用utf8解码成String-->原文String
+     * @param input 密文
+     * @param key
+     * @param iv
+     * @return
+     * @throws Exception
+     */
     public static String AESDecrypt(String input, String key, String iv) throws Exception {
-        var bytesKey = Base64.getDecoder().decode(key);
-        var bytesIV = Base64.getDecoder().decode(iv);
         var inputBytes = Base64.getDecoder().decode(input);
 
-        var secretKey = new SecretKeySpec(bytesKey, "AES");
         var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(bytesIV));
+        cipher.init(Cipher.DECRYPT_MODE, getKeySpec(key), getIvSpec(iv));
         var cipherByte = cipher.doFinal(inputBytes);
 
         var result = new String(cipherByte, StandardCharsets.UTF_8);
         return result;
+    }
+
+    private static SecretKeySpec getKeySpec(String key) {
+        var bytesKey = Base64.getDecoder().decode(key);
+        var keySpec = new SecretKeySpec(bytesKey, "AES");
+        return keySpec;
+    }
+
+    private static IvParameterSpec getIvSpec(String iv) {
+        var bytesIV = Base64.getDecoder().decode(iv);
+        var ivSpec = new IvParameterSpec(bytesIV);
+        return ivSpec;
     }
 
 
