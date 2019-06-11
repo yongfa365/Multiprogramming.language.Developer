@@ -1,6 +1,8 @@
 package com.demo.Helper;
 
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -42,6 +44,13 @@ public class Helper {
         var instant = input.atStartOfDay().atZone(zone).toInstant();
         var date = Date.from(instant);
         return date;
+    }
+
+    public static String getStackTrace(Throwable ex) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        return sw.toString();
     }
 
 

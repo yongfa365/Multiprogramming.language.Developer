@@ -29,7 +29,7 @@ public class BestPractice2 {
             @Override
             public void onFailure(Call call, IOException e) {
                 //证书错、dns错、等其他错误
-                String xxxx = e.getMessage();
+                System.out.println("没有返回,报错：\n");
                 e.printStackTrace();
             }
 
@@ -37,7 +37,7 @@ public class BestPractice2 {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body() != null ? response.body().string() : null;
-                if (response.isSuccessful()) {
+                if (response.isSuccessful()) { // 200<=statusCode<300
                     //200响应的进这里
                     System.out.println("正常返回的Body:\n" + body);
                 } else {

@@ -6,7 +6,7 @@ id|desc|url
 3|Language and VM  有html及pdf可下载|https://docs.oracle.com/javase/specs/
 4|教程|https://docs.oracle.com/javase/tutorial/
 5|API Documentation 各包的介绍|https://docs.oracle.com/en/java/javase/11/docs/api/index.html
-6|jshell|https://docs.oracle.com/javase/10/jshell/ <br> https://docs.oracle.com/javase/10/tools/jshell.htm <br>.net没有官方的，LinqPad类似java的这个
+6|jshell|https://docs.oracle.com/javase/10/jshell/ <br> https://docs.oracle.com/javase/10/tools/jshell.htm <br>或者随便找个类psvm吧。.net官方的没有类似的，有个不错的第三方收费的LinqPad
 7|springboot的各种配置|https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties
 
 ## 所谓的：生态
@@ -44,6 +44,8 @@ IDE学习|3天|常用配置,Font，Color，Theme，忽略大小写,滚动改变�
 
 
 java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个，不存在装箱拆箱，C#一般只在int->string->int时才涉及到。
+
+刚从C#转java觉得Java太封闭了，像lambda，C#那么好的命名你直接抄过来不就行了吗？为什么还要自己再造一套名字？你们不会去看下其他语言的命名，然后可以用就用，统一一下会死吗？随着学习的深入发现java不止不抄C#的，连基于他而开发的很有名的类库创造的好的命名也不抄。
 
 原则上是用到哪个就把哪个搞明白，确定下来，同一类一个确定后，以后换别的就参照着实现一遍，以便做到全覆盖。
 完成的标识是：在github上写了demo及在微信公众号及今日头条写了文章。

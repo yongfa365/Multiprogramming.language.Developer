@@ -1,5 +1,7 @@
 package com.demo;
 
+import com.demo.Helper.Helper;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.time.temporal.TemporalUnit;
 import java.util.zip.GZIPInputStream;
 
 
@@ -26,6 +29,8 @@ public class AboutHttp {
         SimpleDemo();
         GetDemo();
         PostDemo();
+
+        sendWithException();
     }
 
     public static void SimpleDemo() throws Exception {
@@ -36,7 +41,6 @@ public class AboutHttp {
 
         client.send(request, HttpResponse.BodyHandlers.ofString());
     }
-
 
     public static void PostDemo() throws Exception {
 
@@ -134,6 +138,41 @@ public class AboutHttp {
         }
 
 
+    }
+
+    public static void sendWithException() {
+
+        var client = HttpClient.newHttpClient();
+
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create("http://asdfasdfasdfasfe333333.com/")) //可以测试dns问题
+                .uri(URI.create("https://self-signed.badssl.com/")) //可以用原生的okhttpclient测试假证书问题
+                .uri(URI.create("http://httpstat.us/500?sleep=10000")).timeout(Duration.ofSeconds(5))//测试延时
+                .uri(URI.create("http://httpstat.us/404"))
+                .uri(URI.create("http://httpstat.us/502"))
+                .uri(URI.create("http://httpstat.us/200"))
+                .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
+                .build();
+
+        try {
+            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            var body = response.body();
+
+            //TODO:貌似所有的httpClient类库都是这样的：只要有响应就是正常的。与C#不同:
+            //   2XX、300X（java与C#都认为是正常）；4XX、5XX(java认为正常，C#认为异常)；dns、timeout、ssl错（Java与C#都认为是异常）
+
+            if (200 <= response.statusCode() && response.statusCode() < 300) {
+                //200响应的进这里
+                System.out.println("正常返回的Body:\n" + body);
+            } else {
+                //400,403,404,500,502,503等响应进这里
+                System.out.println("异常返回的Body:\n" + body);
+            }
+        } catch (Exception e) {
+            //证书错、dns错、等其他错误
+            var err = Helper.getStackTrace(e);
+            System.out.println("没有返回,报错：\n" + err);
+        }
     }
 
     public static String InputStreamToString(InputStream in) throws IOException {
