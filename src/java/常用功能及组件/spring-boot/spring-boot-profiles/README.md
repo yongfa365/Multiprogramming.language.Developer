@@ -1,3 +1,47 @@
+
+##application.properties与application.yml的差异
+他们两个是可以互转的，以下几个是等效的：
+```
+#properties格式的
+environments.dev.url=http://dev.bar.com
+environments.dev.name=Developer Setup
+environments.prod.url=http://foo.bar.com
+environments.prod.name=My Cool App
+my.servers[0]=dev.bar.com
+my.servers[1]=foo.bar.com
+```
+
+```
+#yml格式的
+environments:
+  dev:
+    url: http://dev.bar.com
+    name: Developer Setup
+  prod:
+    url: http://foo.bar.com
+    name: My Cool App
+my:
+  servers:
+    - dev.bar.com
+    - foo.bar.com
+```
+
+```
+#yml格式的,混搭的
+environments.dev:
+    url: http://dev.bar.com
+    name: Developer Setup
+environments.prod.url: http://foo.bar.com
+environments.prod.name: My Cool App
+my:
+  servers:
+    - dev.bar.com
+    - foo.bar.com
+```
+需要注意的是yml格式，“:”后要有个空格。如果多个节点写一行则要将“:”换成“.”
+
+
+##配置文件规划
 配置文件一般是这样规划的：
 ```
 application.yml

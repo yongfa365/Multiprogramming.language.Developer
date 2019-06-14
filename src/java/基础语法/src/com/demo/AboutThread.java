@@ -37,7 +37,7 @@ public class AboutThread {
     /**
      * ThreadPool的用法，
      */
-    private static void RunThreadPoolDemo() {
+    private static void RunThreadPoolDemo() throws  Exception{
         //关于线程池，Java与C#最大的不同:
         // C#整个只有一个线程池。
         // Java可以定义任意多个线程池，只要内存CPU能承受得起。
@@ -56,7 +56,10 @@ public class AboutThread {
         var threadPool = Executors.newFixedThreadPool(10);
         threadPool.submit(() -> Run());
         threadPool.submit(() -> Run());
+        //关门，不接客了。已接的客继续，是否服务完了不管。不等待，要等待得调用awaitTermination。
         threadPool.shutdown();
+        //关门后，挂起线程最多多久，线程都结束了或超时了就不等了，至于线程是死是活不管（会有野线程在为所欲为）。
+        threadPool.awaitTermination(10,TimeUnit.SECONDS);
     }
 
     /**

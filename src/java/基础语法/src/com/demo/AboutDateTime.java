@@ -1,5 +1,7 @@
 package com.demo;
 
+import com.demo.Helper.Helper;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -169,19 +171,27 @@ public class AboutDateTime {
         //endregion
 
 
-        //region timer
+        //region timer 上一各跑完后，才跑下一个，本质上更像同步的，与C#行为不同，各有特点，貌似java的这个使用场景更多
         {
-            //方法1:
+            //方法1:原生timer，不推荐
             var timer = new Timer("我是个Timer", true);
             timer.schedule(new TimerTask() {
+                @Override
                 public void run() {
                     System.out.println(LocalTime.now().toString() + "Timer Runing ");
                 }
-            }, 1000 * 1, 1000 * 1);
+            }, 0, 1000 * 1);
 
-            //方法2：
-            Executors.newScheduledThreadPool(10).scheduleAtFixedRate(() -> {
+            //方法2：如果 任务执行时间>间隔时间 则任务完成后立即执行下一次，否则要等间隔时间到了才执行。
+            Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
                 System.out.println("执行任务A:" + LocalDateTime.now());
+                Helper.sleep(1000); //改成1000及5000分别试下
+            }, 0, 3, TimeUnit.SECONDS);
+
+            //方法3：不管你执行多久，都要等固定的延迟后才能执行下一次。
+            Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> {
+                System.out.println("执行任务B:" + LocalDateTime.now());
+                Helper.sleep(1000); //改成1000及5000分别试下
             }, 0, 3, TimeUnit.SECONDS);
         }
         //endregion

@@ -8,6 +8,7 @@ id|desc|url
 5|API Documentation 各包的介绍|https://docs.oracle.com/en/java/javase/11/docs/api/index.html
 6|jshell|https://docs.oracle.com/javase/10/jshell/ <br> https://docs.oracle.com/javase/10/tools/jshell.htm <br>或者随便找个类psvm吧。.net官方的没有类似的，有个不错的第三方收费的LinqPad
 7|springboot的各种配置|https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties
+8|纯洁的微笑：Spring Boot 使用的各种示例，以最简单、最实用为标准|https://github.com/ityouknow/spring-boot-examples
 
 ## 所谓的：生态
 **C#**：默认组件已经做的相当出色了，假如算100分。他已经做的这么好了，就算你有个更好的想法可能只是不停的+1,但只是+1力度不大，你的组件就不容易出名，最终看起来好像就是周边发展的不行。一言以蔽之：**月明星稀**。
@@ -49,7 +50,9 @@ java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个�
 
 原则上是用到哪个就把哪个搞明白，确定下来，同一类一个确定后，以后换别的就参照着实现一遍，以便做到全覆盖。
 完成的标识是：在github上写了demo及在微信公众号及今日头条写了文章。
-TODO:从思维导图拿过来所有的
+
+
+## TODO List
 
 - [x] Java 11
     - [x] Basic(8个原始类型|BigDecimal|uuid|Random|if|else|do|while|for|swith|enum|接口默认实现|匿名类|内部类)
@@ -65,6 +68,7 @@ TODO:从思维导图拿过来所有的
     - [x] jps
     - [x] jstack
     - [x] jshell
+    - [ ] jconsole
 
 - [x] Intellij IDEA
     - [x] 常用(滚动改变字体大小|悬停提示|去掉大小写敏感)
@@ -95,15 +99,16 @@ TODO:从思维导图拿过来所有的
 
 - [ ] Cache
     - [ ] Caffeine
+    - [ ] Redis(list)
 
 - [ ] Spring  
     - [=] Core（AOP|IOC ）
-    - [x] SpringBoot(config,stater)
+    - [=] SpringBoot(autoconfig,starter)
+        - [ ] 拆包
     - [ ] Spring MVC|RestApi
     - [ ] Spring Data
       - [ ] 多数据源配置（MySQL|RabbitMQ|Redis）
       - [ ] JPA(MySQL,貌似死了，因为JavaEE)
-      - [ ] Redis(list)
       - [ ] Mongodb（utc时间）
       - [ ] RabbitMQ（重连|LocalQueue）
       - [ ] Kafka
