@@ -34,9 +34,55 @@ id|desc|url
 2|spring-boot-starter-cache|https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-caching.html
 
 ### Caffeine原生使用方法
-  - [OriginalDemo1_Simple](http://www.google.com/)
-  - [OriginalDemo2_Refresh](http://www.google.com/)
+  - [Demo1_Simple](AboutCaffeine/src/main/java/yongfa365/AboutCaffeine/Demo1_Simple.java)
+  - [Demo2_Refresh](AboutCaffeine/src/main/java/yongfa365/AboutCaffeine/Demo2_Refresh.java)
   
-  ### spring-boot-starter-cache使用方法
-  - [缓存方法结果，配置文件控制](http://www.google.com/)
-  - [自定义多个bean](http://www.google.com/)
+### spring-boot-starter-cache使用方法
+  - [默认使用方法](spring-boot-cache-default/src/main/java/yongfa365/springbootcachedefault/CacheHelper.java)
+  - [spring-boot-starter-cache结合Caffeine的使用方法](spring-boot-cache-caffeine)
+  - [自定义多个Bean使用Caffeine](TODO：)
+
+### 核心代码展示
+```xml
+<!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
+<dependency>
+	<groupId>com.github.ben-manes.caffeine</groupId>
+	<artifactId>caffeine</artifactId>
+	<version>2.7.0</version>
+</dependency>
+```
+application.properties配置：
+```yaml
+
+#Cache白名单，不指定不限制。若指定则程序要么不用缓存，要么只能用这里的名称
+spring.cache.cache-names=LocalCache_InMethod,cache12313
+
+#此设置为10s后过期，然后得等填充完拿最新数据，填充速度慢就要等的时间长。
+spring.cache.caffeine.spec=expireAfterWrite=5s,initialCapacity=10,maximumSize=1000
+
+#不能用refresh
+#spring.cache.caffeine.spec=expireAfterWrite=20s,refreshAfterWrite=10s
+```
+启动类加个注解：
+```java
+@EnableCaching //启动类要加这个注解
+@SpringBootApplication
+public class App {
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
+}
+```
+缓存类直接用个@Cacheable：
+```java
+@Component
+public class CacheHelper {
+    //Cacheable的方式缓存过期后会因穿透而变慢，需要设置sync防止并发请求同时穿透
+    @Cacheable(value = "LocalCache_InMethod", sync = true)
+    public Integer getData() {
+        return LocalDateTime.now().getSecond();
+    }
+}
+```
+
+
