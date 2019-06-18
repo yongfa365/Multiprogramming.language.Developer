@@ -222,6 +222,17 @@ public class AboutBasic {
     }
 
 
+    public  static  void  noThrowsExceptionInMethod()
+    {
+        try {
+            //这种事 【checked异常】，需要try{}catch{}处理或在方法上throws Exception抛出
+            throw new Exception("我是checked异常");
+        } catch (Exception ex) {
+            //如果不想处理【checked异常】，想让框架处理，那可以包装成【Runtime异常】这样就不用在方法一级写throws 了
+            throw new RuntimeException(ex);
+        }
+    }
+
 }
 
 
