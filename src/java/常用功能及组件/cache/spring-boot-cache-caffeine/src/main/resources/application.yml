@@ -1,32 +1,32 @@
-#Cache°×Ãûµ¥£¬²»Ö¸¶¨²»ÏŞÖÆ¡£ÈôÖ¸¶¨Ôò³ÌĞòÒªÃ´²»ÓÃ»º´æ£¬ÒªÃ´Ö»ÄÜÓÃÕâÀïµÄÃû³Æ
+#Cacheç™½åå•ï¼Œä¸æŒ‡å®šä¸é™åˆ¶ã€‚è‹¥æŒ‡å®šåˆ™ç¨‹åºè¦ä¹ˆä¸ç”¨ç¼“å­˜ï¼Œè¦ä¹ˆåªèƒ½ç”¨è¿™é‡Œçš„åç§°
 spring.cache.cache-names: LocalCache_OnMethod,PERSON
 
-#´ËÉèÖÃÎª10sºó¹ıÆÚ£¬È»ºóµÃµÈÌî³äÍêÄÃ×îĞÂÊı¾İ£¬Ìî³äËÙ¶ÈÂı¾ÍÒªµÈµÄÊ±¼ä³¤¡£
+#æ­¤è®¾ç½®ä¸º10såè¿‡æœŸï¼Œç„¶åå¾—ç­‰å¡«å……å®Œæ‹¿æœ€æ–°æ•°æ®ï¼Œå¡«å……é€Ÿåº¦æ…¢å°±è¦ç­‰çš„æ—¶é—´é•¿ã€‚
 spring.cache.caffeine.spec: expireAfterWrite=5s,initialCapacity=10,maximumSize=1000
 
-#²»ÄÜÓÃrefresh
+#ä¸èƒ½ç”¨refresh
 #spring.cache.caffeine.spec: expireAfterWrite=20s,refreshAfterWrite=10s
 
 
 
 
 
-#CaffeineÅäÖÃËµÃ÷£º
+#Caffeineé…ç½®è¯´æ˜ï¼š
 #
-#initialCapacity=[integer]: ³õÊ¼µÄ»º´æ¿Õ¼ä´óĞ¡
-#maximumSize=[long]: »º´æµÄ×î´óÌõÊı
-#maximumWeight=[long]: »º´æµÄ×î´óÈ¨ÖØ
-#expireAfterAccess=[duration]: ×îºóÒ»´ÎĞ´Èë»ò·ÃÎÊºó¾­¹ı¹Ì¶¨Ê±¼ä¹ıÆÚ
-#expireAfterWrite=[duration]: ×îºóÒ»´ÎĞ´Èëºó¾­¹ı¹Ì¶¨Ê±¼ä¹ıÆÚ
-#refreshAfterWrite=[duration]: ´´½¨»º´æ»òÕß×î½üÒ»´Î¸üĞÂ»º´æºó¾­¹ı¹Ì¶¨µÄÊ±¼ä¼ä¸ô£¬Ë¢ĞÂ»º´æ
-#weakKeys: ´ò¿ªkeyµÄÈõÒıÓÃ
-#weakValues£º´ò¿ªvalueµÄÈõÒıÓÃ
-#softValues£º´ò¿ªvalueµÄÈíÒıÓÃ
-#recordStats£º¿ª·¢Í³¼Æ¹¦ÄÜ
+#initialCapacity=[integer]: åˆå§‹çš„ç¼“å­˜ç©ºé—´å¤§å°
+#maximumSize=[long]: ç¼“å­˜çš„æœ€å¤§æ¡æ•°
+#maximumWeight=[long]: ç¼“å­˜çš„æœ€å¤§æƒé‡
+#expireAfterAccess=[duration]: æœ€åä¸€æ¬¡å†™å…¥æˆ–è®¿é—®åç»è¿‡å›ºå®šæ—¶é—´è¿‡æœŸ
+#expireAfterWrite=[duration]: æœ€åä¸€æ¬¡å†™å…¥åç»è¿‡å›ºå®šæ—¶é—´è¿‡æœŸ
+#refreshAfterWrite=[duration]: åˆ›å»ºç¼“å­˜æˆ–è€…æœ€è¿‘ä¸€æ¬¡æ›´æ–°ç¼“å­˜åç»è¿‡å›ºå®šçš„æ—¶é—´é—´éš”ï¼Œåˆ·æ–°ç¼“å­˜
+#weakKeys: æ‰“å¼€keyçš„å¼±å¼•ç”¨
+#weakValuesï¼šæ‰“å¼€valueçš„å¼±å¼•ç”¨
+#softValuesï¼šæ‰“å¼€valueçš„è½¯å¼•ç”¨
+#recordStatsï¼šå¼€å‘ç»Ÿè®¡åŠŸèƒ½
 #
-#×¢Òâ£º
+#æ³¨æ„ï¼š
 #
-#expireAfterWriteºÍexpireAfterAccessÍ¬ÊÂ´æÔÚÊ±£¬ÒÔexpireAfterWriteÎª×¼¡£
-#maximumSizeºÍmaximumWeight²»¿ÉÒÔÍ¬Ê±Ê¹ÓÃ
-#weakValuesºÍsoftValues²»¿ÉÒÔÍ¬Ê±Ê¹ÓÃ
+#expireAfterWriteå’ŒexpireAfterAccessåŒäº‹å­˜åœ¨æ—¶ï¼Œä»¥expireAfterWriteä¸ºå‡†ã€‚
+#maximumSizeå’ŒmaximumWeightä¸å¯ä»¥åŒæ—¶ä½¿ç”¨
+#weakValueså’ŒsoftValuesä¸å¯ä»¥åŒæ—¶ä½¿ç”¨
 
