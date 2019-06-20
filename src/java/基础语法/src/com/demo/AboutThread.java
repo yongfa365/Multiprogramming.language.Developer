@@ -54,8 +54,10 @@ public class AboutThread {
 
         //阿里不推荐用Executors,因为隐藏了要关注的核心细节
         var threadPool = Executors.newFixedThreadPool(10);
-        threadPool.submit(() -> Run());
-        threadPool.submit(() -> Run());
+        //批量想pool添加任务，pool最多会使用10个线程去跑。
+        for (int i = 0; i < 100; i++) {
+            threadPool.submit(() -> Run());
+        }
         //关门，不接客了。已接的客继续，是否服务完了不管。不等待，要等待得调用awaitTermination。
         threadPool.shutdown();
         //关门后，挂起线程最多多久，线程都结束了或超时了就不等了，至于线程是死是活不管（会有野线程在为所欲为）。

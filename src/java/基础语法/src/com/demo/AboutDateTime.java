@@ -171,7 +171,7 @@ public class AboutDateTime {
         //endregion
 
 
-        //region timer 上一各跑完后，才跑下一个，本质上更像同步的，与C#行为不同，各有特点，貌似java的这个使用场景更多
+        //region schedule都是 上一各跑完后，才跑下一个，本质上是同步的（无论线程池设置多大），与C#行为不同，各有特点，貌似java的这个使用场景更多
         {
             //方法1:原生timer，不推荐
             var timer = new Timer("我是个Timer", true);
@@ -182,13 +182,14 @@ public class AboutDateTime {
                 }
             }, 0, 1000 * 1);
 
-            //方法2：如果 任务执行时间>间隔时间 则任务完成后立即执行下一次，否则要等间隔时间到了才执行。
+            //方法2：如果 任务执行时间>间隔时间 则立即执行，否则间隔时间到了才执行。
+            // 如果任务第一次要5s，之后只要0s，间隔设置为1s，则：第一次5s，然后紧接着会再执行4次之前落下的，然后才1s1次
             Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
                 System.out.println("执行任务A:" + LocalDateTime.now());
                 Helper.sleep(1000); //改成1000及5000分别试下
             }, 0, 3, TimeUnit.SECONDS);
 
-            //方法3：不管你执行多久，都要等固定的延迟后才能执行下一次。
+            //方法3：按执行完后，等固定间隔再执行，不管你执行多久。
             Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> {
                 System.out.println("执行任务B:" + LocalDateTime.now());
                 Helper.sleep(1000); //改成1000及5000分别试下
