@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import yongfa365.common.Helper;
 
-import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -21,35 +20,47 @@ public class MyServiceTest {
 
 
     @Test
-    public void getData() {
-        while (true) {
+    public void T1_穿透后_依然立即返回旧值_后台会刷新数据() {
+        var pool = Executors.newSingleThreadScheduledExecutor();
+        pool.scheduleWithFixedDelay(() -> {
+            log.info("getData {}", service.getData("111111"));
+        }, 0, 1, TimeUnit.SECONDS);
+        Helper.sleep(20_000);
+        pool.shutdown();
+    }
+
+    @Test
+    public void T2_测试是否会并发穿透() {
+        log.info("正常应该只能看到一个穿透");
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> {
+                log.info("getData {}", service.getData("11111"));
+            }).start();
+        }
+        Helper.sleep(20_000);
+    }
+
+    @Test
+    public void T3_测试是否根据条件缓存() {
+        var i = 20;
+        while (i-- > 0) {
             log.info("getData  input:11111,  结果： {}", service.getData("11111"));
             log.info("getData  input:22222,  结果： {}", service.getData("22222"));
             Helper.sleep(1000);
         }
+
+        Helper.sleep(5000);
     }
 
-    @Test
-    public void getData_穿透测试() {
-
-        for (int i = 0; i < 10; i++) {
-            new Thread(()->{
-                log.info("getData {}", service.getData("11111"));
-            }).start();;
-
-
-        }
-        Helper.sleep(20_000);
-
-    }
 
     @Test
-    public void getData2() {
+    public void 测试没有加特性的不应被缓存() {
+        log.info("应该每次都要等比较久");
         var pool = Executors.newSingleThreadScheduledExecutor();
         pool.scheduleWithFixedDelay(() -> {
-            log.info("getData2 {}", service.getData2("234234"));
+            log.info("getData  input:11111,  结果： {}", service.getData2("11111"));
         }, 0, 1, TimeUnit.SECONDS);
-        Helper.sleep(50_000);
+        Helper.sleep(20_000);
         pool.shutdown();
     }
 }
