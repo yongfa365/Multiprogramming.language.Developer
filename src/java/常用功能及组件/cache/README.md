@@ -77,8 +77,9 @@ public class App {
 ```java
 @Component
 public class CacheHelper {
-    //Cacheable的方式缓存过期后会因穿透而变慢，需要设置sync防止并发请求同时穿透
-    @Cacheable(value = "LocalCache_InMethod", sync = true)
+    //Cacheable的方式缓存过期后会因穿透而变慢，需要设置sync防止并发请求同时穿透。
+    //默认CacheKey只考虑方法参数，极容易串，简单解决方案是显示的为每个都指定不同的key，但又不适用于有参数的方法。
+    @Cacheable(value = "LocalCache_InMethod", sync = true, key="CacheHelper.getData")
     public Integer getData() {
         return LocalDateTime.now().getSecond();
     }
