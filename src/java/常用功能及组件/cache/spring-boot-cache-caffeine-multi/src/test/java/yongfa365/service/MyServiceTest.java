@@ -36,11 +36,33 @@ public class MyServiceTest {
         log.info("开始测试缓存:{}", CaffeineConfig.Settings.Default);
 
         var pool = Executors.newSingleThreadScheduledExecutor();
-        pool.scheduleAtFixedRate(() -> {
+        pool.scheduleWithFixedDelay(() -> {
             log.info("getData2 {}", service.getData2());
         }, 0, 1, TimeUnit.SECONDS);
         Helper.sleep(22_000);
         pool.shutdown();
+
+    }
+
+    @Test
+    public void getData3() {
+        log.info("开始测试不同参数返回不同缓存，不会覆盖");
+
+        var pool = Executors.newSingleThreadScheduledExecutor();
+        pool.scheduleWithFixedDelay(() -> {
+            log.info("getData3 ,input task111, 执行结果： {}", service.getData3("task111"));
+        }, 0, 1, TimeUnit.SECONDS);
+
+
+        var pool2 = Executors.newSingleThreadScheduledExecutor();
+        pool2.scheduleWithFixedDelay(() -> {
+            log.info("getData3 ,input task222, 执行结果： {}", service.getData3("task222"));
+        }, 0, 1, TimeUnit.SECONDS);
+
+        Helper.sleep(22_000);
+
+        pool.shutdown();
+        //pool2.shutdown();
 
     }
 }

@@ -7,10 +7,14 @@ import yongfa365.common.Helper;
 import yongfa365.config.CaffeineConfig;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Slf4j
 @Service
 public class MyService {
+    /**
+     * 缓存5s
+     */
     @Cacheable(cacheNames = CaffeineConfig.Settings.Cache5Sec, sync = true)
     public int getData() {
         log.info("穿透getData");
@@ -23,5 +27,15 @@ public class MyService {
         log.info("穿透getData2");
         Helper.sleep(3000);
         return LocalDateTime.now().getSecond();
+    }
+
+    /**
+     * 根据参数缓存
+     */
+    @Cacheable(cacheNames = CaffeineConfig.Settings.Cache5Sec, sync = true)
+    public String getData3(String input) {
+        log.info("穿透getData3 " + input);
+        Helper.sleep(3000);
+        return String.format("input:%s , data:%s", input, UUID.randomUUID().hashCode());
     }
 }
