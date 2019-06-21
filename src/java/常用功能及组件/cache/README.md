@@ -85,5 +85,5 @@ public class CacheHelper {
     }
 }
 ```
-
+key的实现方案可以看下官方的[SimpleKeyGenerator.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKeyGenerator.java)和[SimpleKey.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKey.java) 这里用不好会有问题
 
