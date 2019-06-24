@@ -81,7 +81,7 @@ java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个�
     - [x] Maven（mirror.aliyun|repository.dir|自行搭建仓库|各种命令）
     - [ ] Gradle
     
-- [ ] JSON(嵌套引用|enum|null|DateTime|pretty|性能)
+- [ ] JSON(嵌套引用|enum|null|LocalDateTime|pretty|性能|hashmap|所有基本类型|与C#的互通|多属性反序列化不报错)
     - [ ] fastJson
     - [ ] jackson
 
