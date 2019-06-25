@@ -55,7 +55,7 @@ public class AboutDateTime {
             var now = ZonedDateTime.now();
 
             //以前大家都用SimpleDateFormat，但他是非线程安全的，java8后应该用DateTimeFormatter替换他。
-            var time1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n").format(now); //n是纳秒
+            var time1 = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")); //n是纳秒
 
             //2018-11-28T16:57:42.205617700+08:00         ★ISO8601，用这个哪都支持
             var time2 = now.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -86,9 +86,11 @@ public class AboutDateTime {
         //region 定义DateTime 及 字符串转DateTime
         {
             var time1 = LocalDate.of(2018, 11, 21);
-            var time2 = ZonedDateTime.of(2018, 11, 21, 12, 23, 23, 123456700, ZoneId.of("+08:00"));
-            var time3 = LocalTime.of(12, 23, 23, 123456700);
-            var time4 = LocalDateTime.of(2018, 11, 21, 12, 23, 23, 123456700);//有多个重载,可能Java更推荐用这个吧
+            var time2 = LocalTime.of(12, 23, 23, 123456700);
+            //有多个重载,可能Java更推荐用这个吧
+            var time3 = LocalDateTime.of(2018, 11, 21, 12, 23, 23, 123456700);
+            //重载太少，太不人性化了。
+            var time4 = ZonedDateTime.of(2018, 11, 21, 12, 23, 23, 123456700, ZoneId.of("+08:00"));
 
 
             //默认的parse只支持“对应的标准的ISO格式“，如果想支持别的，可以使用重载方法指定字符串类型
@@ -131,6 +133,9 @@ public class AboutDateTime {
             var period_D = period.getDays(); //3 只考虑天的数字，没有包含年及月
             var period_diff_d = period.toTotalMonths(); //14 这个是算总的
 
+            Period periodOf = Period.of(1, 1, 1);
+            Period period0 = Period.ZERO;
+
             //Duration完整的日期时间去比较，结果都折算成Time（没有Year,Month），然后在Time维度考虑，如：
             var duration = Duration.between(ZonedDateTime.now(), ZonedDateTime.now().plusDays(-1).plusHours(-2).plusMinutes(-3)); //PT-26H-3M
             var duration_D = duration.toDays(); //-1
@@ -138,6 +143,9 @@ public class AboutDateTime {
             var duration_M = duration.toMinutes(); // 算的是总数
             var duration_S = duration.toSeconds(); // 算的是总数
             var duration_MS = duration.toMillis(); // 算的是总数
+
+            Duration durationOfXXX = Duration.ofMillis(1000);
+            Duration duration0 = Duration.ZERO;
 
             //★ChronoUnit,如果最终只是想要看两个时间的具体差值，这个就是首选啦。arg2-arg1的结果,当然也是有些限制的，具体自行debug吧。
             var days = ChronoUnit.DAYS.between(ZonedDateTime.now().plusYears(1), ZonedDateTime.now()); //-365
