@@ -93,7 +93,8 @@ java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个�
     - [ ] lz4
 
 
-- [ ] lombok
+- [x] lombok（耗时1天）
+    - [x] @Data、@Builder、@NoArgsConstructor、@Slf4j、@SuperBuilder、@ExtensionMethod
 
 - [ ] Mybatis（自动生成与手动分开|备注|事物|映射）
 
