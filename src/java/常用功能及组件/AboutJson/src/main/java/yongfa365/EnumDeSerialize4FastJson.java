@@ -1,11 +1,11 @@
-package com.wingontravel.jsonutils;
+package yongfa365;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.JSONLexer;
 import com.alibaba.fastjson.parser.JSONToken;
 import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
-import com.wingontravel.jsonutils.model.BaseEnum;
+import yongfa365.model.BaseEnum;
 
 import java.lang.reflect.Type;
 

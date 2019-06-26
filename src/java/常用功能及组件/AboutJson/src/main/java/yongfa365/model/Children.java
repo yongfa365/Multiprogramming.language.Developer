@@ -1,9 +1,9 @@
-package com.wingontravel.jsonutils.model;
+package yongfa365.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.wingontravel.jsonutils.EnumDeSerialize4FastJson;
-import com.wingontravel.jsonutils.EnumSerialize4FastJson;
+import yongfa365.EnumDeSerialize4FastJson;
+import yongfa365.EnumSerialize4FastJson;
 
 import java.util.HashMap;
 import java.util.List;

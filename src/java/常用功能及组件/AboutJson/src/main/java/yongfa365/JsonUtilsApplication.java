@@ -1,8 +1,6 @@
-package com.wingontravel.jsonutils;
+package yongfa365;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,8 +9,11 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.wingontravel.jsonutils.model.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import yongfa365.model.Children;
+import yongfa365.model.Father;
+import yongfa365.model.GenderEnum;
+import yongfa365.model.HobbyEnum;
 
 import java.io.IOException;
 import java.time.LocalDate;

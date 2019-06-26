@@ -1,4 +1,4 @@
-package com.wingontravel.jsonutils;
+package yongfa365;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

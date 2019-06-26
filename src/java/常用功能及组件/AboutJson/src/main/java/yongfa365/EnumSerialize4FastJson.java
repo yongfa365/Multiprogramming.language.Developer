@@ -1,9 +1,9 @@
-package com.wingontravel.jsonutils;
+package yongfa365;
 
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
-import com.wingontravel.jsonutils.model.BaseEnum;
+import yongfa365.model.BaseEnum;
 
 import java.lang.reflect.Type;
 

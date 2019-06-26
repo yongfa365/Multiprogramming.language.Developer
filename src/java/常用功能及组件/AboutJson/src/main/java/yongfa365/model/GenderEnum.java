@@ -1,8 +1,7 @@
-package com.wingontravel.jsonutils.model;
+package yongfa365.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.ToString;
 
 public enum GenderEnum implements BaseEnum {
     male(1, "男"), female(2, "女");

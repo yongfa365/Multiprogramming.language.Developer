@@ -1,4 +1,4 @@
-package com.wingontravel.jsonutils;
+package yongfa365;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
