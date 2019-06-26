@@ -1,4 +1,4 @@
-package com.wingontravel.jsonutils.model;
+package com.json.test.jsonutils.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

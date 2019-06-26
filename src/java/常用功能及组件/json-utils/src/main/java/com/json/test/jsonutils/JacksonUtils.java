@@ -1,4 +1,4 @@
-package com.wingontravel.jsonutils;
+package com.json.test.jsonutils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;

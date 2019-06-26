@@ -1,9 +1,9 @@
-package com.wingontravel.jsonutils;
+package com.json.test.jsonutils;
 
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
-import com.wingontravel.jsonutils.model.BaseEnum;
+import com.json.test.jsonutils.model.BaseEnum;
 
 import java.lang.reflect.Type;
 

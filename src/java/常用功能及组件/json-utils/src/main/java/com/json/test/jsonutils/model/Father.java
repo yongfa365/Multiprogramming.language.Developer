@@ -1,8 +1,7 @@
-package com.wingontravel.jsonutils.model;
+package com.json.test.jsonutils.model;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.parser.Feature;
 
 import java.time.LocalDateTime;
 

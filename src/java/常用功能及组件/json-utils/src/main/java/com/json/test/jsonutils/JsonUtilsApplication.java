@@ -1,8 +1,6 @@
-package com.wingontravel.jsonutils;
+package com.json.test.jsonutils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,10 +9,13 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.wingontravel.jsonutils.model.*;
+import com.json.test.jsonutils.model.Children;
+import com.json.test.jsonutils.model.Father;
+import com.json.test.jsonutils.model.GenderEnum;
+import com.json.test.jsonutils.model.HobbyEnum;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,10 +29,12 @@ public class JsonUtilsApplication {
 
     public static void main(String[] args) throws IOException {
         //SpringApplication.run(JsonUtilsApplication.class, args);
-        fastJsonFatherSonSerilize();
-        fastjsonFatherSonDeserilize();
-        jacksonFatherSonSerilize();
-        jacksonFatherSonDeserilize();
+//        fastJsonFatherSonSerilize();
+//        fastjsonFatherSonDeserilize();
+//        jacksonFatherSonSerilize();
+//        jacksonFatherSonDeserilize();
+
+        jacksonBinfoDetserilize();
     }
 
 
@@ -104,6 +107,9 @@ public class JsonUtilsApplication {
 
         String jsonStr = writer.writeValueAsString(father);
 
+        //格式化输出
+//        jsonStr = writer.writerWithDefaultPrettyPrinter().writeValueAsString(father);
+
 //{"mySon":{"name":"eee","age":18},"name":"Bob","age":40,"birthday":"1979-01-01 01:01:00"} 需要 在对应字段上加上注解 @JsonBackReference
         System.out.println(jsonStr);
     }
@@ -119,4 +125,28 @@ public class JsonUtilsApplication {
         Father father = reader.readValue(jsonStr, Father.class);
         System.out.println(father.getBirthday().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
+
+
+    private static void jacksonBinfoDetserilize() throws IOException {
+        String jsonStr = readFile();
+
+
+
+
+        System.out.println(jsonStr);
+    }
+
+    public static String readFile() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        InputStream inputStream = JsonUtilsApplication.class.getClassLoader().getResourceAsStream("binfo.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)); // 实例化输入流，并获取网页代码
+        String s; // 依次循环，至到读的值为空
+
+        while ((s = reader.readLine()) != null) {
+            sb.append(s);
+        }
+        reader.close();
+        return sb.toString();
+    }
+
 }

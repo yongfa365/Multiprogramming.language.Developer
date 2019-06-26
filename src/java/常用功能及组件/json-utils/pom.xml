@@ -8,7 +8,7 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.wingontravel</groupId>
+    <groupId>com.json.test</groupId>
     <artifactId>json-utils</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>json-utils</name>

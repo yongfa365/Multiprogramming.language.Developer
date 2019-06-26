@@ -1,4 +1,4 @@
-package com.wingontravel.jsonutils;
+package com.json.test.jsonutils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
