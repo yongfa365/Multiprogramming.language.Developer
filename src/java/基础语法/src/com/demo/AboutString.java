@@ -14,11 +14,6 @@ import java.util.regex.Pattern;
 
 public class AboutString {
     public static void main(String[] args) throws Exception {
-        RunDemo();
-    }
-
-    public static void RunDemo() throws Exception {
-
         //region 构造个string
         {
             // 平时使用最多的,要转义，貌似比较麻烦，其实你在Paste及Copy时idea会自动转义或自动去掉转义，还是挺方便的

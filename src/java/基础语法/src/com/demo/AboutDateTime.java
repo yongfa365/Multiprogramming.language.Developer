@@ -16,11 +16,6 @@ import java.util.concurrent.TimeUnit;
 // S可以有0-9个，有几个S就表示从左到右截取几位纳秒
 public class AboutDateTime {
     public static void main(String[] args) throws Exception {
-        RunDemo();
-    }
-
-    public static void RunDemo() throws Exception {
-
         //region 相关类 与C#大不同,研究这个花了一天多时间
 
         //1.8之前的，位于java.util中，初始化后还可以set改变，改变后getxxx时才生效，线程不安全，被各种吐槽，不推荐：
@@ -175,36 +170,6 @@ public class AboutDateTime {
             //方法2:原生没有StopWatch,可以用org.apache.commons.lang3.time
 
 
-        }
-        //endregion
-
-
-        //region schedule都是 上一各跑完后，才跑下一个，本质上是同步的（无论线程池设置多大），与C#行为不同，各有特点，貌似java的这个使用场景更多
-        {
-            //方法1:原生timer，不推荐
-            var timer = new Timer("我是个Timer", true);
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println(LocalTime.now().toString() + "Timer Runing ");
-                }
-            }, 0, 1000 * 1);
-
-            //方法2：按固定频率调度，类似令牌桶，到时间就往桶里扔一个，不管桶里有多少个，worker只要看到桶里有就执行。
-            //上一次任务的开始时间 到 下一次任务的开始时间 的间隔，每次任务都会执行；
-            // 如果 任务执行时间>间隔时间 则当前完成后立即执行下一次，否则间隔时间到了才执行。
-            // 如果任务第一次要5s，之后只要0s，间隔设置为1s，则：第一次5s，然后紧接着会再执行4次之前落下的，然后才1s1次
-            Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-                System.out.println("执行任务A:" + LocalDateTime.now());
-                Helper.sleep(1000); //改成1000及5000分别试下
-            }, 0, 3, TimeUnit.SECONDS);
-
-            //方法3：按固定间隔调度，不管任务执行多久，按执行完后，都得等固定间隔再执行下一次。
-            //上一次任务的结束时间 到 下一次任务的开始时间 的间隔，每次任务都会执行；
-            Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> {
-                System.out.println("执行任务B:" + LocalDateTime.now());
-                Helper.sleep(1000); //改成1000及5000分别试下
-            }, 0, 3, TimeUnit.SECONDS);
         }
         //endregion
 

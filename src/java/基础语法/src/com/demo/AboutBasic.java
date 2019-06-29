@@ -16,11 +16,6 @@ import java.util.function.Function;
 //此文件时最基础功能的展示，所以都用的是具体类型，没有用var,而平时用基本都是var
 public class AboutBasic {
     public static void main(String[] args) {
-        RunDemo();
-    }
-
-    public static void RunDemo() {
-
         //region 最最基础类型
         {
             //8个原始类型(Primitive Type )，这些是不能为null的，其他的都能为null。与C#不同，C#是int与Int32等效的
@@ -222,8 +217,7 @@ public class AboutBasic {
     }
 
 
-    public  static  void  noThrowsExceptionInMethod()
-    {
+    public static void noThrowsExceptionInMethod() {
         try {
             //这种事 【checked异常】，需要try{}catch{}处理或在方法上throws Exception抛出
             throw new Exception("我是checked异常");

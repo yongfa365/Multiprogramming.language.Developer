@@ -22,10 +22,6 @@ import java.util.zip.GZIPInputStream;
 // 11.0.2解决了这个bug,按官方的说法他比apache的httpclient更好，与lambda结合也更好
 public class AboutHttp {
     public static void main(String[] args) throws Exception {
-        RunDemo();
-    }
-
-    public static void RunDemo() throws Exception {
         SimpleDemo();
         GetDemo();
         PostDemo();
