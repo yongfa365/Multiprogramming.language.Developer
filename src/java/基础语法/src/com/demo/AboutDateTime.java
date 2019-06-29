@@ -190,14 +190,17 @@ public class AboutDateTime {
                 }
             }, 0, 1000 * 1);
 
-            //方法2：如果 任务执行时间>间隔时间 则立即执行，否则间隔时间到了才执行。
+            //方法2：按固定频率调度，类似令牌桶，到时间就往桶里扔一个，不管桶里有多少个，worker只要看到桶里有就执行。
+            //上一次任务的开始时间 到 下一次任务的开始时间 的间隔，每次任务都会执行；
+            // 如果 任务执行时间>间隔时间 则当前完成后立即执行下一次，否则间隔时间到了才执行。
             // 如果任务第一次要5s，之后只要0s，间隔设置为1s，则：第一次5s，然后紧接着会再执行4次之前落下的，然后才1s1次
             Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
                 System.out.println("执行任务A:" + LocalDateTime.now());
                 Helper.sleep(1000); //改成1000及5000分别试下
             }, 0, 3, TimeUnit.SECONDS);
 
-            //方法3：按执行完后，等固定间隔再执行，不管你执行多久。
+            //方法3：按固定间隔调度，不管任务执行多久，按执行完后，都得等固定间隔再执行下一次。
+            //上一次任务的结束时间 到 下一次任务的开始时间 的间隔，每次任务都会执行；
             Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> {
                 System.out.println("执行任务B:" + LocalDateTime.now());
                 Helper.sleep(1000); //改成1000及5000分别试下

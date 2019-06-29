@@ -1,29 +1,32 @@
-HELP.md
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+# 柳永法整理，有疑问或需要添加请联系我
+# https://git-scm.com/docs/gitignore
+# https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository#_ignoring
+# dir1/		#忽略所有层级的dir1目录
+# /dir1/	#忽略当前目录下的dir1目录
+# *.iml		#忽略所有层级的*.iml文件
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+### VS Code/Visual Studio ###
+.vscode/
+.vs/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
+target/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-/build/
+###  NodeJS  ###
+.DS_Store
+node_modules/
+jspm_packages/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-### VS Code ###
-.vscode/
+###  Our Project  ###
+*-test-secret.yml
+*-uat-secret.yml
+*-prod-secret.yml
