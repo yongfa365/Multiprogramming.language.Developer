@@ -27,7 +27,6 @@ cron|到点就执行，如果上一个没执行完就跳过本次。
 
 
 ## Spring @Scheduled
-
     - Scheduled里long的单位都是ms
     - fixedRate、fixedDelay、cron同时只能有一个
     - pom.xml没有要求
@@ -43,11 +42,14 @@ public class ScheduleInSpring {
 
 ```java
 @Scheduled(cron = "*/2 * * * * *")
+public static void taskByCron() {...}
+
+@Scheduled(cron = "${cron.expression}")
+public static void taskByCron2() {...}
 
 @Scheduled(fixedDelay = 3000, initialDelay = 3000)
+public static void taskByFixedDelay() {...}
 
 @Scheduled(fixedRate = 3000)
-public static void taskByFixedRate() {
-    log.info("taskByFixedRate");
-}
+public static void taskByFixedRate() {...}
 ```
