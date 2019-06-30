@@ -1,0 +1,32 @@
+# 柳永法整理，有疑问或需要添加请联系我
+# https://git-scm.com/docs/gitignore
+# https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository#_ignoring
+# dir1/		#忽略所有层级的dir1目录
+# /dir1/	#忽略当前目录下的dir1目录
+# *.iml		#忽略所有层级的*.iml文件
+
+### VS Code/Visual Studio ###
+.vscode/
+.vs/
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+target/
+
+###  NodeJS  ###
+.DS_Store
+node_modules/
+jspm_packages/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+###  Our Project  ###
+*-test-secret.yml
+*-uat-secret.yml
+*-prod-secret.yml
