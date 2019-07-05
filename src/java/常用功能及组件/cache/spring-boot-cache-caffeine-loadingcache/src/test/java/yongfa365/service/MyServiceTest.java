@@ -31,7 +31,7 @@ public class MyServiceTest {
 
     @Test
     public void T2_测试是否会并发穿透() {
-        log.info("正常应该只能看到一个穿透");
+        log.info("正常应该只能看到一个穿透，其他等有结果后直接返回");
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
                 log.info("getData {}", service.getDataWithCaffeineLoadingCache("11111"));
@@ -42,6 +42,7 @@ public class MyServiceTest {
 
     @Test
     public void T3_测试是否根据条件缓存() {
+        log.info("同一行应该看到的input与结果一样，都是11111或22222");
         var i = 20;
         while (i-- > 0) {
             log.info("getData  input:11111,  结果： {}", service.getDataWithCaffeineLoadingCache("11111"));
@@ -65,14 +66,4 @@ public class MyServiceTest {
     }
 
 
-    @Test
-    public void 测试Cacheable() {
-        log.info("应该：穿透后的5s内很快，5s后要填充数据所以要等");
-        var pool = Executors.newSingleThreadScheduledExecutor();
-        pool.scheduleWithFixedDelay(() -> {
-            log.info("getData {}", service.getDataWithCacheable("111111"));
-        }, 0, 1, TimeUnit.SECONDS);
-        Helper.sleep(30_000);
-        pool.shutdown();
-    }
 }

@@ -26,7 +26,7 @@ public class Person {
     String gender;
     GenderType genderType;
 
-    static enum GenderType {
+    enum GenderType {
         MAN(1, "男"), WOMAN(1, "女");
         int value;
         String desc;
