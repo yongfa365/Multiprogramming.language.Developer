@@ -63,7 +63,7 @@ public class VerifySpringBootCacheAnnotationServiceTest {
     public void 默认缓存容易互串_测试() throws Exception {
         log.info("默认缓存容易互串!!!,因为他的Key只是按方法参数计算的。");
         log.info("以下3个都是无参的，所以算出的缓存key也是相同的，后面两个无等待，直接从缓存返回");
-        log.info("简单解决方法是显示的指定key：@cacheable(key=dsfsdfs)");
+        log.info("可以启用ApplicationConfig里的那个Configuration来解决");
         log.info("数据：" + service.并发仅一个穿透());
         log.info("数据：" + service.并发穿透());
         log.info("数据：" + service.首次访问或缓存过期后会穿透());

@@ -78,12 +78,31 @@ public class App {
 @Component
 public class CacheHelper {
     //Cacheable的方式缓存过期后会因穿透而变慢，需要设置sync防止并发请求同时穿透。
-    //默认CacheKey只考虑方法参数，没有考虑类及方法名，极容易串，简单解决方案是显示的为每个都指定不同的key，但又不适用于有参数的方法。
-    @Cacheable(value = "LocalCache_InMethod", sync = true, key="CacheHelper.getData")
+    @Cacheable(value = "LocalCache_InMethod", sync = true)
     public Integer getData() {
         return LocalDateTime.now().getSecond();
     }
 }
 ```
-key的实现方案可以看下官方的[SimpleKeyGenerator.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKeyGenerator.java)和[SimpleKey.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKey.java) 这里用不好会有问题
+默认CacheKey只考虑方法的参数，没有考虑类及方法名，极容易串。
+CacheKey的实现方案可以看下官方的[SimpleKeyGenerator.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKeyGenerator.java)和[SimpleKey.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKey.java) 这里用不好会有问题。
+强烈建议用以下方法重写下KeyGenerator，以覆盖默认实现，参考自[Spring Cache – Creating a Custom KeyGenerator](https://www.baeldung.com/spring-cache-custom-keygenerator)：
+```java
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils; //这个spring自带
 
+@EnableCaching
+@Configuration
+public class ApplicationConfig extends CachingConfigurerSupport {
+    @Override
+    public KeyGenerator keyGenerator() {
+        return (target, method, params) ->
+                target.getClass().getSimpleName() + ":"
+                        + method.getName() + ":"
+                        + StringUtils.arrayToDelimitedString(params, "_");
+    }
+}
+```
