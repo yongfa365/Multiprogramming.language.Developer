@@ -38,9 +38,10 @@ id|desc|url
   - [Demo2_Refresh](AboutCaffeine/src/main/java/yongfa365/AboutCaffeine/Demo2_Refresh.java)
   
 ### spring-boot-starter-cache使用方法
-  - [默认使用方法](spring-boot-cache-default/src/main/java/yongfa365/springbootcachedefault/CacheHelper.java)
   - [spring-boot-starter-cache结合Caffeine的使用方法](spring-boot-cache-caffeine)
-  - [自定义多个Bean使用Caffeine](TODO：)
+  - [spring-boot-starter-cache定义多个Caffeine的方法](spring-boot-cache-caffeine-multi)
+  - [spring-boot-starter-cache使用AOP实现LoadingCache的方法](spring-boot-cache-caffeine-loadingcache)
+
 
 ### 核心代码展示
 ```xml

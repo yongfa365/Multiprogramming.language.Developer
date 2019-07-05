@@ -3,7 +3,7 @@ spring-boot-cache默认不支持LoadingCache，但我们希望的是数据还没
 
 
 ## 实现方法
-使用aop实现，具体代码：[**自定义CacheManager**](src/main/javayongfa365/config/CaffeineConfig.java)
+使用aop实现，具体代码：[**自定义CacheManager**](src/main/java/yongfa365/config/CaffeineConfig.java)
 
 ```xml
 <dependency>

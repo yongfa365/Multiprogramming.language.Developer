@@ -2,12 +2,12 @@ package yongfa365.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Aspect
 @Configuration
+@EnableCaching //aop的不需要这个，是给CacheManager这个Bean用的
 public class CaffeineConfig {
 
     private static final ConcurrentHashMap<String, LoadingCache> LOADING_CACHES = new ConcurrentHashMap<>();
@@ -47,7 +48,7 @@ public class CaffeineConfig {
 
         //TODO:默认就是同时只有一个穿透，那@cacheable(sync=false)是怎么做到的？
         var cache = LOADING_CACHES.get(cacheName);
-        var key = new CacheKey(joinPoint.getArgs());
+        var key = new CacheKey(joinPoint.getSignature().toLongString(), joinPoint.getArgs());
         return cache.get(key);
     }
 
@@ -60,25 +61,7 @@ public class CaffeineConfig {
             throw new RuntimeException("name请使用CaffeineConfig.Settings里的", e);
         }
 
-        //region 构建LoadingCache
-        var builder = Caffeine.newBuilder();
-        var annotation = field.getAnnotation(CacheConfigInfo.class);
-        if (annotation.recordStats()) {
-            builder.recordStats();
-        }
-        if (annotation.expireAfterWriteSeconds() != -1) {
-            builder.expireAfterWrite(annotation.expireAfterWriteSeconds(), TimeUnit.SECONDS);
-        }
-        if (annotation.expireAfterAccessSeconds() != -1) {
-            builder.expireAfterAccess(annotation.expireAfterAccessSeconds(), TimeUnit.SECONDS);
-        }
-        if (annotation.refreshAfterWriteSeconds() != -1) {
-            builder.refreshAfterWrite(annotation.refreshAfterWriteSeconds(), TimeUnit.SECONDS);
-        }
-        if (annotation.maximumSize() != -1) {
-            builder.maximumSize(annotation.maximumSize());
-        }
-
+        var builder = getCaffeineBuilder(field, true);
         var loadingCache = builder.build(key -> {
             try {
                 //log.debug("000000000000，proceed,观察是否多次进入");
@@ -87,13 +70,13 @@ public class CaffeineConfig {
                 throw new RuntimeException("RefreshCacheException", throwable);
             }
         });
-        //endregion
 
         LOADING_CACHES.put(cacheName, loadingCache);
     }
 
+
     /**
-     * 自定义CacheManager实现多种缓存过期策略
+     * 自定义CacheManager实现多种缓存过期策略，不支持LoadingCache
      */
     @Bean
     public CacheManager cacheManager() {
@@ -101,24 +84,7 @@ public class CaffeineConfig {
 
         var fields = CaffeineConfig.Settings.class.getDeclaredFields();
         for (var field : fields) {
-            var annotation = field.getAnnotation(CacheConfigInfo.class);
-
-            var builder = Caffeine.newBuilder();
-            if (annotation.recordStats()) {
-                builder.recordStats();
-            }
-            if (annotation.expireAfterWriteSeconds() != -1) {
-                builder.expireAfterWrite(annotation.expireAfterWriteSeconds(), TimeUnit.SECONDS);
-            }
-            if (annotation.expireAfterAccessSeconds() != -1) {
-                builder.expireAfterAccess(annotation.expireAfterAccessSeconds(), TimeUnit.SECONDS);
-            }
-            //            if (annotation.refreshAfterWriteSeconds() != -1) {
-            //                builder.refreshAfterWrite(annotation.refreshAfterWriteSeconds(), TimeUnit.SECONDS);
-            //            }
-            if (annotation.maximumSize() != -1) {
-                builder.maximumSize(annotation.maximumSize());
-            }
+            var builder = getCaffeineBuilder(field, false);
 
             var name = "";
             try {
@@ -130,7 +96,6 @@ public class CaffeineConfig {
             var cache = new CaffeineCache(name, builder.build());
 
             caches.add(cache);
-
         }
 
         var manager = new SimpleCacheManager();
@@ -138,6 +103,26 @@ public class CaffeineConfig {
         return manager;
     }
 
+    private Caffeine<Object, Object> getCaffeineBuilder(Field field, boolean isCanRefresh) {
+        var builder = Caffeine.newBuilder();
+        var annotation = field.getAnnotation(CacheConfigInfo.class);
+        if (annotation.recordStats()) {
+            builder.recordStats();
+        }
+        if (annotation.expireAfterWriteSeconds() != -1) {
+            builder.expireAfterWrite(annotation.expireAfterWriteSeconds(), TimeUnit.SECONDS);
+        }
+        if (annotation.expireAfterAccessSeconds() != -1) {
+            builder.expireAfterAccess(annotation.expireAfterAccessSeconds(), TimeUnit.SECONDS);
+        }
+        if (annotation.refreshAfterWriteSeconds() != -1 && isCanRefresh) {
+            builder.refreshAfterWrite(annotation.refreshAfterWriteSeconds(), TimeUnit.SECONDS);
+        }
+        if (annotation.maximumSize() != -1) {
+            builder.maximumSize(annotation.maximumSize());
+        }
+        return builder;
+    }
 
     /**
      * 缓存配置，使用方法：@Cacheable(cacheNames = CaffeineConfig.Settings.Cache5Sec)
@@ -147,17 +132,12 @@ public class CaffeineConfig {
         @CacheConfigInfo(refreshAfterWriteSeconds = 5)
         public static final String RefreshPer5Second = "RefreshPer5Second";
 
-        @CacheConfigInfo(expireAfterWriteSeconds = 10)
+        @CacheConfigInfo(expireAfterWriteSeconds = 5 * 60, refreshAfterWriteSeconds = 5)
         public static final String RefreshDefault = "RefreshDefault";
 
-        @CacheConfigInfo(expireAfterWriteSeconds = 5 * 60)
-        public static final String RefreshPer5Min = "RefreshPer5Min";
+        @CacheConfigInfo(expireAfterWriteSeconds = 5)
+        public static final String AfterWrite5Second = "AfterWrite5Second";
 
-        @CacheConfigInfo(expireAfterWriteSeconds = 15 * 60)
-        public static final String RefreshPer15Min = "RefreshPer15Min";
-
-        @CacheConfigInfo(expireAfterWriteSeconds = 60 * 60)
-        public static final String RefreshPer60Min = "RefreshPer60Min";
     }
 
     @Retention(RetentionPolicy.RUNTIME)
@@ -173,26 +153,16 @@ public class CaffeineConfig {
         boolean recordStats() default true;
     }
 
-    @AllArgsConstructor
-    class Locker<TKey, TValue> {
-        TKey lock;
-        TValue data;
-    }
-
     private static class CacheKey implements Serializable {
-
-        public static final CacheKey EMPTY = new CacheKey();
-
         private final Object[] params;
         private final int hashCode;
+        private final String signature;
 
-
-        CacheKey(Object... elements) {
-
+        CacheKey(String signature, Object... elements) {
+            this.signature = signature;
             this.params = new Object[elements.length];
             System.arraycopy(elements, 0, this.params, 0, elements.length);
-            this.hashCode = Arrays.deepHashCode(this.params);
-
+            this.hashCode = Arrays.deepHashCode(this.params) + signature.hashCode(); //非专业处理
         }
 
         Object[] getParams() {
@@ -201,7 +171,15 @@ public class CaffeineConfig {
 
         @Override
         public boolean equals(Object obj) {
-            return (this == obj || (obj instanceof CacheKey && Arrays.deepEquals(this.params, ((CacheKey) obj).params)));
+            if (this == obj) {
+                return true;
+            }
+
+            if (obj instanceof CacheKey) {
+                var item = (CacheKey) obj;
+                return this.signature.equals(item.signature) && Arrays.deepEquals(this.params, item.params);
+            }
+            return false;
         }
 
         @Override
@@ -215,7 +193,7 @@ public class CaffeineConfig {
             for (Object param : this.params) {
                 joiner.add(param.toString());
             }
-            return getClass().getSimpleName() + joiner.toString();
+            return getClass().getSimpleName() + ":" + signature + ":" + joiner.toString();
         }
 
     }

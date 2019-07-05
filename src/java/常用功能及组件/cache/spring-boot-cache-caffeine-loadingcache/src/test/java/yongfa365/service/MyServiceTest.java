@@ -23,9 +23,9 @@ public class MyServiceTest {
     public void T1_穿透后_依然立即返回旧值_后台会刷新数据() {
         var pool = Executors.newSingleThreadScheduledExecutor();
         pool.scheduleWithFixedDelay(() -> {
-            log.info("getData {}", service.getData("111111"));
+            log.info("getData {}", service.getDataWithCaffeineLoadingCache("111111"));
         }, 0, 1, TimeUnit.SECONDS);
-        Helper.sleep(20_000);
+        Helper.sleep(30_000);
         pool.shutdown();
     }
 
@@ -34,7 +34,7 @@ public class MyServiceTest {
         log.info("正常应该只能看到一个穿透");
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
-                log.info("getData {}", service.getData("11111"));
+                log.info("getData {}", service.getDataWithCaffeineLoadingCache("11111"));
             }).start();
         }
         Helper.sleep(20_000);
@@ -44,8 +44,8 @@ public class MyServiceTest {
     public void T3_测试是否根据条件缓存() {
         var i = 20;
         while (i-- > 0) {
-            log.info("getData  input:11111,  结果： {}", service.getData("11111"));
-            log.info("getData  input:22222,  结果： {}", service.getData("22222"));
+            log.info("getData  input:11111,  结果： {}", service.getDataWithCaffeineLoadingCache("11111"));
+            log.info("getData  input:22222,  结果： {}", service.getDataWithCaffeineLoadingCache("22222"));
             Helper.sleep(1000);
         }
 
@@ -61,6 +61,18 @@ public class MyServiceTest {
             log.info("getData  input:11111,  结果： {}", service.getData2("11111"));
         }, 0, 1, TimeUnit.SECONDS);
         Helper.sleep(20_000);
+        pool.shutdown();
+    }
+
+
+    @Test
+    public void 测试Cacheable() {
+        log.info("应该：穿透后的5s内很快，5s后要填充数据所以要等");
+        var pool = Executors.newSingleThreadScheduledExecutor();
+        pool.scheduleWithFixedDelay(() -> {
+            log.info("getData {}", service.getDataWithCacheable("111111"));
+        }, 0, 1, TimeUnit.SECONDS);
+        Helper.sleep(30_000);
         pool.shutdown();
     }
 }

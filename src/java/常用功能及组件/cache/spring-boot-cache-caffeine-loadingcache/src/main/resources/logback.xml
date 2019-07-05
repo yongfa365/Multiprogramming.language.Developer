@@ -4,7 +4,7 @@
         <encoder>
             <Pattern>
 <!--                %d{yyyy-MM-dd HH:mm:ss} %-5level  [%-16.16thread]  %logger{35} %msg%n-->
-                %d%-5level  [%-16.16thread] %msg%n
+                %d  %-5level  [%-16.16thread] %msg%n
             </Pattern>
         </encoder>
     </appender>
