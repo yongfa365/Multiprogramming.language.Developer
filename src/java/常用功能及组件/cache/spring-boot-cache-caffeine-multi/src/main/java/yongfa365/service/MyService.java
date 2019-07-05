@@ -38,4 +38,13 @@ public class MyService {
         Helper.sleep(3000);
         return String.format("input:%s , data:%s", input, UUID.randomUUID().hashCode());
     }
+
+
+    /**
+     * 随意写个cacheName是会报错的
+     */
+    @Cacheable(cacheNames = "xxxxxxxxxxxxxxxxxx", sync = true)
+    public String getData4(String input) {
+        return String.format("input:%s , data:%s", input, UUID.randomUUID().hashCode());
+    }
 }

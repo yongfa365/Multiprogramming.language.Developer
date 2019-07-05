@@ -65,4 +65,11 @@ public class MyServiceTest {
         //pool2.shutdown();
 
     }
+
+    //@Test(expected = Exception.class) 就是要让你看到会报错，所以注释掉这行了
+    @Test
+    public void getData4() {
+        log.info("随意写个cacheName是不行的");
+        service.getData4("xxxxxxxx");
+    }
 }

@@ -119,7 +119,15 @@ public class CaffeineConfig {
             if (annotation.maximumSize() != -1) {
                 builder.maximumSize(annotation.maximumSize());
             }
-            var cache = new CaffeineCache(field.getName(), builder.build());
+
+            var name = "";
+            try {
+                name = field.get(null).toString();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+            var cache = new CaffeineCache(name, builder.build());
 
             caches.add(cache);
 

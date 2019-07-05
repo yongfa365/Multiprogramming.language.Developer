@@ -4,3 +4,7 @@ spring-boot-cache-starter默认只能在application.yml配置一种过期策略�
 
 本项目写了个实现，方便快速扩充：
 [**自定义CacheManager**](src/main/javayongfa365/config/CaffeineConfig.java)
+
+
+## 使用方法：
+走测试用例
