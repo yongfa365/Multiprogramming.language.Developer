@@ -114,7 +114,7 @@ java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个�
       - [ ] RabbitMQ（重连|LocalQueue）
       - [ ] Kafka
       - [ ] ElasticSearch
-
+    - [ ] actuator
 
 - [ ] http (Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
     - [x] jdk HttpClient
@@ -127,9 +127,9 @@ java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个�
     - [ ] Spring task
     - [ ] Quartz（分布式|服务器时间差几秒）
 
-- [ ] Excel
+- [x] Excel
     - [x] EasyExcel(表头|列宽|身份证号|数字|日期时间格式|内存占用) 4h
-    - [ ] POI
+
 
 - [ ] PDF
 - [ ] 性能
@@ -137,3 +137,6 @@ java中的装箱拆箱相当普遍，int->Integer，而C#int->Int32是同一个�
     - [ ] 火焰图
 - [ ] javaagent
 - [ ] html parse
+- [ ] doc
+    - [ ] swaggerui
+    - [ ] javadoc
