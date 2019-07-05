@@ -40,10 +40,12 @@ id|desc|url
 ### spring-boot-starter-cache使用方法
   - [spring-boot-starter-cache结合Caffeine的使用方法](spring-boot-cache-caffeine)
   - [spring-boot-starter-cache定义多个Caffeine的方法](spring-boot-cache-caffeine-multi)
-  - [spring-boot-starter-cache使用AOP实现LoadingCache的方法](spring-boot-cache-caffeine-loadingcache)
+    - [核心实现代码CaffeineConfig.java](spring-boot-cache-caffeine-multi/src/main/java/yongfa365/config/CaffeineConfig.java)
+  - [**spring-boot-starter-cache使用AOP实现LoadingCache的方法**](spring-boot-cache-caffeine-loadingcache)
+    - [核心实现代码CaffeineConfig.java](spring-boot-cache-caffeine-loadingcache/src/main/java/yongfa365/config/CaffeineConfig.java)
 
 
-### 核心代码展示
+### 基础配置，核心代码展示
 ```xml
 <!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
 <dependency>
@@ -85,6 +87,9 @@ public class CacheHelper {
     }
 }
 ```
+
+### 常见问题及修复
+
 默认CacheKey只考虑方法的参数，没有考虑类及方法名，极容易串。
 CacheKey的实现方案可以看下官方的[SimpleKeyGenerator.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKeyGenerator.java)和[SimpleKey.java](https://github.com/spring-projects/spring-framework/blob/master/spring-context/src/main/java/org/springframework/cache/interceptor/SimpleKey.java) 这里用不好会有问题。
 强烈建议用以下方法重写下KeyGenerator，以覆盖默认实现，参考自[Spring Cache – Creating a Custom KeyGenerator](https://www.baeldung.com/spring-cache-custom-keygenerator)：
