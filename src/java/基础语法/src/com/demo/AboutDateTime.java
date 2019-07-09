@@ -5,10 +5,7 @@ import com.demo.Helper.Helper;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +29,8 @@ public class AboutDateTime {
 
         //endregion
 
+        //可以在启动时设置默认时区，这样就不受系统时区影响了。
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8:00"));
 
         //region now 的各种输出
         {
