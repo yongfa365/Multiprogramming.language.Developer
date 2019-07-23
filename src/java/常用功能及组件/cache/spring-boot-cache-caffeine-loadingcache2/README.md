@@ -12,7 +12,12 @@ spring-boot-cache默认不支持LoadingCache，但我们希望的是数据还没
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-aop</artifactId>
 </dependency>
-
+<!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
+<dependency>
+	<groupId>com.github.ben-manes.caffeine</groupId>
+	<artifactId>caffeine</artifactId>
+	<version>2.7.0</version>
+</dependency>
 ```
 ```java
 //spring-boot默认加了spring.aop.auto: true，所以这句不是必须的

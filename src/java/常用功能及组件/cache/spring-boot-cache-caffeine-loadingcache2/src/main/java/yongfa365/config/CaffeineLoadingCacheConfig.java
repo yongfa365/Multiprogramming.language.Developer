@@ -24,7 +24,7 @@ public class CaffeineLoadingCacheConfig {
 
     @Around("@annotation(config)")
     public Object autoRefreshCache(ProceedingJoinPoint joinPoint, CacheableLoading config) {
-        var cacheName = String.format("%s:%s:%s:%s:%s:%s", config.name(), config.maximumSize(),
+        var cacheName = String.format("%s:%s:%s:%s:%s:%s:%s", config.name(), config.maximumSize(),
                 config.expireAfterWrite(), config.expireAfterAccess(), config.refreshAfterWrite(),
                 config.recordStats(), config.timeout());
 
