@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface CacheablePlus {
+public @interface CacheableLoading {
     /**
      * 可以不写，不重要
      */
@@ -34,5 +34,11 @@ public @interface CacheablePlus {
     long refreshAfterWrite() default -1;
 
     boolean recordStats() default false;
+
+    /**
+     * 出错后要等几秒再尝试，默认10秒，防止出错后不停的发起穿透请求。
+     * @return
+     */
+    long timeout() default 10;
 }
 

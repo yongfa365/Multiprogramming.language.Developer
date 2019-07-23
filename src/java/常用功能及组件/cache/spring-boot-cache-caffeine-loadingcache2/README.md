@@ -20,6 +20,6 @@ spring-boot-cache默认不支持LoadingCache，但我们希望的是数据还没
 ```
 
 ```java
-@CacheablePlus(name = "可以不要", expireAfterWrite = 20, refreshAfterWrite = 5, maximumSize = 1000, recordStats = true)
+@CacheableLoading(name = "可以不要", expireAfterWrite = 20, refreshAfterWrite = 5, maximumSize = 1000, recordStats = true, timeout=5)
 String getDataWithCaffeineLoadingCache(String input) {...}
 ```

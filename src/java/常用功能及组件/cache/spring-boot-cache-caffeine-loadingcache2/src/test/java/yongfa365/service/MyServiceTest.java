@@ -30,6 +30,22 @@ public class MyServiceTest {
     }
 
     @Test
+    public void T1_穿透后_依然立即返回旧值_后台会刷新数据_后台出错没影响() {
+        log.info("开始正常-->随后报错(5s后后台有错（黑色的）)-->正常拿老的缓存数据-->每隔5s报一次错-->到20s时缓存过期，真的穿透了，调用方要等待");
+        log.info("等待过程中还是没数据，调用方看到异常（红色的）-->最后程序正常后，一切恢复正常");
+        var pool = Executors.newSingleThreadScheduledExecutor();
+        pool.scheduleWithFixedDelay(() -> {
+            try {
+                log.info("input:11111 output: {}", service.getDataWithCaffeineLoadingCacheWithException("11111"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+        Helper.sleep(40_000);
+        pool.shutdown();
+    }
+
+    @Test
     public void T1_1_穿透后等待() {
         var pool = Executors.newSingleThreadScheduledExecutor();
         pool.scheduleWithFixedDelay(() -> {

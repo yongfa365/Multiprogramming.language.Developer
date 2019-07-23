@@ -37,7 +37,13 @@ public class Demo2_Refresh {
         //调用方法也从getIfPresent变成get了，一定会拿到值才走，会等待。
         var obj1 = LocalCache.get("key1");
         var obj2 = LocalCache.get("key2");
+try {
 
+}catch (Throwable ex)
+{
+    Thread.sleep(1000);
+    throw new RuntimeException("RefreshCacheException", throwable);
+}
         log.info("★证明：虽然同时开了10个线程，但实际是只有1个请求会穿透，其他请求会等待并拿第1次的结果来响应。");
         {
             log.info("开启10个线程.Start");

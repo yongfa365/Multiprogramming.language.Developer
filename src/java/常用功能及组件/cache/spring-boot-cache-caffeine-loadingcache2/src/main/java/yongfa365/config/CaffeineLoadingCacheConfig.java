@@ -17,13 +17,13 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Aspect
 @Configuration
-public class CaffeineConfig {
+public class CaffeineLoadingCacheConfig {
 
     private static final ConcurrentHashMap<String, LoadingCache> LOADING_CACHES = new ConcurrentHashMap<>();
     private static final Object LOCK = new Object();
 
     @Around("@annotation(config)")
-    public Object autoRefreshCache(ProceedingJoinPoint joinPoint, CacheablePlus config) {
+    public Object autoRefreshCache(ProceedingJoinPoint joinPoint, CacheableLoading config) {
         var cacheName = String.format("%s:%s:%s:%s:%s:%s", config.name(), config.maximumSize(),
                 config.expireAfterWrite(), config.expireAfterAccess(), config.refreshAfterWrite(), config.recordStats());
 
@@ -54,6 +54,7 @@ public class CaffeineConfig {
                             //log.info("000000000000，proceed,观察是否多次进入");
                             return joinPoint.proceed(((CacheKey) key).getParams());
                         } catch (Throwable throwable) {
+                            Thread.sleep(config.timeout() * 1000);
                             throw new RuntimeException("RefreshCacheException", throwable);
                         }
                     });
