@@ -39,11 +39,15 @@ id|desc|url
   
 ### spring-boot-starter-cache使用方法
   - [spring-boot-starter-cache结合Caffeine的使用方法](spring-boot-cache-caffeine)
+
   - [spring-boot-starter-cache定义多个Caffeine的方法](spring-boot-cache-caffeine-multi)
     - [核心实现代码CaffeineConfig.java](spring-boot-cache-caffeine-multi/src/main/java/yongfa365/config/CaffeineConfig.java)
-  - [**spring-boot-starter-cache使用AOP实现LoadingCache的方法**](spring-boot-cache-caffeine-loadingcache)
+
+  - [spring-boot-starter-cache使用AOP实现LoadingCache的方法](spring-boot-cache-caffeine-loadingcache)
     - [核心实现代码CaffeineConfig.java](spring-boot-cache-caffeine-loadingcache/src/main/java/yongfa365/config/CaffeineConfig.java)
 
+  - [推荐:**spring-boot-starter-cache使用AOP实现LoadingCache的方法2**](spring-boot-cache-caffeine-loadingcache2)
+    - [核心实现代码CaffeineConfig.java](spring-boot-cache-caffeine-loadingcache2/src/main/java/yongfa365/config/CaffeineLoadingCacheConfig.java)
 
 ### 基础配置，核心代码展示
 ```xml

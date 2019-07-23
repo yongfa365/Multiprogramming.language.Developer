@@ -25,7 +25,8 @@ public class CaffeineLoadingCacheConfig {
     @Around("@annotation(config)")
     public Object autoRefreshCache(ProceedingJoinPoint joinPoint, CacheableLoading config) {
         var cacheName = String.format("%s:%s:%s:%s:%s:%s", config.name(), config.maximumSize(),
-                config.expireAfterWrite(), config.expireAfterAccess(), config.refreshAfterWrite(), config.recordStats());
+                config.expireAfterWrite(), config.expireAfterAccess(), config.refreshAfterWrite(),
+                config.recordStats(), config.timeout());
 
         //double check lock TODO:防止并发添加到HashMap锁引起的并发穿透？
         if (!LOADING_CACHES.containsKey(cacheName)) {
