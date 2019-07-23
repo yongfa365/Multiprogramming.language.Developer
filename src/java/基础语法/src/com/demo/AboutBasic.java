@@ -218,6 +218,7 @@ public class AboutBasic {
 
 
     public static void noThrowsExceptionInMethod() {
+        Helper.NoErrorInvoke(() -> {throw new Exception();});
         try {
             //这种事 【checked异常】，需要try{}catch{}处理或在方法上throws Exception抛出
             throw new Exception("我是checked异常");

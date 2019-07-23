@@ -11,7 +11,7 @@ import java.util.stream.BaseStream;
 
 
 public class Helper {
-    public static void NoErrorInvoke(Runnable action) {
+    public static void NoErrorInvoke(WithExceptionRunnable action) {
         try {
             action.run();
         } catch (Exception ex) {
