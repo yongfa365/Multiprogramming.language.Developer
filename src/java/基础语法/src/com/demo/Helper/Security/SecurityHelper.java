@@ -7,20 +7,20 @@ import java.util.Base64;
 
 public class SecurityHelper {
 
-    public static String ToBase64(String input) {
+    public static String toBase64(String input) {
         var inputBytes = input.getBytes(StandardCharsets.UTF_8);
         var result = Base64.getEncoder().encodeToString(inputBytes);
         return result;
     }
 
-    public static String FromBase64(String input) {
+    public static String fromBase64(String input) {
         var inputBytes = Base64.getDecoder().decode(input);
         var result = new String(inputBytes, StandardCharsets.UTF_8);
         return result;
     }
 
 
-    public static String ToSHA1(String input) throws Exception {
+    public static String toSHA1(String input) throws Exception {
         var inputBytes = input.getBytes(StandardCharsets.UTF_8);
         var provider = MessageDigest.getInstance("SHA-1");
         provider.update(inputBytes);
@@ -30,7 +30,7 @@ public class SecurityHelper {
     }
 
 
-    public static String ToSHA512(String input) throws Exception {
+    public static String toSHA512(String input) throws Exception {
         var inputBytes = input.getBytes(StandardCharsets.UTF_8);
         var provider = MessageDigest.getInstance("SHA-512");
         provider.update(inputBytes);
@@ -40,14 +40,14 @@ public class SecurityHelper {
     }
 
 
-    public static String To16bitMD5(String input) throws Exception {
-        var full = To32bitMD5(input);
+    public static String to16BitMD5(String input) throws Exception {
+        var full = to32BitMD5(input);
         var result = full.substring(8, 24);
         return result;
     }
 
 
-    public static String To32bitMD5(String input) throws Exception {
+    public static String to32BitMD5(String input) throws Exception {
         var inputBytes = input.getBytes(StandardCharsets.UTF_8);
         var provider = MessageDigest.getInstance("MD5");
         provider.update(inputBytes);

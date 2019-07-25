@@ -179,14 +179,14 @@ public class AboutString {
 
             var src = "我是123の뭐라구";
 
-            var base64_to = SecurityHelper.ToBase64(src);
-            var base64_from = SecurityHelper.FromBase64(base64_to);
+            var base64_to = SecurityHelper.toBase64(src);
+            var base64_from = SecurityHelper.fromBase64(base64_to);
 
-            var md5_16bit = SecurityHelper.To16bitMD5(src);
-            var md5_32bit = SecurityHelper.To32bitMD5(src);
+            var md5_16bit = SecurityHelper.to16BitMD5(src);
+            var md5_32bit = SecurityHelper.to32BitMD5(src);
 
-            var sha1 = SecurityHelper.ToSHA1(src);
-            var sha512 = SecurityHelper.ToSHA512(src);
+            var sha1 = SecurityHelper.toSHA1(src);
+            var sha512 = SecurityHelper.toSHA512(src);
 
             //var aes_key_iv = AESHelper.GetKeys();
             var aes_key_iv = AESHelper.GetFixedKeys();
@@ -209,7 +209,7 @@ public class AboutString {
 
             //RSA的用途之二：私钥加密，公钥验证，数字签名用
             //Step 1：原内容取hash
-            var srcHash = SecurityHelper.ToSHA1(src);
+            var srcHash = SecurityHelper.toSHA1(src);
 
             //Step 2：私钥加密hash 【实现签名】
             var rsa_Signature = RSAHelper.RSASingnature(srcHash, rsaPrivateKey);
