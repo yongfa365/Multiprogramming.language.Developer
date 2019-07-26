@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CaffeineLoadingCacheConfig {
 
-    private static final ConcurrentHashMap<String, LoadingCache> LOADING_CACHES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, LoadingCache<CacheKey, Object>> LOADING_CACHES = new ConcurrentHashMap<>();
     private static final Object LOCK = new Object();
 
     @Around("@annotation(config)")
@@ -33,7 +33,7 @@ public class CaffeineLoadingCacheConfig {
             synchronized (LOCK) {
                 if (!LOADING_CACHES.containsKey(cacheName)) {
                     var builder = Caffeine.newBuilder();
-
+                    builder.removalListener((key, value, cause) -> log.info("Key:{} was removed ({})", key, cause));
                     if (config.recordStats()) {
                         builder.recordStats();
                     }
@@ -50,10 +50,10 @@ public class CaffeineLoadingCacheConfig {
                         builder.maximumSize(config.maximumSize());
                     }
 
-                    var loadingCache = builder.build(key -> {
+                    LoadingCache<CacheKey, Object> loadingCache = builder.build(key -> {
                         try {
                             //log.info("000000000000，proceed,观察是否多次进入");
-                            return joinPoint.proceed(((CacheKey) key).getParams());
+                            return joinPoint.proceed(key.getParams());
                         } catch (Throwable throwable) {
                             Thread.sleep(config.timeout() * 1000);
                             throw new RuntimeException("RefreshCacheException", throwable);

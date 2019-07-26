@@ -86,10 +86,35 @@ public class MyServiceTest {
         var pool = Executors.newSingleThreadScheduledExecutor();
         pool.scheduleWithFixedDelay(() -> {
             log.info("getData  input:11111,  结果： {}", service.getData2("11111"));
+
         }, 0, 1, TimeUnit.SECONDS);
         Helper.sleep(20_000);
         pool.shutdown();
     }
 
 
+    @Test
+    public void expireAfterAccess() throws InterruptedException {
+        log.info("getData  input:11111,  结果： {}", service.expireAfterAccess("11111"));
+
+
+        Thread.sleep(7000);
+        log.info("====================================");
+        log.info("7S后再访问，然后触发刷新 有replaced");
+        log.info("getData  input:11111,  结果： {}", service.expireAfterAccess("11111"));
+
+        Thread.sleep(20000);
+        log.info("====================================");
+        log.info("20S后再访问，然后触发访问过期 有expired");
+        log.info("getData  input:11111,  结果： {}", service.expireAfterAccess("11111"));
+
+        log.info("====================================");
+        log.info("不停访问，只会有replaced");
+        var pool = Executors.newSingleThreadScheduledExecutor();
+        pool.scheduleWithFixedDelay(() -> {
+            log.info("getData  input:11111,  结果： {}", service.expireAfterAccess("11111"));
+        }, 0, 1, TimeUnit.SECONDS);
+        Helper.sleep(60_000);
+        pool.shutdown();
+    }
 }
