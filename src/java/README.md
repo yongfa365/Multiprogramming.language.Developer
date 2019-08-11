@@ -11,9 +11,9 @@ id|desc|url
 8|纯洁的微笑：Spring Boot 使用的各种示例，以最简单、最实用为标准|https://github.com/ityouknow/spring-boot-examples
 
 ## 所谓的：生态
-**C#**：默认组件已经做的相当出色了，假如算100分。他已经做的这么好了，就算你有个更好的想法可能只是不停的+1,但只是+1力度不大，你的组件就不容易出名，最终看起来好像就是周边发展的不行。一言以蔽之：**月明星稀**。
+**C#**：默认组件已经做的相当出色了，假如算100分。他已经做的这么好了，就算你有个更好的想法可能只是不停的+1，但只是+1力度不大，你的组件就不容易出名，最终看起来好像就是周边发展的不行。一言以蔽之：**月明星稀**。
 
-**Java**：可能自己做“不够好”算50分，但开源的理念好，用的人多，不好的就重新封装一个，最终一些大公司就出品了一堆优秀的组件。然后最终表现就是：50+10+10+10+........很容易超过了C#。一言以蔽之：**众星璀璨**、**百花齐放**。
+**Java**：语法繁杂更新缓慢算50分，但开源的理念好，用的人多，不好的就重新封装一个，反正都能看到源码，改就是了，最终一些大公司就出品了一堆优秀的组件。然后最终表现就是：50+30+10+15+........很容易超过了C#。一言以蔽之：**众星璀璨**、**百花齐放**。
 
 Java的方式也有缺陷：自身不足第三方补足，然后Java后续版本又加上了第三方的内容可能类名都相同，就冲突了。Java后来发展好了第三方的组件可能就鸡肋了，或者一堆公司实现了同样的功能从而乱花渐欲迷人眼了。
 
@@ -64,7 +64,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] Http(HttpClient|Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body|DownloadString|UploadString)
     - [x] Collection(List|Set|Map|Queue|Stream|FunctionalInterface|lambda)
     - [x] Thread(野线程|ThreadPoolExecutor|parallel|Lock)
-    - [x] Security(RSA|MD5|SHA|Base64|AES|DES)
+    - [x] Security(RSA|MD5|SHA|Base64|AES|DES)（耗时2天）
 
 - [x] 周边工具
     - [x] jps
@@ -80,10 +80,10 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] Keymap(同时融合Visual Studio的快捷键，两边使用同一套|全文搜索)
     - [x] git(Checkout|Merge|Branch|pull|push)
     - [x] plugin(lombok|Alibaba Java Coding Guidelines|Grep Console)
-    - [x] Maven（mirror.aliyun|repository.dir|自行搭建仓库|各种命令）
+    - [x] Maven（mirror.aliyun|repository.dir|自行搭建仓库|各种命令|dependencyManagement|build.pluginManagement）（耗时3天）
     - [ ] Gradle
     
-- [ ] JSON(嵌套引用|enum|null|LocalDateTime|pretty|性能|hashmap|所有基本类型|与C#的互通|多个属性反序列化不报错|注解及规则相同否)
+- [ ] JSON(嵌套引用|enum|null|LocalDateTime|pretty|性能|hashmap|所有基本类型|与C#的互通|多了个属性反序列化不报错|注解及规则相同否|反序列化成复杂类型List<List<HashMap>>)
     - [ ] fastJson
     - [ ] jackson
 
@@ -98,8 +98,38 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
 - [x] lombok（耗时1天）
     - [x] @Data、@Builder、@NoArgsConstructor、@Slf4j、@SuperBuilder、@ExtensionMethod
 
-- [ ] Mybatis（自动生成与手动分开|备注|事物|映射）
 
+- [=] MyBatis（自动生成与手动分开|备注|事物|映射|插件开发）（耗时3天）
+    - [x] 用resultType替代resultMap，能不用resultMap就不用
+    - [x] sqlmap里尽可能扩大CDATA的范围
+    - [x] 插件开发，intercept拦截器，实现分页功能、错误日志加上parameter、数据加解密等
+        - Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)
+        - ParameterHandler (getParameterObject, setParameters)
+        - ResultSetHandler (handleResultSets, handleOutputParameters)
+        - StatementHandler (prepare, parameterize, batch, update, query)
+    - [x] free mybatis generator插件， 在mapper接口与sqlmap间导航，不存在则告警，部分自动生成
+    - [x] 集成tk.mybatis 使用通用Mapper，并写个SqlProvider支持批量插入
+    - [x] 集成PageHelper
+    
+- [x] tk.MyBatis（耗时3天）
+    - MBG能生成的方法他也能，且有增加，不生成XML，只要继承接口就能用。
+    - 使用的是JPA注解，方便集成其他JPA实现，如：Spring Data Jpa 或QueryDsl等。
+    - 写MBG插件生成XML比较麻烦，而会写SqlMap那个XML的就会写扩展tk。
+    - 默认方法名与MBG生成的相同，不影响自定义的接口及XML，0成本增强单表操作。
+    
+- [x] MyBatisPlus（耗时1天）
+    - 自己造的注解：@TableName,@TableId，@TableField,@Keyxxxx,也不计划向JPA靠齐，完全的自造轮子。
+    - 增强的功能，名字也比较个性：insertAllColumn，updateAllColumn，不大喜欢。
+    - 语法里虽然可以强类型字段名，但值的类型是弱类型的，如：1写成"1212safda"也不能识别。
+    - 内部实现跟tk很像，没必要再整一个。
+    
+- [x] MyBatis genarator(MBG)使用，及其[插件开发](https://github.com/yongfa365/mybatis-generator-plugins) （耗时7天）
+    - [x] 插件自动融合：生成的与手写的model,dao,sqlmap，上面放自动的，下面放手动。
+    - [x] 支持SqlServer备注，tinyint映射为Integer
+    - [x] 添加Jpa注解、IdClass
+    - [x] 生成tk.mybatis风格文件
+
+    
 - [ ] Cache
     - [x] Caffeine(耗时6天)
     - [ ] Redis(list)
@@ -107,16 +137,17 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
 - [ ] Spring  
     - [=] Core（AOP|IOC ）
     - [=] SpringBoot(autoconfig,starter)
-        - [ ] 拆包
+        - [ ] 拆包（xxx.jar,config,lib）（1天）
     - [ ] Spring MVC|RestApi
     - [ ] Spring Data
       - [ ] 多数据源配置（MySQL|RabbitMQ|Redis）
-      - [ ] JPA(MySQL,貌似死了，因为JavaEE)
+      - [ ] JPA
+      - [ ] querydsl
       - [ ] Mongodb（utc时间）
-      - [ ] RabbitMQ（重连|LocalQueue）
+      - [ ] RabbitMQ（重连|LocalQueue|并发多个连接）
       - [ ] Kafka
       - [ ] ElasticSearch
-    - [ ] actuator
+    - [ ] actuator、SpringBootAdmin
 
 - [ ] http (Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
     - [x] jdk HttpClient
