@@ -5,9 +5,15 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 
+/**
+ * 我是parent
+ */
 @SuperBuilder
 @Data
 public class Parent
 {
+    /**
+     * 我是parentName
+     */
     String parentName;
 }
