@@ -27,9 +27,6 @@ public class Swagger2 {
                 //.host()//点击 try it out 请求接口时 主机和端口
                 //.protocols(set)//点击 try it out 请求接口时 使用的协议
                 .apiInfo(new ApiInfoBuilder()
-                        .title("可选项 项目接口文档")
-                        .description("可选项  项目的线下接口文档")
-                        .version("1.0")
                         .build())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("yongfa365.RestTemplate")) //以扫描包的方式
