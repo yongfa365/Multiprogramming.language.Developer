@@ -16,9 +16,6 @@ import java.util.Map;
 @RestController
 public class WebClientController {
 
-    @Autowired
-    private RestTemplate restTemplate;
-
     private static final String URL = "/test";
 
     @GetMapping("restTemplateTest")
