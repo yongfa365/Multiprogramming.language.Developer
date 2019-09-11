@@ -13,7 +13,7 @@ public class WebClientController {
 
     private static final String URI = "/test";
 
-    @GetMapping("restTemplateTest")
+    @GetMapping("webClientTest")
     public Object getTest(Object object,HttpServletRequest request){
         Mono<String> stringMono = WebClient.builder()
                 .baseUrl(getRequestSchemeHost(request) + URI + "?object=" + object)
@@ -24,7 +24,7 @@ public class WebClientController {
         return stringMono;
     }
 
-    @PostMapping("restTemplateTest")
+    @PostMapping("webClientTest")
     public Object postTest(Object object,HttpServletRequest request){
         MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
         paramMap.add("object",object);
@@ -38,7 +38,7 @@ public class WebClientController {
         return stringMono;
     }
 
-    @DeleteMapping("restTemplateTest")
+    @DeleteMapping("webClientTest")
     public Object deleteTest(Object object,HttpServletRequest request){
         String block = WebClient.builder()
                 .baseUrl(getRequestSchemeHost(request) + URI + "?object=" + object)
@@ -50,7 +50,7 @@ public class WebClientController {
         return "delete:"+block;
     }
 
-    @PutMapping("restTemplateTest")
+    @PutMapping("webClientTest")
     public Object putTest(Object object,HttpServletRequest request){
         MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
         paramMap.add("object",object);
