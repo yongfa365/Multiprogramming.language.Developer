@@ -17,11 +17,11 @@ public class RestTemplateController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String URL = "/test";
+    private static final String URI = "/test";
 
     @GetMapping("restTemplateTest")
     public Object getTest(Object object,HttpServletRequest request){
-        String resultObject = restTemplate.getForObject(getRequestSchemeHost(request)+URL+"?object="+object, String.class);
+        String resultObject = restTemplate.getForObject(getRequestSchemeHost(request)+ URI +"?object="+object, String.class);
         return resultObject;
     }
 
@@ -32,7 +32,7 @@ public class RestTemplateController {
         MultiValueMap<String,Object> map=new LinkedMultiValueMap<>();
         map.add("object",object);
         HttpEntity<MultiValueMap<String,Object>> reqest=new HttpEntity<>(map,headers);
-        ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(getRequestSchemeHost(request) + URL, reqest, String.class);
+        ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(getRequestSchemeHost(request) + URI, reqest, String.class);
         return stringResponseEntity;
     }
 
@@ -40,7 +40,7 @@ public class RestTemplateController {
     public Object deleteTest(Object object,HttpServletRequest request){
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("object",object);
-        restTemplate.delete(getRequestSchemeHost(request)+URL+"?object="+object);
+        restTemplate.delete(getRequestSchemeHost(request)+ URI +"?object="+object);
         return "delete:"+object;
     }
 
@@ -51,7 +51,7 @@ public class RestTemplateController {
         MultiValueMap<String,Object> map=new LinkedMultiValueMap<>();
         map.add("object",object);
         HttpEntity<MultiValueMap<String,Object>> reqest=new HttpEntity<>(map,headers);
-        restTemplate.put(getRequestSchemeHost(request) + URL, reqest, String.class);
+        restTemplate.put(getRequestSchemeHost(request) + URI, reqest, String.class);
         return "put:"+object;
     }
 
