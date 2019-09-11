@@ -1,27 +1,22 @@
 package yongfa365.WebClient.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class WebClientController {
 
-    private static final String URL = "/test";
+    private static final String URI = "/test";
 
     @GetMapping("restTemplateTest")
     public Object getTest(Object object,HttpServletRequest request){
         Mono<String> stringMono = WebClient.builder()
-                .baseUrl(getRequestSchemeHost(request) + URL + "?object=" + object)
+                .baseUrl(getRequestSchemeHost(request) + URI + "?object=" + object)
                 .build()
                 .get()
                 .retrieve()
@@ -34,7 +29,7 @@ public class WebClientController {
         MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
         paramMap.add("object",object);
         Mono<String> stringMono = WebClient.builder()
-                .baseUrl(getRequestSchemeHost(request) + URL)
+                .baseUrl(getRequestSchemeHost(request) + URI)
                 .build()
                 .post()
                 .syncBody(paramMap)
@@ -46,7 +41,7 @@ public class WebClientController {
     @DeleteMapping("restTemplateTest")
     public Object deleteTest(Object object,HttpServletRequest request){
         String block = WebClient.builder()
-                .baseUrl(getRequestSchemeHost(request) + URL + "?object=" + object)
+                .baseUrl(getRequestSchemeHost(request) + URI + "?object=" + object)
                 .build()
                 .delete()
                 .retrieve()
@@ -60,7 +55,7 @@ public class WebClientController {
         MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
         paramMap.add("object",object);
         Mono<String> stringMono = WebClient.builder()
-                .baseUrl(getRequestSchemeHost(request) + URL)
+                .baseUrl(getRequestSchemeHost(request) + URI)
                 .build()
                 .put()
                 .syncBody(paramMap)
