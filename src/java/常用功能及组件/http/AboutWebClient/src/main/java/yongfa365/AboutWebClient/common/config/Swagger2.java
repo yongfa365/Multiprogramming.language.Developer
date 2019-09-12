@@ -1,7 +1,6 @@
-package yongfa365.RestTemplate.common.config;
+package yongfa365.AboutWebClient.common.config;
 
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -27,9 +26,10 @@ public class Swagger2 {
                 //.host()//点击 try it out 请求接口时 主机和端口
                 //.protocols(set)//点击 try it out 请求接口时 使用的协议
                 .apiInfo(new ApiInfoBuilder()
+                        .version("1.0")
                         .build())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("yongfa365.RestTemplate")) //以扫描包的方式
+                .apis(RequestHandlerSelectors.basePackage("yongfa365.AboutWebClient")) //以扫描包的方式
                 .paths(PathSelectors.any())
                 .build();
     }
