@@ -1,4 +1,4 @@
-package yongfa365.AboutApacheHttpClient.common;
+package yongfa365.AboutApacheHttpClient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
