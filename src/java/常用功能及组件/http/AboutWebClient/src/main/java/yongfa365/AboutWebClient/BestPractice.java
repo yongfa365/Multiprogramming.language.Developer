@@ -1,4 +1,4 @@
-package yongfa365.AboutWebClient.common;
+package yongfa365.AboutWebClient;
 
 public class BestPractice {
     public static void main(String[] args) {
