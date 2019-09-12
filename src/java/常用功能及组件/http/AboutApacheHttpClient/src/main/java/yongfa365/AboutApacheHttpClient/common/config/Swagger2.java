@@ -1,4 +1,4 @@
-package yongfa365.WebClient.common.config;
+package yongfa365.AboutApacheHttpClient.common.config;
 
 
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ public class Swagger2 {
                         .version("1.0")
                         .build())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("yongfa365.WebClient")) //以扫描包的方式
+                .apis(RequestHandlerSelectors.basePackage("yongfa365.AboutApacheHttpClient")) //以扫描包的方式
                 .paths(PathSelectors.any())
                 .build();
     }

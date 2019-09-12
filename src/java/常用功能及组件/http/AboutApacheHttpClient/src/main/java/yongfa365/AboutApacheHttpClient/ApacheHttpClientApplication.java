@@ -1,4 +1,4 @@
-package yongfa365.WebClient;
+package yongfa365.AboutApacheHttpClient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
 @RestController
-public class WebClientApplication {
+public class ApacheHttpClientApplication {
     
     public static void main(String[] args){
-        SpringApplication.run(WebClientApplication.class,args);
+        SpringApplication.run(ApacheHttpClientApplication.class,args);
     }
 
     @GetMapping("test")
