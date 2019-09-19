@@ -5,6 +5,7 @@ import com.demo.Helper.Security.AESHelper;
 import com.demo.Helper.Security.RSAHelper;
 import com.demo.Helper.Security.SecurityHelper;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -178,6 +179,11 @@ public class AboutString {
             //具体实现参见：Helper/*
 
             var src = "我是123の뭐라구";
+
+            var bytes1 = src.getBytes();
+            var bytes2 = src.getBytes(StandardCharsets.UTF_8);
+            var str1 = new String(bytes1);
+
 
             var base64_to = SecurityHelper.toBase64(src);
             var base64_from = SecurityHelper.fromBase64(base64_to);
