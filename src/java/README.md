@@ -135,8 +135,11 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] Redis(list)
 
 - [ ] Spring  
-    - [=] Core（AOP|IOC ）
-    - [=] SpringBoot(autoconfig,starter)
+    - [ ] Core（AOP|IOC ）
+        - [ ] AOP(spring aop|cglib|aspectj)
+        - [ ] IOC
+        - [ ] 动态代理
+    - [=] SpringBoot(autoconfig,starter,parent)
         - [ ] 拆包（xxx.jar,config,lib）（1天）
     - [ ] Spring MVC|RestApi
     - [ ] Spring Data
@@ -157,8 +160,9 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] Apache httpClient
 
 - [ ] Schedule
-    - [ ] Spring task
-    - [ ] Quartz（分布式|服务器时间差几秒）
+    - [ ] [Spring @Scheduled](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-annotation-support-scheduled)
+    - [ ] [Quartz（分布式|服务器时间差几秒）](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-quartz)
+    - [ ] [xxl-job](https://github.com/xuxueli/xxl-job)
 
 - [x] Excel
     - [x] EasyExcel(表头|列宽|身份证号|数字|日期时间格式|内存占用) 4h
