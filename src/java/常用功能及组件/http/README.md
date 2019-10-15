@@ -16,3 +16,8 @@
 |Event|✘|✘|✔✔✔|
 |依赖外部|0|2个共1300K|4个共800K|
 |GitHub Star|--|1K主要没在这维护|35K|
+
+## 测试http请求、证书几个好网站：
+https://httpbin.org/status/503
+https://badssl.com/
+http://httpstat.us/502
