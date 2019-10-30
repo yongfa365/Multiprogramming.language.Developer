@@ -136,7 +136,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
 
 - [ ] Spring  
     - [ ] Core（AOP|IOC ）
-        - [ ] AOP(spring aop|cglib|aspectj)
+        - [ ] AOP(spring aop|cglib|aspectj|javaagent)
         - [ ] IOC
         - [ ] 动态代理
     - [=] SpringBoot(autoconfig,starter,parent)
@@ -172,7 +172,6 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
 - [ ] 性能
     - [ ] APM
     - [ ] 火焰图
-- [ ] javaagent
 - [ ] html parse
 - [ ] doc
     - [ ] swaggerui
