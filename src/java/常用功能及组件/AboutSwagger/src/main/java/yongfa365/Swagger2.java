@@ -30,7 +30,7 @@ public class Swagger2 {
                 .build();
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:8080") //点击 try it out 请求接口时 主机和端口
+                .host("localhost:12345") //点击 try it out 请求接口时 主机和端口
                 .apiInfo(apiInfo)
                 .select()
                 .paths(PathSelectors.any())
