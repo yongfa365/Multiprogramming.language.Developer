@@ -99,7 +99,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] @Data、@Builder、@NoArgsConstructor、@Slf4j、@SuperBuilder、@ExtensionMethod
 
 
-- [=] MyBatis（自动生成与手动分开|备注|事物|映射|插件开发）（耗时3天）
+- [x] MyBatis（自动生成与手动分开|备注|事物|映射|插件开发）（耗时3天）
     - [x] 用resultType替代resultMap，能不用resultMap就不用
     - [x] sqlmap里尽可能扩大CDATA的范围
     - [x] 插件开发，intercept拦截器，实现分页功能、错误日志加上parameter、数据加解密等
@@ -113,15 +113,18 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     
 - [x] tk.MyBatis（耗时3天）
     - MBG能生成的方法他也能，且有增加，不生成XML，只要继承接口就能用。
-    - 使用的是JPA注解，方便集成其他JPA实现，如：Spring Data Jpa 或QueryDsl等。
+    - **使用的是JPA注解，方便集成其他JPA实现，如：Spring Data Jpa 或QueryDsl等。**
     - 写MBG插件生成XML比较麻烦，而会写SqlMap那个XML的就会写扩展tk。
     - 默认方法名与MBG生成的相同，不影响自定义的接口及XML，0成本增强单表操作。
+    - 语法里虽然可以强类型字段名，但值的类型是弱类型的，如：1写成"1212safda"也不能识别。
+    - lambda版本的WeekEnd每一步都会执行反射解析ColumnName，没有缓存，性能堪忧。
     
 - [x] MyBatisPlus（耗时1天）
     - 自己造的注解：@TableName,@TableId，@TableField,@Keyxxxx,也不计划向JPA靠齐，完全的自造轮子。
     - 增强的功能，名字也比较个性：insertAllColumn，updateAllColumn，不大喜欢。
     - 语法里虽然可以强类型字段名，但值的类型是弱类型的，如：1写成"1212safda"也不能识别。
-    - 内部实现跟tk很像，没必要再整一个。
+    - 内部实现跟tk很像。
+    - **lambda版本实现类似EF的表达式树，封装的更全如：groupby,having等，也直接是链式编程，还可以将表达式直接输出为最终的语句，方便测试。**
     
 - [x] MyBatis genarator(MBG)使用，及其[插件开发](https://github.com/yongfa365/mybatis-generator-plugins) （耗时7天）
     - [x] 插件自动融合：生成的与手写的model,dao,sqlmap，上面放自动的，下面放手动。
@@ -152,12 +155,12 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
       - [ ] ElasticSearch
     - [ ] actuator、SpringBootAdmin
 
-- [ ] http (Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
-    - [x] jdk HttpClient
-    - [=] okHttp
-    - [ ] Spring RestTemplate
-    - [ ] Spring WebClient
-    - [ ] Apache httpClient
+- [x] http (Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
+    - [x] [jdk HttpClient](https://golb.hplar.ch/2019/01/java-11-http-client.html) 功能缺失(URI builder, multipart form data, form data, compression support)
+    - [x] okHttp（Interceptor|有详细的每步耗时如：dns解析，建立安全链接，最终连接的IP等）
+    - [ ] Spring RestTemplate 将被淘汰，不研究
+    - [ ] Spring WebClient 有okhttp了就先不研究了
+    - [ ] Apache httpClient 有okhttp了就先不研究了
 
 - [ ] Schedule
     - [ ] [Spring @Scheduled](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-annotation-support-scheduled)
@@ -167,7 +170,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
 - [x] Excel
     - [x] EasyExcel(表头|列宽|身份证号|数字|日期时间格式|内存占用) 4h
 
-
+- [ ] [data validator](https://hibernate.org/validator/)
 - [ ] PDF
 - [ ] 性能
     - [ ] APM
