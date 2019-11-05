@@ -164,9 +164,9 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] Apache httpClient 有okhttp了就先不研究了
 
 - [ ] Schedule
-    - [ ] [Spring @Scheduled](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-annotation-support-scheduled)
+    - [x] [Spring @Scheduled](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-annotation-support-scheduled)
     - [ ] [Quartz（分布式|服务器时间差几秒）](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-quartz)
-    - [ ] [xxl-job](https://github.com/xuxueli/xxl-job)
+    - [ ] [xxl-job](https://github.com/xuxueli/xxl-job)与Quartz差不多但增加了UI更方便
 
 - [x] Excel
     - [x] EasyExcel(表头|列宽|身份证号|数字|日期时间格式|内存占用) 4h
@@ -177,6 +177,6 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] APM
     - [ ] 火焰图
 - [ ] html parse
-- [ ] doc
-    - [ ] swaggerui
-    - [ ] javadoc
+- [x] doc
+    - [x] swagger-ui
+    - [x] javadoc 不需要刻意学，需要时找一个现有的抄下就行
