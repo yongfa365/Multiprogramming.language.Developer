@@ -125,6 +125,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - 语法里虽然可以强类型字段名，但值的类型是弱类型的，如：1写成"1212safda"也不能识别。
     - 内部实现跟tk很像。
     - **lambda版本实现类似EF的表达式树，封装的更全如：groupby,having等，也直接是链式编程，还可以将表达式直接输出为最终的语句，方便测试。**
+    - 只支持单主键，SqlServer是支持多主键的，所以跟主键相关的方法有些场景会有问题。
     
 - [x] MyBatis genarator(MBG)使用，及其[插件开发](https://github.com/yongfa365/mybatis-generator-plugins) （耗时7天）
     - [x] 插件自动融合：生成的与手写的model,dao,sqlmap，上面放自动的，下面放手动。
