@@ -60,7 +60,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] Basic(8个原始类型|BigDecimal|uuid|Random|if|else|do|while|for|swith|enum|接口默认实现|匿名类|内部类)
     - [x] DateTime (LocalDateTime|Period|Duration|ChronoUnit|Timer@@format|parse)
     - [x] String(regex|StringBuilder@@trim,strip,split,join,xxx[1],repeat,PadLeft,PadRight,replace,StartsWith,EndsWith,Contains,Substring,IsNullOrWhiteSpace,IsNullOrEmpty,性能)
-    - [x] File(Files|Path|encoding)
+    - [x] File(Files|Path|encoding)虽然比以前有改进，但还是太难用了，就不是给人用的
     - [x] Http(HttpClient|Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body|DownloadString|UploadString)
     - [x] Collection(List|Set|Map|Queue|Stream|FunctionalInterface|lambda)
     - [x] Thread(野线程|ThreadPoolExecutor|parallel|Lock)
