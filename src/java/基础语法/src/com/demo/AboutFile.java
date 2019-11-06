@@ -1,5 +1,6 @@
 package com.demo;
 
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +22,11 @@ public class AboutFile {
         var lstContext = List.of("A", "B");
         var byteContext = context.getBytes(StandardCharsets.UTF_8);
 
+        //获取当前工作目录
+        var workingDirectory = System.getProperty("user.dir");
+
+        //虽然能能改变这个配置，但Path.of等在启动时已经将其固化了，再改也不会用他。而C#可以很容的修改
+        System.setProperty("user.dir","C:\\windows");
 
         //仅当前目录
         var files1 = Files.list(Path.of("C:\\Windows\\")).filter(p -> p.toString().toLowerCase().endsWith(".exe"));
