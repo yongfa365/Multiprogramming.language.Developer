@@ -166,7 +166,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
 - [ ] Schedule
     - [x] [Spring @Scheduled](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-annotation-support-scheduled)
     - [ ] [Quartz（分布式|服务器时间差几秒）](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-quartz)
-    - [ ] [xxl-job](https://github.com/xuxueli/xxl-job)与Quartz差不多但增加了UI更方便
+    - [ ] [xxl-job](https://github.com/xuxueli/xxl-job)与Quartz差不多,但增加了界面，可以看日志，有各种调度策略，能自动发现，有简单的权限管理
 
 - [x] Excel
     - [x] EasyExcel(表头|列宽|身份证号|数字|日期时间格式|内存占用) 4h
