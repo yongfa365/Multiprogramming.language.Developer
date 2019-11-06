@@ -7,6 +7,7 @@ import yongfa365.AboutOkHttp.Interceptor.HttpLoggingInterceptor;
 import yongfa365.AboutOkHttp.Interceptor.LoggingEventListener;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
@@ -57,15 +58,21 @@ public class HttpClient {
 
     public static OkHttpClient trustAllSslOkHttpClient() {
 
-        return new OkHttpClient().newBuilder()
-                .connectionPool(CONNECTION_POOL) //TODO:要了解下最佳实践，这个池有什么用
-                .connectTimeout(10000, TimeUnit.MILLISECONDS) //默认10s
-                .readTimeout(10000, TimeUnit.MILLISECONDS) //默认10s
-                .sslSocketFactory(IgnoreTsl.SOCKET_FACTORY, IgnoreTsl.TRUST_ALL_MANAGER)
-                .hostnameVerifier((hostname, session) -> true)
+        //通过newBuilder来重用连接池
+        return DEFAULT_OK_HTTP_CLIENT.newBuilder()
                 .retryOnConnectionFailure(true) //TODO: 默认就是true，需要研究下在什么场景会用到这个，会重试多少次
                 .build();
     }
 
+
+    public static final OkHttpClient DEFAULT_OK_HTTP_CLIENT = new OkHttpClient().newBuilder()
+            //  .connectionPool(connectionPool) // 使用默认配置 https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
+            .connectTimeout(Duration.ofSeconds(10))// default 10s
+            .readTimeout(Duration.ofSeconds(10))// default 10s
+            .writeTimeout(Duration.ofSeconds(10))// default 10s
+            .sslSocketFactory(IgnoreTsl.SOCKET_FACTORY, IgnoreTsl.TRUST_ALL_MANAGER)
+            .hostnameVerifier((hostname, session) -> true)
+            .retryOnConnectionFailure(true) // default true
+            .build();
 
 }

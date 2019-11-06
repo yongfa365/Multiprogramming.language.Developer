@@ -19,6 +19,10 @@ public class SyncDemo {
                 .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
                 .build();
 
+        //OkHttp好用的地方，可以直接复用之前定义好的对象，从而减少编码量，
+        //如：request里有大量设置，而新的对象我只想改下url其他不变
+        var request2 = request.newBuilder().url("url2").build();
+
         OkHttpClient httpClient = HttpClient.trustAllSslOkHttpClient();
         //httpClient = new OkHttpClient(); //原生client，默认会校验证书
 
