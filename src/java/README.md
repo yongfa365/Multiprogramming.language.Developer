@@ -84,8 +84,9 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] Gradle
     
 - [ ] JSON(嵌套引用|enum|null|LocalDateTime|pretty|性能|hashmap|所有基本类型|与C#的互通|多了个属性反序列化不报错|注解及规则相同否|反序列化成复杂类型List<List<HashMap>>)
-    - [ ] fastJson
-    - [ ] jackson
+    - [ ] jackson(ObjectMapper需要各种设置才好有，内置在spring里，鬼剑直接用这个)
+    - [ ] [gson](https://www.baeldung.com/jackson-vs-gson)（google产的用起来还算方便，不过用spring多，暂时就不研究了）
+    - [ ] fastJson（所谓的阿里出品的，虽然问题不断，但调用简单）
 
 - [ ] Compress
     - [ ] snappy
