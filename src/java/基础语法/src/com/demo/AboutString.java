@@ -143,10 +143,11 @@ public class AboutString {
             var str5 = p.split("a111b222C");
             var str6 = p.matcher("a111b222C").replaceAll("_");
 
-            var match0 = "a@b,c".matches(","); // false 没有match,只有matches所以正则要写全，如下：
+            var match0 = "a@b,c".matches(","); //★★★ false 没有match,只有matches所以正则要写全，如下：
             var match1 = "a@b,c".matches(".*,.*"); // true
             var match3 = Pattern.matches(".*,.*", "a@b,c"); // true
             var match4 = Pattern.compile(",").matcher("a@b,c").find(); // true
+            var match5 = Pattern.compile(",").matcher("a@b,c").matches(); // false
 
             // 匹配一个 就是find()一次
             var match = Pattern.compile("(\\d+).(\\d+)").matcher("a111b222c");
