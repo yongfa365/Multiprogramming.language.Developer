@@ -4,9 +4,16 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+//动态代理=动态+代理。
+// 动态：是指运行时，相对于编译时。
+// 代理：是指代替、替代
+//       如常见的机票代理，没代理时：你到机场买机票 --> 有代理后：你到携程买机票，携程代替你到机场买机票。
+// 携程的好处：比价，简化流程，减少耗时，不用问机场直接回复你有没有票。。。
+
 public class AboutDynamicProxy {
     public static void main(String[] args) {
         var proxy = new AnimalProxy();
+
         var dogProxy = (Animal) proxy.getInstance(new Dog());
         dogProxy.eat();
     }
