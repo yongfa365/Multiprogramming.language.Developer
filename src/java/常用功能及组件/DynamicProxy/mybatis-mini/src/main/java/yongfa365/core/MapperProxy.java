@@ -14,6 +14,7 @@ public class MapperProxy implements InvocationHandler {
 
     @SuppressWarnings("unchecked")
     public <T> T newInstance(Class<T> clazz) {
+        // 传说中的动态代理
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, this);
     }
 
@@ -26,7 +27,7 @@ public class MapperProxy implements InvocationHandler {
 
         // 其他方法拦截下来，由“代理”决定怎么响应。是查数据库还是缓存 “代理说了算”。
         
-        // ============== Step 1: 从“注解”或“xml”拿到对应的SQL ==============
+        // ============== Step 1: 从“注解”或“xml”或“解析domain”拿到对应的SQL ==============
         log.info("方法的签名:" + method.toString()); // 从xml拿: 可以根据签名去匹配
         var sql = method.getDeclaredAnnotation(Select.class).value(); // 从注解拿: 反射就行了
         log.info("注解上写的Sql:" + sql);
@@ -50,7 +51,7 @@ public class MapperProxy implements InvocationHandler {
         var returnType = method.getReturnType();
         log.info("将DB返回内容转为实体:" + returnType);
 
-        // 实体要有个无参的构造函数，有参处理麻烦所以直接定死要无参的。
+        // 实体要有个无参的构造函数(有参处理麻烦所以直接定死要无参的)。
         var result = returnType.getDeclaredConstructor().newInstance();
 
         var fields = returnType.getDeclaredFields();
