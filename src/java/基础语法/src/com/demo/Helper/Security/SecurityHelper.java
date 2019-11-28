@@ -29,7 +29,7 @@ public class SecurityHelper {
 
             var result = String.format("%01x", new BigInteger(1, provider.digest()));
             return result.toUpperCase();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             throw new RuntimeException("toSHA1Exception", e);
         }
     }
@@ -43,7 +43,7 @@ public class SecurityHelper {
 
             var result = String.format("%01x", new BigInteger(1, provider.digest()));
             return result.toUpperCase();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             throw new RuntimeException("toSHA512Exception", e);
         }
     }
@@ -64,7 +64,7 @@ public class SecurityHelper {
             //%032x=%0第一个参数，32是最终返回的最小长度，x是以16进制返回
             var result = String.format("%032x", new BigInteger(1, provider.digest()));
             return result.toUpperCase();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             throw new RuntimeException("to32BitMD5Exception", e);
         }
     }

@@ -23,6 +23,13 @@ namespace ConsoleApp.BestPractices
             var lstContext = new List<string> { "A", "B" };
             var byteContext = Encoding.UTF8.GetBytes(context);
 
+            //获取当前工作目录
+            var workingDirectory = Environment.CurrentDirectory;
+            
+            //改变当前工作目录，说改就改，之后的文件操作的BasePath就是这个了，Java11没有这样的功能。
+            Environment.CurrentDirectory = "c:\\windows";
+
+
             //仅当前目录
             var files1 = Directory.GetFiles("C:\\Windows\\", "*.exe");
 
