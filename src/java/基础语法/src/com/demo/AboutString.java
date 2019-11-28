@@ -5,6 +5,7 @@ import com.demo.Helper.Security.AESHelper;
 import com.demo.Helper.Security.RSAHelper;
 import com.demo.Helper.Security.SecurityHelper;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -142,10 +143,11 @@ public class AboutString {
             var str5 = p.split("a111b222C");
             var str6 = p.matcher("a111b222C").replaceAll("_");
 
-            var match0 = "a@b,c".matches(","); // false 没有match,只有matches所以正则要写全，如下：
+            var match0 = "a@b,c".matches(","); //★★★ false 没有match,只有matches所以正则要写全，如下：
             var match1 = "a@b,c".matches(".*,.*"); // true
             var match3 = Pattern.matches(".*,.*", "a@b,c"); // true
             var match4 = Pattern.compile(",").matcher("a@b,c").find(); // true
+            var match5 = Pattern.compile(",").matcher("a@b,c").matches(); // false
 
             // 匹配一个 就是find()一次
             var match = Pattern.compile("(\\d+).(\\d+)").matcher("a111b222c");
@@ -178,6 +180,11 @@ public class AboutString {
             //具体实现参见：Helper/*
 
             var src = "我是123の뭐라구";
+
+            var bytes1 = src.getBytes();
+            var bytes2 = src.getBytes(StandardCharsets.UTF_8);
+            var str1 = new String(bytes1);
+
 
             var base64_to = SecurityHelper.toBase64(src);
             var base64_from = SecurityHelper.fromBase64(base64_to);

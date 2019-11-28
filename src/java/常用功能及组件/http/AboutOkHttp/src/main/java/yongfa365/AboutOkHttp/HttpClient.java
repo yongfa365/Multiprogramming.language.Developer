@@ -2,14 +2,14 @@ package yongfa365.AboutOkHttp;
 
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
+import yongfa365.AboutOkHttp.Interceptor.HttpLoggingInterceptor;
+import yongfa365.AboutOkHttp.Interceptor.LoggingEventListener;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 
@@ -19,50 +19,60 @@ public class HttpClient {
     //https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
     private static final ConnectionPool CONNECTION_POOL = new ConnectionPool();
 
-    private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[]{
-            new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
 
-                @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
+    public OkHttpClient OkHttpClient;
+    public StringBuffer HttpLog = new StringBuffer();
+    public StringBuffer EventLog = new StringBuffer();
 
-                @Override
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return new java.security.cert.X509Certificate[]{};
-                }
-            }
-    };
+    private HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(message -> {
+        HttpLog.append("\n").append(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss.SSS"))).append("           ").append(message);
+    });
 
-    private static final SSLContext TRUST_ALL_SSL_CONTEXT;
+    private LoggingEventListener.Factory loggingEvent = new LoggingEventListener.Factory(message -> {
+        //不使用EventLog而是都用HttpLog，将两个日志合并在一起
+        HttpLog.append("\n").append(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss.SSS"))).append(" ").append(message);
+    });
 
-    static {
-        try {
-            TRUST_ALL_SSL_CONTEXT = SSLContext.getInstance("TLS"); //TLS比SSL版本高，应该是兼容SSL的
-            TRUST_ALL_SSL_CONTEXT.init(null, TRUST_ALL_CERTS, new java.security.SecureRandom());
-        } catch (NoSuchAlgorithmException | KeyManagementException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //阻止new的方式初始化
-    private HttpClient() {
-    }
-
-    private static final SSLSocketFactory TRUST_ALL_SSL_SOCKET_FACTORY = TRUST_ALL_SSL_CONTEXT.getSocketFactory();
-
-    public static OkHttpClient trustAllSslOkHttpClient() {
-
-        return new OkHttpClient().newBuilder()
-                .connectionPool(CONNECTION_POOL) //TODO:要了解下最佳实践，这个池有什么用
-                .connectTimeout(10000, TimeUnit.MILLISECONDS) //默认10s
-                .readTimeout(10000, TimeUnit.MILLISECONDS) //默认10s
-                .sslSocketFactory(TRUST_ALL_SSL_SOCKET_FACTORY, (X509TrustManager) TRUST_ALL_CERTS[0])
+    public HttpClient() {
+        httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient = new OkHttpClient().newBuilder()
+                .addInterceptor(httpLoggingInterceptor)
+                .eventListenerFactory(loggingEvent)
+                .sslSocketFactory(IgnoreTsl.SOCKET_FACTORY, IgnoreTsl.TRUST_ALL_MANAGER)
                 .hostnameVerifier((hostname, session) -> true)
-                .retryOnConnectionFailure(true) //TODO: 默认就是true，需要研究下在什么场景会用到这个，会重试多少次
                 .build();
 
     }
+
+    public String body(Response response) {
+        if (httpLoggingInterceptor.getLevel() == HttpLoggingInterceptor.Level.BODY) {
+            return httpLoggingInterceptor.getBody();
+        } else {
+            try {
+                return response.body() != null ? response.body().string() : null;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static OkHttpClient trustAllSslOkHttpClient() {
+
+        //通过newBuilder来重用连接池
+        return DEFAULT_OK_HTTP_CLIENT.newBuilder()
+                .retryOnConnectionFailure(true) //TODO: 默认就是true，需要研究下在什么场景会用到这个，会重试多少次
+                .build();
+    }
+
+
+    public static final OkHttpClient DEFAULT_OK_HTTP_CLIENT = new OkHttpClient().newBuilder()
+            //  .connectionPool(connectionPool) // 使用默认配置 https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
+            .connectTimeout(Duration.ofSeconds(10))// default 10s
+            .readTimeout(Duration.ofSeconds(10))// default 10s
+            .writeTimeout(Duration.ofSeconds(10))// default 10s
+            .sslSocketFactory(IgnoreTsl.SOCKET_FACTORY, IgnoreTsl.TRUST_ALL_MANAGER)
+            .hostnameVerifier((hostname, session) -> true)
+            .retryOnConnectionFailure(true) // default true
+            .build();
+
 }

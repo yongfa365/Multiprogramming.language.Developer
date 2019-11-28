@@ -80,4 +80,8 @@ application-prod-secret.yml （源码没有，部署时加入）
 ```
 
 
+## @ConfigurationProperties vs. @Value
+- @ConfigurationProperties("spring.datasource") 不区分大小写，有没有配置或属性都不会报错。 
+- @Value("${a.b.c:默认值}") 区分大小写，没有配置会报错，可以指定默认值。
+
 

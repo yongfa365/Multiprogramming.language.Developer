@@ -60,7 +60,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] Basic(8个原始类型|BigDecimal|uuid|Random|if|else|do|while|for|swith|enum|接口默认实现|匿名类|内部类)
     - [x] DateTime (LocalDateTime|Period|Duration|ChronoUnit|Timer@@format|parse)
     - [x] String(regex|StringBuilder@@trim,strip,split,join,xxx[1],repeat,PadLeft,PadRight,replace,StartsWith,EndsWith,Contains,Substring,IsNullOrWhiteSpace,IsNullOrEmpty,性能)
-    - [x] File(Files|Path|encoding)
+    - [x] File(Files|Path|encoding)虽然比以前有改进，但还是太难用了，就不是给人用的
     - [x] Http(HttpClient|Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body|DownloadString|UploadString)
     - [x] Collection(List|Set|Map|Queue|Stream|FunctionalInterface|lambda)
     - [x] Thread(野线程|ThreadPoolExecutor|parallel|Lock)
@@ -84,8 +84,9 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] Gradle
     
 - [ ] JSON(嵌套引用|enum|null|LocalDateTime|pretty|性能|hashmap|所有基本类型|与C#的互通|多了个属性反序列化不报错|注解及规则相同否|反序列化成复杂类型List<List<HashMap>>)
-    - [ ] fastJson
-    - [ ] jackson
+    - [ ] jackson(ObjectMapper需要各种设置才好有，内置在spring里，鬼剑直接用这个)
+    - [ ] [gson](https://www.baeldung.com/jackson-vs-gson)（google产的用起来还算方便，不过用spring多，暂时就不研究了）
+    - [ ] fastJson（所谓的阿里出品的，虽然问题不断，但调用简单）
 
 - [ ] Compress
     - [ ] snappy
@@ -99,7 +100,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] @Data、@Builder、@NoArgsConstructor、@Slf4j、@SuperBuilder、@ExtensionMethod
 
 
-- [=] MyBatis（自动生成与手动分开|备注|事物|映射|插件开发）（耗时3天）
+- [x] MyBatis（自动生成与手动分开|备注|事物|映射|插件开发）（耗时3天）
     - [x] 用resultType替代resultMap，能不用resultMap就不用
     - [x] sqlmap里尽可能扩大CDATA的范围
     - [x] 插件开发，intercept拦截器，实现分页功能、错误日志加上parameter、数据加解密等
@@ -113,15 +114,19 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     
 - [x] tk.MyBatis（耗时3天）
     - MBG能生成的方法他也能，且有增加，不生成XML，只要继承接口就能用。
-    - 使用的是JPA注解，方便集成其他JPA实现，如：Spring Data Jpa 或QueryDsl等。
+    - **使用的是JPA注解，方便集成其他JPA实现，如：Spring Data Jpa 或QueryDsl等。**
     - 写MBG插件生成XML比较麻烦，而会写SqlMap那个XML的就会写扩展tk。
     - 默认方法名与MBG生成的相同，不影响自定义的接口及XML，0成本增强单表操作。
+    - 语法里虽然可以强类型字段名，但值的类型是弱类型的，如：1写成"1212safda"也不能识别。
+    - lambda版本的WeekEnd每一步都会执行反射解析ColumnName，没有缓存，性能堪忧。
     
 - [x] MyBatisPlus（耗时1天）
     - 自己造的注解：@TableName,@TableId，@TableField,@Keyxxxx,也不计划向JPA靠齐，完全的自造轮子。
     - 增强的功能，名字也比较个性：insertAllColumn，updateAllColumn，不大喜欢。
     - 语法里虽然可以强类型字段名，但值的类型是弱类型的，如：1写成"1212safda"也不能识别。
-    - 内部实现跟tk很像，没必要再整一个。
+    - 内部实现跟tk很像。
+    - **lambda版本实现类似EF的表达式树，封装的更全如：groupby,having等，也直接是链式编程，还可以将表达式直接输出为最终的语句，方便测试。**
+    - 只支持单主键，SqlServer是支持多主键的，所以跟主键相关的方法有些场景会有问题。
     
 - [x] MyBatis genarator(MBG)使用，及其[插件开发](https://github.com/yongfa365/mybatis-generator-plugins) （耗时7天）
     - [x] 插件自动融合：生成的与手写的model,dao,sqlmap，上面放自动的，下面放手动。
@@ -130,13 +135,16 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] 生成tk.mybatis风格文件
 
     
-- [ ] Cache
+- [x] Cache
     - [x] Caffeine(耗时6天)
-    - [ ] Redis(list)
+    - [x] Redis(Jedis封装的比较简单，命名也跟原生对应，更适合再包装)
 
 - [ ] Spring  
-    - [=] Core（AOP|IOC ）
-    - [=] SpringBoot(autoconfig,starter)
+    - [ ] Core（AOP|IOC ）
+        - [ ] AOP(spring aop|cglib|aspectj|javaagent)
+        - [ ] IOC
+        - [ ] 动态代理
+    - [=] SpringBoot(autoconfig,starter,parent)
         - [ ] 拆包（xxx.jar,config,lib）（1天）
     - [ ] Spring MVC|RestApi
     - [ ] Spring Data
@@ -149,27 +157,27 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
       - [ ] ElasticSearch
     - [ ] actuator、SpringBootAdmin
 
-- [ ] http (Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
-    - [x] jdk HttpClient
-    - [=] okHttp
-    - [ ] Spring RestTemplate
-    - [ ] Spring WebClient
-    - [ ] Apache httpClient
+- [x] http (Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
+    - [x] [jdk HttpClient](https://golb.hplar.ch/2019/01/java-11-http-client.html) 功能缺失(URI builder, multipart form data, form data, compression support)
+    - [x] okHttp（Interceptor|有详细的每步耗时如：dns解析，建立安全链接，最终连接的IP等）
+    - [ ] Spring RestTemplate 将被淘汰，不研究
+    - [ ] Spring WebClient 有okhttp了就先不研究了
+    - [ ] Apache httpClient 有okhttp了就先不研究了
 
-- [ ] Schedule
-    - [ ] Spring task
-    - [ ] Quartz（分布式|服务器时间差几秒）
+- [x] Schedule（分布式|服务器时间差10秒任务只要3秒的重复执行问题）
+    - [x] [Spring @Scheduled](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-annotation-support-scheduled)
+    - [ ] [Quartz](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-quartz)被xxl-job取代了
+    - [x] [xxl-job](https://github.com/xuxueli/xxl-job)与Quartz差不多,但增加了界面，可以看日志，有各种调度策略，能自动发现，有简单的权限管理
 
 - [x] Excel
     - [x] EasyExcel(表头|列宽|身份证号|数字|日期时间格式|内存占用) 4h
 
-
+- [ ] [data validator](https://hibernate.org/validator/)
 - [ ] PDF
 - [ ] 性能
     - [ ] APM
     - [ ] 火焰图
-- [ ] javaagent
 - [ ] html parse
-- [ ] doc
-    - [ ] swaggerui
-    - [ ] javadoc
+- [x] doc
+    - [x] swagger-ui
+    - [x] javadoc 不需要刻意学，需要时找一个现有的抄下就行

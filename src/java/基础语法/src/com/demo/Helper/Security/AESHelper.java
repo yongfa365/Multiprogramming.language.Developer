@@ -1,26 +1,32 @@
 package com.demo.Helper.Security;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
 public class AESHelper {
-    public static String[] GetFixedKeys() throws Exception {
+    public static String[] GetFixedKeys() {
         return new String[]{"ll7uz0DREVGBA9IJxmnwoEsJoQtgpGPqXQOzmYgaS6o=", "yuntM97GbF5ISjSsx0qKqA=="};
     }
 
-    public static String[] GetKeys() throws Exception {
-        var keyGen = KeyGenerator.getInstance("AES");
-        keyGen.init(256);
-        var secretKey = keyGen.generateKey();
-        var byteKey = secretKey.getEncoded();
-        var key = Base64.getEncoder().encodeToString(byteKey);
-        var iv = Base64.getEncoder().encodeToString(SecureRandom.getInstanceStrong().generateSeed(16));
-        return new String[]{key, iv};
+    public static String[] GetKeys() {
+        try {
+            var keyGen = KeyGenerator.getInstance("AES");
+            keyGen.init(256);
+            var secretKey = keyGen.generateKey();
+            var byteKey = secretKey.getEncoded();
+            var key = Base64.getEncoder().encodeToString(byteKey);
+            var iv = Base64.getEncoder().encodeToString(SecureRandom.getInstanceStrong().generateSeed(16));
+            return new String[]{key, iv};
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -30,36 +36,45 @@ public class AESHelper {
      * @param key
      * @param iv
      * @return
-     * @throws Exception
+     * @
      */
-    public static String AESEncrypt(String input, String key, String iv) throws Exception {
-        var inputBytes = input.getBytes(StandardCharsets.UTF_8);
+    public static String AESEncrypt(String input, String key, String iv) {
+        try {
+            var inputBytes = input.getBytes(StandardCharsets.UTF_8);
 
-        var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, getKeySpec(key), getIvSpec(iv));
-        var cipherByte = cipher.doFinal(inputBytes);
+            var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, getKeySpec(key), getIvSpec(iv));
+            var cipherByte = cipher.doFinal(inputBytes);
 
-        var result = Base64.getEncoder().encodeToString(cipherByte);
-        return result;
+            var result = Base64.getEncoder().encodeToString(cipherByte);
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * 密文String-->使用Base64转码成byte[]-->解密成byte[]-->使用utf8解码成String-->原文String
+     *
      * @param input 密文
      * @param key
      * @param iv
      * @return
-     * @throws Exception
+     * @
      */
-    public static String AESDecrypt(String input, String key, String iv) throws Exception {
-        var inputBytes = Base64.getDecoder().decode(input);
+    public static String AESDecrypt(String input, String key, String iv) {
+        try {
+            var inputBytes = Base64.getDecoder().decode(input);
 
-        var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, getKeySpec(key), getIvSpec(iv));
-        var cipherByte = cipher.doFinal(inputBytes);
+            var cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, getKeySpec(key), getIvSpec(iv));
+            var cipherByte = cipher.doFinal(inputBytes);
 
-        var result = new String(cipherByte, StandardCharsets.UTF_8);
-        return result;
+            var result = new String(cipherByte, StandardCharsets.UTF_8);
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static SecretKeySpec getKeySpec(String key) {
