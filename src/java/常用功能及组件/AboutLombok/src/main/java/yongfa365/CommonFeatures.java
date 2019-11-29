@@ -1,9 +1,6 @@
 package yongfa365;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -41,4 +38,16 @@ public class CommonFeatures {
 class User {
     int id;
     String userName;
+}
+
+
+@Data
+class User2 {
+    int id;
+    String userName;
+
+    //禁止生成getXXX及setXXX,lombok还不支持直接忽略某个字段
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    boolean isMan;
 }

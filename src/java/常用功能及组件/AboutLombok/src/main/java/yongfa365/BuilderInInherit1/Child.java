@@ -12,7 +12,7 @@ import lombok.ToString;
 public class Child extends Parent {
     private String childName;
 
-    //需要把父类的所有字段都写到这个子类的构造函数里
+    //需要把父类的所有字段都写到这个子类的构造函数里，不建议用了
     @Builder
     private Child(String parentName, String childName) {
         super(parentName);
