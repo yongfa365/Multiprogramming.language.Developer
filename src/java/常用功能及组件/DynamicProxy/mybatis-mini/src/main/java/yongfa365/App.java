@@ -8,16 +8,14 @@ import yongfa365.domain.User;
 
 public class App {
     public static void main(String[] args) {
-        MapperProxy proxy = new MapperProxy();
-
-        UserMapper userMapper = proxy.newInstance(UserMapper.class);
+        UserMapper userMapper = MapperProxy.of(UserMapper.class);
         User user = userMapper.getUserById(1001);
         System.out.println(user);
         System.out.println(userMapper);
 
         System.out.println("========================================================================".repeat(2));
 
-        var productMapper = proxy.newInstance(ProductMapper.class);
+        var productMapper = MapperProxy.of(ProductMapper.class);
         var product = productMapper.getProduct(1254,"产品名称");
         System.out.println(product);
         System.out.println(productMapper);
