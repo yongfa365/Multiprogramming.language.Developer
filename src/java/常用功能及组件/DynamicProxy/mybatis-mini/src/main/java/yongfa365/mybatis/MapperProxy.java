@@ -2,7 +2,6 @@ package yongfa365.mybatis;
 
 import lombok.extern.slf4j.Slf4j;
 import yongfa365.mybatis.annotation.Select;
-import yongfa365.dao.DBMock;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

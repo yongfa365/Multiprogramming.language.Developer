@@ -1,4 +1,4 @@
-package yongfa365.dao;
+package yongfa365.mybatis;
 
 import java.util.Collections;
 import java.util.Map;
