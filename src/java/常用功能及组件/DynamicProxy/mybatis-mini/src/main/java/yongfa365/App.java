@@ -1,6 +1,7 @@
 package yongfa365;
 
-import yongfa365.core.MapperProxy;
+import yongfa365.domain.Product;
+import yongfa365.mybatis.MapperProxy;
 import yongfa365.dao.ProductMapper;
 import yongfa365.dao.UserMapper;
 import yongfa365.domain.User;
@@ -8,15 +9,15 @@ import yongfa365.domain.User;
 
 public class App {
     public static void main(String[] args) {
-        UserMapper userMapper = MapperProxy.of(UserMapper.class);
+        UserMapper userMapper = MapperProxy.newInstance(UserMapper.class);
         User user = userMapper.getUserById(1001);
         System.out.println(user);
         System.out.println(userMapper);
 
         System.out.println("========================================================================".repeat(2));
 
-        var productMapper = MapperProxy.of(ProductMapper.class);
-        var product = productMapper.getProduct(1254,"产品名称");
+        ProductMapper productMapper = MapperProxy.newInstance(ProductMapper.class);
+        Product product = productMapper.getProduct(1254,"产品名称");
         System.out.println(product);
         System.out.println(productMapper);
 

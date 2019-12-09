@@ -1,7 +1,7 @@
-package yongfa365.core;
+package yongfa365.mybatis;
 
 import lombok.extern.slf4j.Slf4j;
-import yongfa365.core.annotation.Select;
+import yongfa365.mybatis.annotation.Select;
 import yongfa365.dao.DBMock;
 
 import java.lang.reflect.InvocationHandler;
@@ -69,7 +69,7 @@ public class MapperProxy implements InvocationHandler {
 
     // 〓〓〓〓〓〓〓〓〓〓 其次，他还能初始化一个动态代理，方便外界调用 〓〓〓〓〓〓〓〓〓〓
     @SuppressWarnings("unchecked")
-    public static <T> T of(Class<T> interfaceClass) {
+    public static <T> T newInstance(Class<T> interfaceClass) {
         return (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class[]{interfaceClass}, handler);
     }
 
