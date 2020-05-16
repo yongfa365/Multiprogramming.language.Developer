@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -50,7 +51,7 @@ public class AboutBasic {
             BigDecimal bigDecimalValue = new BigDecimal("987654321");
 
             //c#：1m+1m在java得写成： new BigDecimal(1).add(new BigDecimal(1));
-            BigDecimal m_1 = bigDecimalValue.divide(new BigDecimal("3"));
+            BigDecimal m_1 = BigDecimal.ZERO.divide(new BigDecimal("3"));
 
             //0.09999999999999998  double 精度不够，一般不要用，
             Double double_bad = 1.0 - 9 * 0.1;
@@ -91,6 +92,9 @@ public class AboutBasic {
         //Java没有值类型之说，都是引用类型的，所以可以直接赋值null，所以没有C#里的可空类型：int? ,Nullable<int> ，
         {
             Integer int1 = null;
+
+            var a3 = Optional.ofNullable(int1).orElse(123);
+
             if (int1 == null) {
                 int1 = 123;
             }

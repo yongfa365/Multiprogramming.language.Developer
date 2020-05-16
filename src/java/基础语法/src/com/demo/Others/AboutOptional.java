@@ -2,6 +2,7 @@ package com.demo.Others;
 
 import java.util.List;
 import java.util.Optional;
+
 //https://blog.kaaass.net/archives/764
 //https://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html
 //https://howtodoinjava.com/java8/java-8-optionals-complete-reference/
@@ -46,14 +47,22 @@ class AboutOptional {
         //存在才打印,C#虽然没提供，但直接写个扩展方法就把这个秒杀了
         Optional.ofNullable(version).ifPresent(System.out::println);
 
+        var version2 = Optional.ofNullable(version).orElse("APP7.2");
+
         //java 1.9有了if else写法:
         Optional.ofNullable(version).ifPresentOrElse(
                 p -> System.out.println(p), //存在则执行
                 () -> System.out.println("null") //不存在则执行
         );
 
-        //java 1.9有了stream()
+
         var lst = List.of(1, 2, 3);
+
+        Integer integer1 = lst.stream().filter(p -> p > 3).findFirst().get(); //ide会警告，如果不想报错则需要ifPresent或isPresent下再取
+        Integer integer2 = lst.stream().filter(p -> p > 3).findFirst().orElseThrow();//不存在时就报错，既然你这么清楚那IDE就没理由警告了。
+        Integer integer3 = lst.stream().filter(p -> p > 3).findFirst().orElse(123);//  给个默认值
+        Integer integer4 = lst.stream().filter(p -> p > 3).findFirst().orElseGet(() -> {return 1 + 1;});//给个supplier
+
         lst = null;
         Optional.ofNullable(lst).ifPresent(System.out::println);
     }
