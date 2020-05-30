@@ -24,7 +24,7 @@ Java在IDEA里F12可以直接看到源代码，很容易了解内部实现，有
 ## 常用的第三方库有
 Name|URL|Desc
 ----|----|----
-Apache Commons Lang|https://commons.apache.org/proper/commons-lang/<br>https://github.com/apache/commons-lang|Commons的开发者会尽其所能地减少组件与其它开发库的依赖，让部署这些组件更加容易。除此之外，Commons组件还会尽可能保持接口的稳定，让Apache的用户（包括使用Commons的其它Apache项目）可以使用时无需担心未来可能的变化。内容包括：二进制，各种编码，字符串操作，集合扩展与增强，压缩解压，文件操作等。**最最常用的还是commons-lang3**
+Apache Commons Lang|https://commons.apache.org/proper/commons-lang/<br>https://github.com/apache/commons-lang|Commons的开发者会尽其所能地减少组件与其它开发库的依赖，让部署这些组件更加容易。除此之外，Commons组件还会尽可能保持接口的稳定，让Apache的用户（包括使用Commons的其它Apache项目）可以使用时无需担心未来可能的变化。内容包括：二进制，各种编码，字符串操作，集合扩展与增强，压缩解压，文件操作等。**最最常用的还是commons-lang3，一定要学会并优先用这种，节约时间减少bug的利器，比JDK写法简单！**
 Google Guava|https://github.com/google/guava/wiki http://ifeve.com/google-guava/|Guava工程包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。 所有这些工具每天都在被Google的工程师应用在产品服务中。 **guava以前有优势，但被java8收编了一些核心功能（抄袭）后，guava已经没那么必要了TODO：要研究下**
 
 
