@@ -18,16 +18,14 @@ id|desc|url
 Java的方式也有缺陷：自身不足第三方补足，然后Java后续版本又加上了第三方的内容可能类名都相同，就冲突了。Java后来发展好了第三方的组件可能就鸡肋了，或者一堆公司实现了同样的功能从而乱花渐欲迷人眼了。
 
 ## 学习方法
-所以学Java与学C#不同，想要用好C#只要学下官方默认组件就基本满分了，简单高效。而要学好Java则得：1.学好默认组件，有些是不用学的，具体哪些你要能分辨，2.熟悉第三方组件如：File，Http,Json,String,Collection，Lombok，框架如Spring。
+所以学Java与学C#不同，想要用好C#只要学下官方默认组件就基本满分了，简单高效。而要学好Java则得：1.学好默认组件，有些是不用学的，具体哪些你要能分辨，2.熟悉第三方组件如：File、Http、Json、String、Collection、Lombok、commons-lang3，框架如Spring。
 
 Java在IDEA里F12可以直接看到源代码，很容易了解内部实现，有不清楚的很快就能搞定。而C#不能看源码影响深入研究，所以他官方文档写的很好，当然也可以用ILSpy反编译看，但这就不方便了。从这个角度看Java更贴合我的人生信条，不懂就搞懂，有路径可寻。
 ## 常用的第三方库有
 Name|URL|Desc
 ----|----|----
-Apache Commons Lang|https://commons.apache.org/|Commons的开发者会尽其所能地减少组件与其它开发库的依赖，让部署这些组件更加容易。除此之外，Commons组件还会尽可能保持接口的稳定，让Apache的用户（包括使用Commons的其它Apache项目）可以使用时无需担心未来可能的变化。内容包括：二进制，各种编码，字符串操作，集合扩展与增强，压缩解压，文件操作等。
-Apache HttpComponents|https://hc.apache.org/|HttpClient,**以前这个很方便，但java 11里有了自己的httpclient后，他的这个优势被削弱了**
+Apache Commons Lang|https://github.com/apache/commons-lang<br>https://github.com/apache/commons-lang|Commons的开发者会尽其所能地减少组件与其它开发库的依赖，让部署这些组件更加容易。除此之外，Commons组件还会尽可能保持接口的稳定，让Apache的用户（包括使用Commons的其它Apache项目）可以使用时无需担心未来可能的变化。内容包括：二进制，各种编码，字符串操作，集合扩展与增强，压缩解压，文件操作等。**最最常用的还是commons-lang3**
 Google Guava|https://github.com/google/guava/wiki http://ifeve.com/google-guava/|Guava工程包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。 所有这些工具每天都在被Google的工程师应用在产品服务中。 **guava以前有优势，但被java8收编了一些核心功能（抄袭）后，guava已经没那么必要了TODO：要研究下**
-Jackson|https://github.com/FasterXML/jackson-databind/|json序列化与反序列化的
 Caffeine|https://github.com/ben-manes/caffeine|据说比guava的cache好，TODO
 
 ## 写Demo消耗时间
@@ -84,9 +82,10 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] Gradle
     
 - [ ] JSON(嵌套引用|enum|null|LocalDateTime|pretty|性能|hashmap|所有基本类型|与C#的互通|多了个属性反序列化不报错|注解及规则相同否|反序列化成复杂类型List<List<HashMap>>)
-    - [ ] jackson(ObjectMapper需要各种设置才好有，内置在spring里，鬼剑直接用这个)
-    - [ ] [gson](https://www.baeldung.com/jackson-vs-gson)（google产的用起来还算方便，不过用spring多，暂时就不研究了）
-    - [ ] fastJson（所谓的阿里出品的，虽然问题不断，但调用简单）
+    - [x] [jackson](https://github.com/FasterXML/jackson-databind/) ObjectMapper需要各种设置才好有，内置在spring里
+    - [x] [JsonPath](https://github.com/json-path/JsonPath) 方便的读写json, **强项是读json**
+    - [ ] [gson](https://www.baeldung.com/jackson-vs-gson) google产的用起来还算方便，不过用spring多，暂时就不研究了
+    - [ ] fastJson 所谓的阿里出品的，虽然安全问题不断，但调用简单，受众极泛
 
 - [ ] Compress
     - [ ] snappy
@@ -96,8 +95,8 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] lz4
 
 
-- [x] lombok（耗时1天）
-    - [x] @Data、@Builder、@NoArgsConstructor、@Slf4j、@SuperBuilder、@ExtensionMethod
+- [x] [lombok](https://projectlombok.org/)（耗时1天）
+    - [x] @Data、@Builder、@SuperBuilder、@NoArgsConstructor、@AllArgsConstructor、@RequiredArgsConstructor、@NonNull、@Slf4j、@ExtensionMethod
 
 
 - [x] MyBatis（自动生成与手动分开|备注|事物|映射|插件开发）（耗时3天）
@@ -140,17 +139,17 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [x] Redis(Jedis封装的比较简单，命名也跟原生对应，更适合再包装)
 
 - [ ] Spring  
-    - [ ] Core（AOP|IOC ）
-        - [ ] AOP(spring aop|cglib|aspectj|javaagent)
-        - [ ] IOC
-        - [ ] 动态代理
-    - [=] SpringBoot(autoconfig,starter,parent)
-        - [ ] 拆包（xxx.jar,config,lib）（1天）
+    - [=] Core（AOP|IOC ）
+        - [=] AOP(spring aop|cglib|aspectj|javaagent)
+        - [=] IOC
+        - [=] 动态代理
+    - [x] SpringBoot(autoconfig,starter,parent)
+        - [x] 拆包（xxx.jar,config,lib）（1天）
     - [ ] Spring MVC|RestApi
     - [ ] Spring Data
-      - [ ] 多数据源配置（MySQL|RabbitMQ|Redis）
-      - [ ] JPA
-      - [ ] querydsl
+      - [=] 多数据源配置（MySQL|RabbitMQ|Redis）
+      - [=] JPA
+      - [=] querydsl
       - [ ] Mongodb（utc时间）
       - [ ] RabbitMQ（重连|LocalQueue|并发多个连接）
       - [ ] Kafka
@@ -158,11 +157,11 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
     - [ ] actuator、SpringBootAdmin
 
 - [x] http (Sync|Async|gzip|headers|cookies|pool|SSL|proxy|get<T>|status400...body)
-    - [x] [jdk HttpClient](https://golb.hplar.ch/2019/01/java-11-http-client.html) 功能缺失(URI builder, multipart form data, form data, compression support)
+    - [x] [jdk HttpClient](https://golb.hplar.ch/2019/01/java-11-http-client.html) 功能缺失:(URI builder, multipart form data, form data, compression support)
     - [x] okHttp（Interceptor|有详细的每步耗时如：dns解析，建立安全链接，最终连接的IP等）
     - [ ] Spring RestTemplate 将被淘汰，不研究
     - [ ] Spring WebClient 有okhttp了就先不研究了
-    - [ ] Apache httpClient 有okhttp了就先不研究了
+    - [ ] [Apache httpClient](https://hc.apache.org/|HttpClient) 有okhttp了就先不研究了
 
 - [x] Schedule（分布式|服务器时间差10秒任务只要3秒的重复执行问题）
     - [x] [Spring @Scheduled](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling-annotation-support-scheduled)
@@ -172,7 +171,7 @@ C#多用静态方法，如：XXXHelper，扩展方法等。而java里则多用sp
 - [x] Excel
     - [x] EasyExcel(表头|列宽|身份证号|数字|日期时间格式|内存占用) 4h
 
-- [ ] [data validator](https://hibernate.org/validator/)
+- [x] [data validator](https://hibernate.org/validator/)
 - [ ] PDF
 - [ ] 性能
     - [ ] APM
