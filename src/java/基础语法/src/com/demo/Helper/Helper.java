@@ -4,9 +4,9 @@ package com.demo.Helper;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.function.Consumer;
 import java.util.stream.BaseStream;
 
 
@@ -59,5 +59,10 @@ public class Helper {
         } catch (InterruptedException e) {
         }
     }
+
+    public static void log(Object object) {
+        System.out.println(LocalTime.now() + "\t" + object);
+    }
+
 
 }
