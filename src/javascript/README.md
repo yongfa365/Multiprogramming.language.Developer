@@ -1,0 +1,14 @@
+## 官方网站
+id|desc|url
+--|----|----
+1|MDN（developer.mozilla.org）目前看来最专业的前端开发标准 官网|[MDN js中文](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) ｜ [MDN js英文](https://developer.mozilla.org/en-US/docs/Web/JavaScript) ｜[MDN js参考](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) ｜ [MDN Web API](https://developer.mozilla.org/en-US/docs/Web/API) 
+2|《JavaScript 语言入门教程》 阮一峰 ES6之前的版本，还不错|https://wangdoc.com/javascript/ <br> https://github.com/wangdoc/javascript-tutorial
+3|《ECMAScript 6 入门》阮一峰 ES6及之后的版本，写的不怎么样，但也能看|http://es6.ruanyifeng.com/ <br> https://github.com/ruanyf/es6tutorial
+
+
+
+
+## 耗时
+2007年左右有系统的学习过一遍，后来系统的学习过jQuery,之后用的不多，但基础基本也都会吧，所以es5的功能大约看了24个番茄，12个小时就差不多了。es6的看了大约44个番茄，22小时，简单算下来5天时间吧，实际是穿插在15天完成的。
+
+在Promise、async-await、sleep上花费时间较长，主要是要结合历史经验场景想造出更合适的例子。
