@@ -1,188 +1,191 @@
-﻿//js是单线程的，所以只能实现一些异步的功能了。
+﻿/*jshint esversion: 6 */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
+//js是单线程的，但可以实现一些异步的功能
 
-namespace ConsoleApp.BestPractices
+//#region 模拟度假系统，同时请求机票与酒店，这个能看懂的话，基本就差不多了
 {
-    /// <summary>
-    /// 虽然在C#里写并行或开线程很容易，基本就一行代码，但增加线程来加速的做法不可取。
-    /// 建议正式使用时还是用专业的消息队列吧，如：RabbitMQ,Kafka
-    /// 官网：https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks
-    /// 官网：https://docs.microsoft.com/en-us/dotnet/api/system.threading.thread
-    /// </summary>
-    public class AboutThread
-    {
-        public static void RunDemo()
-        {
-            RunOldThreadDemo();
+    console.time("查询酒店+机票总耗时");
 
-            RunThreadPoolGlobalSettingsDemo();
+    //实际中要自行处理httpstatus != 200的场景
 
-            RunTypical_Thread_Task_Parallel_Demo();
+    var hoteltask = fetch('https://httpstat.us/200?sleep=10000')
+    .then(rs => rs.text())
+    .then(body =>  [{hotelId:1,name:"酒店1"},{hotelId:100,name:"酒店100" + body}]);
 
-            RunThreadSyncDemo();
-
-            LockTest.LockDemo();
-        }
-
-        /// <summary>
-        /// 早期开线程的方法，不建议研究
-        /// </summary>
-        private static void RunOldThreadDemo()
-        {
-            //new Thread开的线程的特点：
-            //  1.是野线程：不受ThreadPool控制，也就是说没有最小最大线程之说，开线程速度也很快。
-            //  2.是前台线程：主线程执行完要退出时，会等所有的前台线程执行完。直接Kill进程没有此限制。
-            var thread1 = new Thread(new ThreadStart(Run));
-            thread1.IsBackground = false; //默认是false即：前台线程
-            thread1.Start();
-
-            //线程池开线程
-            ThreadPool.QueueUserWorkItem(x => Run());
-        }
+    var flighttask = fetch('https://httpstat.us/200?sleep=8000')
+    .then(rs => rs.text())
+    .then(body => [{flightId:1,airline:"深航"},{flightId:2,airline:"东航" + body}]);
 
 
-        /// <summary>
-        /// 线程池ThreadPool的全局设置
-        /// </summary>
-        private static void RunThreadPoolGlobalSettingsDemo()
-        {
-            //线程不是你要多少就立即给你开多少的，有最小及最大线程数，小于最小你要多少就开多少，超过了大约每秒开2个，直到达到最大
-            //默认 最小线程数==IO线程数==cpu核数,相当小，当然这个是可以设置的：
-            int workerThreadsMin, completionPortThreadsMin, workerThreadsMax, completionPortThreadsMax;
-            ThreadPool.GetMaxThreads(out workerThreadsMax, out completionPortThreadsMax);
-            ThreadPool.GetMinThreads(out workerThreadsMin, out completionPortThreadsMin);
-            var aaa1 = ThreadPool.SetMaxThreads(10000, 10000);
-            var aaa = ThreadPool.SetMinThreads(1000, 1000); //设置大于最大，则返回失败。
-            System.Net.ServicePointManager.DefaultConnectionLimit = int.MaxValue;
-        }
-
-
-        /// <summary>
-        /// 常用的线程及并行操作，Task,Parallel,这些默认都是通过ThreadPool开线程的
-        /// </summary>
-        private static void RunTypical_Thread_Task_Parallel_Demo()
-        {
-            //启动个线程
-            Task.Factory.StartNew(Run);
-            Task.Factory.StartNew(() =>
-            {
-                Run();
-            });
-
-
-            //启动个线程
-            Task.Run(() => Run());
-
-
-            //并行for
-            Parallel.For(0, 10, item => Console.WriteLine(item));
-            Parallel.For(0, 10, item =>
-            {
-                Console.WriteLine(item);
-            });
-
-
-            //设置最大并行度
-            Parallel.For(0, 10, new ParallelOptions { MaxDegreeOfParallelism = 2 }, item => Console.WriteLine(item));
-
-
-            //并行foreach
-            var lst = new List<int> { 1, 2, 3, 4, 5 };
-            Parallel.ForEach(lst, item => Console.WriteLine(item));
-            Parallel.ForEach(lst, Console.WriteLine);
-            lst.AsParallel().ForAll(Console.WriteLine); //数组、集合都可以.AsParallel()
-
-            //并行调用多个方法
-            Parallel.Invoke(Run, Run, () => { Console.WriteLine(""); }, () => { });
-        }
-
-        /// <summary>
-        /// 线程同步相当容易，就是个Task.WaitAll，当然还有更高级的，但基本这个就够用了。
-        /// </summary>
-        private static void RunThreadSyncDemo()
-        {
-            var sw = Stopwatch.StartNew();
-
-            //获取酒店数量、列表
-            var hotelCount = 0;
-            var getHotels = Task.Run(() =>
-            {
-                Thread.Sleep(1234); //模拟查询酒店......
-                hotelCount = 100;
-            });
-
-            //获取机票数量、列表
-            var flightCount = 0;
-            var getFlights = Task.Run(() =>
-            {
-                Thread.Sleep(2000); //模拟查询机票......
-                flightCount = 10;
-            });
-
-            //等机票酒店都回来，什么？高大上的线程同步就是一句话？你以为呢？
-            Task.WaitAll(getHotels, getFlights);
-
-            //返回结果：
-            Console.WriteLine($"查询耗时{sw.ElapsedMilliseconds}ms,酒店{hotelCount}个，机票{flightCount}个，可供你选择");
-        }
-
-
-
-        private static void Run()
-        {
-            Console.WriteLine($"ThreadId:{Thread.CurrentThread.ManagedThreadId}");
-        }
-
-
-        class LockTest
-        {
-            public static readonly object objLock = new object();
-            /// <summary>
-            /// 多线程要考虑 线程安全 及 锁，这个是锁的使用。线程安全相关的可以参考AboutCollection
-            /// </summary>
-            public static void LockDemo()
-            {
-
-                //演示：同步操作
-                var addSync = 0;
-                for (int i = 0; i < 10000; i++)
-                {
-                    addSync += i;
-                }
-
-
-
-                //演示：异步操作，没有使用lock时，最终的结果不对
-                var addAsync = 0;
-                Parallel.For(0, 10000, i => addAsync += i);
-                var nolock = addSync == addAsync; //false
-
-
-
-                //演示：异步操作，使用lock，最终结果正确
-                var addAsyncWithLock = 0;
-                Parallel.For(0, 10000, i =>
-                {
-                    lock (objLock)
-                    {
-                        addAsyncWithLock += i;
-                    }
-                });
-
-                var withlock = addSync == addAsyncWithLock; //true
-            }
-        }
-
-
-    }
-
-
-
+    //等所有结果回来
+    Promise.all([hoteltask, flighttask])
+        .then(([hotels, flights]) => {
+            console.log("获取到 酒店:", hotels.map(p => p.hotelId).join(), "机票：", flights.map(p => p.flightId).join());
+            console.log("最终时间应该小于酒店+机票的时间，https连接有时慢，可以多刷新几次看下。")
+            console.timeEnd("查询酒店+机票总耗时");
+        })
+        .catch(ex => console.log(ex))
+        .finally(() => console.log("是死是活，已有定数"));
 
 }
+//#endregion
+
+
+
+
+
+
+
+
+
+//#region async函数：是一个能返回Promise对象的函数。当函数执行的时候，一旦遇到await就会先返回其后的Promise， 等到异步操作完成，再接着执行await后面的语句。
+{
+    // 如果只是拿到特定的结果，then下去就行
+    fetch('https://httpstat.us/200?sleep=3000')
+        .then(rs => rs.text())
+        .then(body => console.log(body))
+        .catch(console.error);
+
+
+    // 如果要做更多的事情，得这么写了
+    async function get(url) {
+        //fetch会生成个Promise，同时因为在await后面，所以会立即返回，等到resolve后才会执行后面的语句
+        let rs = await fetch(url);
+
+        //rs.text()也是个promise,所以需要接着await
+        let body = await rs.text();
+
+        //所谓的 更多的事
+        return `url:${url} ==> body:${body}`;
+    }
+
+    get('https://httpstat.us/200?sleep=3000')
+        .then(result => console.log(result))
+        .catch(console.error);
+
+}
+//#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+//#region 并发读取远程URL
+{
+    //看着是异步的，async,await都有，但其实还是一个一个来的，for后没有结果不能进入下一个
+    async function getUrls(urls) {
+        for (let url of urls) {
+            let rs = await fetch(url);
+            let body = await rs.text();
+            console.log(`url:${url} ==> body:${body}`);
+        }
+    }
+    
+    //这才是真正的并发，因为map后每个都返回的是Promise，就能直接进入下一个了。
+    async function getUrls(urls) {
+        // 并发读取远程URL
+        let promises = urls.map(async (url) => {
+            let rs = await fetch(url);
+            let body = await rs.text();
+            return `url:${url} ==> body:${body}`;
+        });
+
+        // 按次序输出
+        for (let promise of promises) {
+            console.log(await promise);
+        }
+    }
+
+    let urls = [
+        'https://httpstat.us/200?sleep=3000',
+        'https://httpstat.us/400?sleep=1000',
+        'https://httpstat.us/502?sleep=4000',
+        'https://httpstat.us/403?sleep=2000',
+    ];
+
+    getUrls(urls);
+}
+//#endregion
+
+
+
+
+
+
+
+//#region Promise
+{
+    //一个正常的Promise要做的事情
+    var commonPromise = new Promise((resolve, reject) => {
+        let isSuccess = true; //mock
+        if (isSuccess) {
+            resolve(要返回的结果);
+        } else {
+            reject(); //或者不写这个，让他抛出异常就等同于调用了reject();
+        }
+    });
+
+    //链式调用，每个then的结果都是个新的Promise
+    Promise.resolve()
+        .then(step1)
+        .then(step2)
+        .then(step3)
+        .catch(console.error) //不管上面哪个step出错都会执行这个
+        .finally(() => console.log("是死是活，已有定数"));
+
+
+    function sleep(ms) {
+        return new Promise((resolve, reject) => {
+            //虽然setTimeout是异步的，但只要回调了relolve就行
+            setTimeout(resolve, ms, 'done');
+        });
+    }
+
+    sleep(100).then(result => {
+        console.log(result);
+    });
+}
+//#endregion
+
+
+
+
+
+//#region Promise.all() Promise.resolve() Promise.reject()
+{
+    let p1 = Promise.resolve(123);
+    let p2 = Promise.resolve('hello');
+    let p3 = Promise.resolve(true);
+    let p4 = Promise.reject('error');
+    
+    // [123, "hello", true]
+    Promise.all([p1, p2, p3]).then(result => {
+      console.log(result);
+    });
+    
+    // error
+    Promise.all([p1, p2, p4]).then(result => {
+      console.log(result);
+    }).catch(result => {
+      console.log(result);
+    });
+    
+    
+    //会自动包装，但前提是他已经有最终结果了，如果传的是个函数，则需要函数执行完的结果他才包装
+    // this will be counted as if the iterable passed is empty, so it gets fulfilled
+    var p = Promise.all([1,2,3]);
+    // this will be counted as if the iterable passed contains only the resolved promise with value "444", so it gets fulfilled
+    var p2 = Promise.all([1,2,3, Promise.resolve(444)]);
+    // this will be counted as if the iterable passed contains only the rejected promise with value "555", so it gets rejected
+    var p3 = Promise.all([1,2,3, Promise.reject(555)]);
+
+}
+//#endregion
+
