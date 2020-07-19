@@ -1,163 +1,229 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
+﻿/*jshint esversion: 6 */
 
-namespace ConsoleApp.BestPractices
+//#region date 的各种输出
 {
-    public class AboutDateTime
-    {
-        ///<summary>
-        ///有备注的直接看就行了
-        ///没备注的只是说明其使用方法，自己调试断点F10一个一个看吧
-        ///微软DateTime已经做的很好了，所以外界也几乎没有对他再二次开发的了
-        ///官方：
-        ///  完整文档：https://docs.microsoft.com/en-us/dotnet/api/system.datetime
-        ///  标准format:https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings
-        ///  自定义format:https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
-        ///</summary>
-        public static void RunDemo()
-        {
-            #region 相关类
-            //System.DateTime 日期与时间的，一般就用这个包括 日期，时间，时区 及各种计算方法,DateTime是struct，是值类型的
-            //TimeSpan 只是日期时间的，比较少用，两个DateTime相减的结果就是这个
-            //System.Diagnostics.Stopwatch 如其名，记录时间用的。
-            #endregion
+    var now = new Date();
+
+    //js没有原生的自定义格式化方法，有几个固定的不符合国情的（想要好用的看最后面的format）：
+    now.toISOString(); //"2020-07-19T05:11:33.175Z"    少8小时的
+    now.toLocaleDateString(); //"7/19/2020"  不好用
+
+    var now = DateTime.Now;
+
+    console.log("now.getFullYear()", now.getFullYear());
+    console.log("now.getMonth()", now.getMonth()); //是索引，比实际月少1
+    console.log("now.getDate()", now.getDate());
+
+    console.log("now.getHours()", now.getHours()); //是24小时制的
+    console.log("now.getMinutes()", now.getMinutes());
+    console.log("now.getSeconds()", now.getSeconds());
+    console.log("now.getMilliseconds()", now.getMilliseconds());
+
+    console.log("now.getTime()", now.getTime());
+    console.log("now.getDay()", now.getDay()); //DayOfWeek
+    console.log("now.getTimezoneOffset()", now.getTimezoneOffset()); //当前时区到UTC的秒数，+08:00这个值是-480，奇葩
+
+}
+//#endregion
 
 
-            #region DateTime.Now 的各种输出
-            {
-                var time1 = DateTime.Now;  //2018/11/21 16:16:31 ★之所以显示“/”而不是“-”是因为系统语言决定的,也许你的机器就是-
-                var time2 = DateTime.UtcNow; //2018/11/21 8:16:31  减了8小时的
-                var time3 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"); //2018-11-21 16:16:31.2588022,f可以1-7个
-                var time4 = DateTime.Now.ToString("o"); //2018-11-21T16:16:31.2658022+08:00 ★ISO8601，用这个哪都支持
-
-                var now = DateTime.Now;
-                Console.WriteLine(now.Date); //2018/11/21 0:00:00 也就是time部分全为0的结果
-
-                Console.WriteLine(now.Year);
-                Console.WriteLine(now.Month);
-                Console.WriteLine(now.Day);
-                Console.WriteLine(now.Hour);
-                Console.WriteLine(now.Minute);
-                Console.WriteLine(now.Second);
-                Console.WriteLine(now.Millisecond);
-
-                Console.WriteLine(now.Ticks);
-                Console.WriteLine(now.Kind);
-                Console.WriteLine(now.DayOfYear);
-                Console.WriteLine(now.DayOfWeek);
-                Console.WriteLine(now.TimeOfDay);
-            }
-            #endregion
 
 
-            #region 定义DateTime 及 字符串转DateTime
-            {
-                var time1 = new DateTime(2018, 11, 21);
-                var time2 = new DateTime(2018, 11, 21, 16, 28, 30);//就是年月日时分秒
+//#region 定义DateTime 及 字符串转DateTime
+{
+    //初始化的语法
+    new Date();
+    new Date(value);
+    new Date(dateString); //不推荐用字符串解析日期，有需要自行解析
+    new Date(year, monthIndex[, day[, hours[, minutes[, seconds[, milliseconds]]]]]); //注意monthIndex是index，如5月要传4
 
-                var tp_1 = DateTime.Parse("2018-11-21");
-                var tp_2 = DateTime.Parse("2018-11-21 12:23:25");
-                var tp_3 = DateTime.Parse("2018-11-21 12:23:25.12345");//7位的ms,java是9位的
-                var tp_4 = DateTime.Parse("2018-11-21T12:23:25.1234567");
-                var tp_5 = DateTime.Parse("2018-11-21T12:23:25.1234567+08:00");
-                var tp_6 = DateTime.Parse("2018.11.21");
-                var tp_7 = DateTime.Parse("12:23:25"); //日期是当天，时间是指定的。
-                var tp_8 = DateTime.Parse("12:23");
+    //将js日期时间转C#的方法：new DateTime(1970, 01, 01).AddMilliseconds(1595134697251);
+    Date.now(); //1595134697251 从UTC 1970-01-01 0点起的秒数
+    Date.parse("2020-12-23"); //1608681600000   从UTC 1970-01-01 0点起的秒数
 
-                DateTime.TryParse("2018-11-21T12:23:25.1234567+08:00", out DateTime ttp_1); //out前面不用声明ttp_1
-                Console.WriteLine(ttp_1);
-
-
-            }
-            #endregion
+    new Date(); //Sun Jul 19 2020 12:58:10 GMT+0800 (China Standard Time)
+    new Date(1592913569202); //Tue Jun 23 2020 19:59:29 GMT+0800 (中国标准时间)
+    new Date("2020-12-23 13:56:12.123"); //Wed Dec 23 2020 13:56:12 GMT+0800 (China Standard Time)
+    new Date(2020, 0);
+    new Date(2020, 0, 2);
+    new Date(2018, 11, 21, 16, 28, 30);
 
 
-            #region DateTime增减、TimeSpan、比较大小
-            {
+    new Date("2020-12-23");                    //Wed Dec 23 2020 08:00:00 GMT+0800 (China Standard Time) 注意：多了8小时
+    new Date("2020-12-23T00:56");              //Wed Dec 23 2020 00:56:00 GMT+0800 (China Standard Time) 正常
+    new Date("2020-12-23T00:56:58");           //Wed Dec 23 2020 00:56:58 GMT+0800 (China Standard Time) 正常
+    new Date("2020-12-23T00:56:58.365+08:00"); //Wed Dec 23 2020 00:56:58 GMT+0800 (China Standard Time) 正常
 
-                var time1 = DateTime.Now
-                    .AddYears(1)
-                    .AddMonths(-2) //可加可减
-                    .AddDays(3)
-                    .AddHours(2)
-                    .AddMinutes(1)
-                    .AddSeconds(1)
-                    .AddMilliseconds(1)
-                    .AddTicks(12345)
-                  ;
+}
+//#endregion
 
 
-                var timespan = DateTime.Now - DateTime.Now.AddDays(-1).AddHours(-2).AddMinutes(-3); //1.02:03:00
-                Console.WriteLine(timespan);
-
-                //TimeSpan比DateTime多了几个Total*属性，如：60s+1s的结果是：Minutes=1,Seconds=1，要看真实差得：TotalSeconds=61
-                Console.WriteLine(timespan.TotalDays);
-                Console.WriteLine(timespan.TotalHours);
-                Console.WriteLine(timespan.TotalMinutes);
-                Console.WriteLine(timespan.TotalSeconds);
-                Console.WriteLine(timespan.TotalMilliseconds);
-
-                Console.WriteLine(timespan.Days);
-                Console.WriteLine(timespan.Hours);
-                Console.WriteLine(timespan.Minutes);
-                Console.WriteLine(timespan.Seconds);
-                Console.WriteLine(timespan.Milliseconds);
-
-                Console.WriteLine(timespan.Ticks);
 
 
-                var timeBool1 = new DateTime(2018, 11, 21) == new DateTime(2018, 11, 21); //True
-                var timeBool2 = DateTime.Now > DateTime.Now.AddDays(1); //False
-                var timeBool3 = DateTime.Now < DateTime.Now.AddDays(1); //True
-                var timeBool4 = DateTime.Now != DateTime.Now; //False
 
-            }
-            #endregion
+//#region DateTime增减、TimeSpan、比较大小
+{
+    //没有原生的加减年、月、日等的方法
 
+    new Date(2020, 07, 19) < new Date(2020, 12, 12); //true
 
-            #region 计时器，Stopwatch
-            {
-                //看一段代码执行花了多久,方法1：
-                var time = DateTime.Now;
-                Thread.Sleep(1234);
-                Console.WriteLine($@"耗时：{DateTime.Now - time}");
+    new Date(2020, 07, 19) == new Date(2020, 07, 19); //false, 不能这么比较
+    new Date(2020, 07, 19).getTime() == new Date(2020, 07, 19).getTime(); //true
+    new Date(2020, 07, 19) - new Date(2020, 07, 19) === 0; //true 相减的结果是：总毫秒的差值。
 
-                //方法2:
-                var sp = Stopwatch.StartNew();
-                Thread.Sleep(1234);
-                Console.WriteLine($@"sp.Elapsed: {sp.Elapsed} sp.ElapsedMilliseconds: {sp.ElapsedMilliseconds}");
-
-                //Stopwatch的其他操作
-                sp.Reset();
-                sp.Restart();
-
-                //以前的写法，现在也还能用
-                var sp1 = new Stopwatch();
-                sp1.Start();
-                sp1.Stop();
-
-            }
-            #endregion
+}
+//#endregion
 
 
-            #region timer
-            {
-                var timer = new System.Timers.Timer
-                {
-                    Interval = 1000 * 1,
-                    Enabled = true
-                };
 
-                timer.Elapsed += (sender, e) =>
-                {
-                    Console.WriteLine($"Timer Runing {timer.Interval++}");
-                };
-            }
-            #endregion
 
+
+//#region 计时器，Stopwatch
+{
+    //看一段代码执行花了多久
+    //方法1（也可以用Date.now()）：
+    var time = new Date();
+    await new Promise(r => setTimeout(r, 2000));
+    console.log(`耗时：${new Date()-time} ms`);
+
+    //方法2：没有StopWatch
+
+}
+//#endregion
+
+
+
+
+
+//#region timer 定时器 setTimeout | setInterva
+{
+    //常用以下两种写法：
+    setTimeout(() => {
+        //your code
+    }, 1000);
+
+    setInterval(() => {
+        //your code
+    }, 1000);
+    
+
+    //契约
+    var id = scope.setTimeout(function [, delay, arg1, arg2, ...]);
+    var id = scope.setTimeout(function [, delay]);
+    var id = scope.setTimeout(code[, delay]);
+
+    
+    //setTimeout和setInterval指定的回调函数，必须等到本轮事件循环的所有同步任务都执行完，才会开始执行。即便delay为0
+    //一个例子，先输出1和3，然后才其他
+    console.log(1);
+    //1s后执行，
+    var id1 = setTimeout(() => console.log("我是setTimeout"), 1000);
+    var id1 = setTimeout((a, b) => console.log("我是setTimeout ", a + b), 1000, 100, 3);
+
+    //每1s执行一次
+    var id2 = setInterval(() => console.log("我是setInterval", new Date().toISOString()), 1000);
+    var id2 = setInterval((a, b) => console.log("我是setInterval", a + b), 1000, 100, 3);
+    console.log(3)
+}
+//#endregion
+
+
+
+
+
+//#region sleep功能，语言功能不全，就使用者花时间来补了
+{
+    // 第一种： 在最外层可以简单的这么用
+    await new Promise(r => setTimeout(r, 2000));
+
+
+
+    // 第二种： Promise的写法
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    //可以一直then下去来延时
+    sleep(2000).then(p => {
+        console.log("2秒后...")
+    }).then(p => sleep(3000)).then(p => {
+        console.log("再3秒后...")
+    }).then(p => sleep(2000)).then(p => {
+        console.log("再2秒后...")
+    });
+
+
+    //在函数内部可以结合async来用
+    async function demo() {
+        console.log('准备sleep 2s');
+        await sleep(2000);
+        console.log('完成sleep');
+
+        // Sleep in loop
+        for (let i = 0; i < 5; i++) {
+            await sleep(2000);
+            console.log(i);
+        }
+    }
+
+    demo();
+
+
+
+    // 第三种：同步xhr
+    function sleepByXHR(ms) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://httpstat.us/200?sleep=' + ms, false); // `false` makes the request synchronous
+        xhr.send();
+    }
+
+    var time = new Date();
+    sleepByXHR(2000)
+    console.log(`耗时：${new Date()-time} ms`);
+
+}
+//#endregion
+
+
+
+
+
+
+
+//#region js的Date默认格式化不行，找个简单好用的
+{
+    Date.prototype.format = function (fmt) {
+        var dict = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
         }
 
+        for (var [k, v] of Object.entries(dict)) {
+            if (new RegExp(`(${k})`).test(fmt)) {
+                v += "";
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? v : ("00" + v).substr(v.length));
+            }
+        }
+        return fmt;
+    };
+    new Date().format("yyyy-MM-ddTHH:mm:ss.S"); //"2020-07-19T18:58:31.692"
 
-    }
+
+
+    //改掉默认输出为：2020-7-19T19:25.868Z+08:00
+    Date.prototype.toString = function () {
+        return `${this.getFullYear()}-${this.getMonth()+1}-${this.getDate()}T${this.getHours()}:${this.getMinutes()}.${this.getMilliseconds()}Z+08:00`;
+    };
 }
+//#endregion
+

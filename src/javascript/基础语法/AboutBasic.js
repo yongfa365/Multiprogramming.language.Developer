@@ -1,4 +1,7 @@
-﻿// #region 最基础类型
+﻿//在浏览器的console里试试吧
+
+// #region 最基础类型
+{
     //js的数字类型只有两个：Number及BigInt
     //Number相当于C#或java的double，而double精确度不够，一般业务项目都不用。但js与后端的C#或java交互时，可能接收到后端的类似long或Int64之类的较大的数字，如9223372036854775807，这个值在js里会被变成9223372036854776000，最后几位变成0了，这个问题在前后端交互时要特别小心，需要转成字符串。
 
@@ -54,7 +57,7 @@
     var a123 = null;
     var a3 = a123 ?? 0; //返回第一个不为null的或者返回null
 
-    var response = null;
+    var response = null; //可以换成{head:{code:200}}看看
     var code = response?.head?.code ?? 500; //500
 
     // ||也可以实现类似效果：
@@ -63,14 +66,14 @@
 
     false || 0 || ''
     // ''
-
+}
 //#endregion
 
 
 
 
 //#region 元组 Tuple<T1,T2,T3...T8> ,AnonymousType,Lambda表达式，Action<T1,T2..T8>, Func<T1,T2.T8..Tout> dynamic
-
+{
     //元组 Tuple太容易了,数组也算一种吧
     var t1 = ["1", 1, Date.now()];
     var t_1 = t1[1] + t1[2] + t1[3];
@@ -102,7 +105,7 @@
         actiontestInt++;
         throw Error("xxxx");
     });
-    actiontestInt
+    actiontestInt //2
 
     //Func
     var add = (x, y) => x + y;
@@ -114,7 +117,7 @@
     };
 
     add(1, 2); //3
-
+}
 //#endregion
 
 
@@ -124,6 +127,7 @@
 
 
 // #region if else do while for foreach switch
+{
     if (1 + 1 == 2) {
         //code
     } else if (2 > 1) {
@@ -156,12 +160,13 @@
     for (let [index, item] of strs.entries()) {
         console.log(index, item);
     }
-
+}
 //#endregion
 
 
 
 // #region 数学方法
+{
     Math.ceil(123.456); //天花板
     Math.floor(123.456); //地板
 
@@ -175,6 +180,7 @@
     new Number(1.451, 1).toFixed(1); //1.5 被修约的数字等于5时，若5的后面还有不为“0”的任何数，则此时无论5的前面是奇数还是偶数，均应进位。
     new Number(1.75, 1).toFixed(1); //1.8  被修约的数字等于5时，要看5前面的数字，若是奇数则进位，若是偶数则将5舍掉，即修约后末尾数字都成为偶数
     new Number(1.46, 1).toFixed(1); //1.5  被修约的数字>=6时，则进位
+}
 //#endregion
 
 
