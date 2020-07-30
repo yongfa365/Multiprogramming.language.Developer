@@ -70,5 +70,5 @@ function ajax(url) {
     });
 }
 
-await ajax("https://httpstat.us/200?预热下https");
+await ajax("https://httpstat.us/200");
       
