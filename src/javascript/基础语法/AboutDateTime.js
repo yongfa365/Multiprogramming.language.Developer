@@ -38,7 +38,7 @@
     new Date(year, monthIndex[, day[, hours[, minutes[, seconds[, milliseconds]]]]]); //注意monthIndex是index，如5月要传4
 
     //将js日期时间转C#的方法：new DateTime(1970, 01, 01).AddMilliseconds(1595134697251);
-    Date.now(); //1595134697251 从UTC 1970-01-01 0点起的秒数
+    Date.now(); //1595134697251 从UTC 1970-01-01 0点起的“毫秒数”
     Date.parse("2020-12-23"); //1608681600000   从UTC 1970-01-01 0点起的秒数
 
     new Date(); //Sun Jul 19 2020 12:58:10 GMT+0800 (China Standard Time)
@@ -64,6 +64,8 @@
 //#region DateTime增减、TimeSpan、比较大小
 {
     //没有原生的加减年、月、日等的方法
+
+    var tomorrow = new Date(Date.now() + 1*24*60*60*1000); //这就是加一天了
 
     new Date(2020, 07, 19) < new Date(2020, 12, 12); //true
 
