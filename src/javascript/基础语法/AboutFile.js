@@ -1,87 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace ConsoleApp.BestPractices
-{
-    /// <summary>
-    /// 一般用静态方法就行，如果对性能要求很高，才考虑打开后操作，操作完再关闭
-    /// </summary>
-    public class AboutFile
-    {
-        public static void RunDemo()
-        {
-            Console.WriteLine("控制台输入输出，随便输入个，回车结束:");
-            var input = Console.ReadLine();
-            Console.WriteLine($"你输入了：{input}");
+﻿//js操作文件应该不常用，或者在Node.js里才会用到，所以这里就不写了。
 
 
-
-            var filepath = "C:\\FileTest\\haha\\1.txt";
-            var context = "内容";
-            var lstContext = new List<string> { "A", "B" };
-            var byteContext = Encoding.UTF8.GetBytes(context);
-
-            //获取当前工作目录
-            var workingDirectory = Environment.CurrentDirectory;
-            
-            //改变当前工作目录，说改就改，之后的文件操作的BasePath就是这个了，Java11没有这样的功能。
-            Environment.CurrentDirectory = "c:\\windows";
-
-
-            //仅当前目录
-            var files1 = Directory.GetFiles("C:\\Windows\\", "*.exe");
-
-            //包括子目录，可以指定多种筛选规则
-            var files2 = Directory.GetFiles("C:\\Windows\\", "*.EXE", new EnumerationOptions
-            {
-                RecurseSubdirectories = true,
-                MatchCasing = MatchCasing.PlatformDefault,
-                AttributesToSkip = FileAttributes.Normal
-            });
-
-            Directory.CreateDirectory("C:\\FileTest\\haha"); //存在不报错
-
-            if (!File.Exists(filepath))
-            {
-                //xx
-            }
-
-
-            File.AppendAllText(filepath, context);
-
-            File.WriteAllText(filepath, context);
-            File.WriteAllLines(filepath, lstContext);
-            File.WriteAllBytes(filepath, byteContext);
-
-            //文件在用时无权删除，如果要删除则需要包装下kernel32.dll
-
-            //http://www.jeremyshanks.com/fastest-way-to-write-text-files-to-disk-in-c/
-            using (var writer = new StreamWriter("C:\\bigtest.txt", true, Encoding.UTF8, 65536))
-            {
-                var temp = "12345".Repeat(1024);
-                for (int i = 0; i < 1000000; i++)
-                {
-                    writer.WriteLine(temp);
-                }
-            }
-            File.Delete("C:\\bigtest.txt");
-
-
-            var cnt1 = File.ReadAllText(filepath);
-            var cnt2 = File.ReadAllLines(filepath);
-            var cnt3 = File.ReadAllBytes(filepath);
-
-
-            File.Copy(filepath, filepath + ".txt", true);
-            File.Delete(filepath);
-
-
-            var tempPath = Path.Combine("C:", "a", "b", "c.txt"); //C:\a\b\c.txt 
-            var filename = Path.GetFileName(tempPath);
-            var fullpath = Path.GetFullPath(tempPath);
-            var extend = Path.GetExtension(tempPath);
-        }
+//ActiveXObject是微软私有的，各处不推荐用，但像Emeditor的macros可以用，所以也有其应用场景啦，https://developer.mozilla.org/zh-CN/docs/Archive/Web/JavaScript/Microsoft_Extensions/ActiveXObject
+var fso = new ActiveXObject("Scripting.FileSystemObject");
+var files = [];
+var filesHasModified = [];
+function showFolderFileList(folderspec) {
+    var f = fso.GetFolder(folderspec);
+    if (/\\(doc|lib|\.git|\.idea|\.vs|dll)$/gi.test(folderspec)) {
+        return;
     }
+
+    // recurse subfolders
+    var subfolders = new Enumerator(f.SubFolders);
+    for (; !subfolders.atEnd(); subfolders.moveNext()) {
+        showFolderFileList((subfolders.item()).path);
+    }
+
+    // display all file path names.
+    var fc = new Enumerator(f.files);
+    for (; !fc.atEnd(); fc.moveNext()) {
+        var file = fc.item();
+        if (/\.(jmx|config|cs|Config|tt|ttinclude|txt|yml|java|bak|xml|cshtml|sh|yaml|js|json|md|properties)$/gi.test(file)) {
+            files.push(file);
+        }
+
+    }
+
 }
+
+showFolderFileList('D:\\Sources.git2');
+
+alert("将分析：" + files.length + "个文件")
