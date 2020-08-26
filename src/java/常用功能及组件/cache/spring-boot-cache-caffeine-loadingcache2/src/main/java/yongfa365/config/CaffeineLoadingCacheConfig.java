@@ -53,10 +53,12 @@ public class CaffeineLoadingCacheConfig {
                     LoadingCache<CacheKey, Object> loadingCache = builder.build(key -> {
                         try {
                             //log.info("000000000000，proceed,观察是否多次进入");
-                            return joinPoint.proceed(key.getParams());
+                            return key.getJoinPoint().proceed();
                         } catch (Throwable throwable) {
                             Thread.sleep(config.timeout() * 1000);
-                            throw new RuntimeException("RefreshCacheException", throwable);
+                            var message = "RefreshCacheException：" + throwable.getMessage() + "\n 【CacheKey：" + key + "】\n【JoinPoint： " + key.getJoinPoint().getSignature() + "】";
+                            //需要设置捕捉线程异常才能收集到此日志
+                            throw new RuntimeException(message, throwable);
                         }
                     });
 
@@ -67,25 +69,23 @@ public class CaffeineLoadingCacheConfig {
 
         //TODO:默认就是同时只有一个穿透，那@cacheable(sync=false)是怎么做到的？
         var cache = LOADING_CACHES.get(cacheName);
-        var key = new CacheKey(joinPoint.getSignature().toLongString(), joinPoint.getArgs());
+        var key = new CacheKey(joinPoint);
         return cache.get(key);
     }
 
-
     private static class CacheKey implements Serializable {
-        private final Object[] params;
         private final int hashCode;
         private final String signature;
+        private final ProceedingJoinPoint joinPoint;
 
-        CacheKey(String signature, Object... elements) {
-            this.signature = signature;
-            this.params = new Object[elements.length];
-            System.arraycopy(elements, 0, this.params, 0, elements.length);
-            this.hashCode = Arrays.deepHashCode(this.params) + signature.hashCode(); //非专业处理
+        CacheKey(ProceedingJoinPoint joinPoint) {
+            this.joinPoint = joinPoint;
+            this.signature = joinPoint.getSignature().toLongString();
+            this.hashCode = Arrays.deepHashCode(joinPoint.getArgs()) + signature.hashCode();
         }
 
-        Object[] getParams() {
-            return this.params;
+        ProceedingJoinPoint getJoinPoint() {
+            return joinPoint;
         }
 
         @Override
@@ -96,7 +96,7 @@ public class CaffeineLoadingCacheConfig {
 
             if (obj instanceof CacheKey) {
                 var item = (CacheKey) obj;
-                return this.signature.equals(item.signature) && Arrays.deepEquals(this.params, item.params);
+                return this.signature.equals(item.signature);
             }
             return false;
         }
@@ -109,7 +109,7 @@ public class CaffeineLoadingCacheConfig {
         @Override
         public String toString() {
             var joiner = new StringJoiner(",", "[", "]");
-            for (Object param : this.params) {
+            for (Object param : joinPoint.getArgs()) {
                 joiner.add(param.toString());
             }
             return getClass().getSimpleName() + ":" + signature + ":" + joiner.toString();
