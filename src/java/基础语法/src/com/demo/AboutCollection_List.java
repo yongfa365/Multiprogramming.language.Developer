@@ -114,5 +114,10 @@ public class AboutCollection_List {
             conlist.add(new Person());
         }
 
+
+        //java经常需要 List转Array,所以有此节
+        String[] strs1 = List.of("1", "2", "3", "4").toArray(String[]::new);
+        String[] strs2 = List.of("1", "2", "3", "4").toArray(new String[0]);
+        String[] strs3 = List.of("1", "2", "3", "4").stream().filter(p -> Integer.parseInt(p) % 2 == 0).toArray(String[]::new);
     }
 }
