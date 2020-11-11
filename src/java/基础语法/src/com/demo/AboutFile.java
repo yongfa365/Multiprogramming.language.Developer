@@ -26,7 +26,7 @@ public class AboutFile {
         var workingDirectory = System.getProperty("user.dir");
 
         //虽然能能改变这个配置，但Path.of等在启动时已经将其固化了，再改也不会用他。而C#可以很容的修改
-        System.setProperty("user.dir","C:\\windows");
+        System.setProperty("user.dir", "C:\\windows");
 
         //仅当前目录
         var files1 = Files.list(Path.of("C:\\Windows\\")).filter(p -> p.toString().toLowerCase().endsWith(".exe"));
@@ -45,6 +45,10 @@ public class AboutFile {
         if (!Files.exists(Path.of(filepath))) {
             //xx
         }
+
+        var path = Path.of(filepath);
+        System.out.println(path.getParent()); // C:\FileTest\haha
+        System.out.println(path.toFile().getParent()); // C:\FileTest\haha
 
         Files.write(Path.of(filepath), context.getBytes(StandardCharsets.UTF_8),
                 //不存在则创建，存在则附加。
