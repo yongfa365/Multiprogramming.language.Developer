@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>Api</module>
+        <module>ApiTest</module>
+    </modules>
+
+    <groupId>yongfa365</groupId>
+    <artifactId>AutomatedTesting</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>AutomatedTesting</name>
+    <description>Automated Testing ,Junit，Cucumber，karate api test</description>
+
+</project>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>yongfa365</groupId>
+    <artifactId>ApiTest</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>ApiTest</name>
+
+    <properties>
+        <java.version>11</java.version>
+        <jmockit.version>1.49</jmockit.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jmockit/jmockit -->
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>${jmockit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-apache</artifactId>
+            <version>0.9.6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.intuit.karate/karate-junit5 -->
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>0.9.6</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <!--        &lt;!&ndash;   官方推荐代码与资源方一起，因为他只是测试，放一起更容易观察，尤其适用于大型测试     &ndash;&gt;-->
+        <!--        <testResources>-->
+        <!--            <testResource>-->
+        <!--                <directory>src/test/java</directory>-->
+        <!--                <excludes>-->
+        <!--                    <exclude>**/*.java</exclude>-->
+        <!--                </excludes>-->
+        <!--            </testResource>-->
+        <!--        </testResources>-->
+
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>false</skipTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>
+                        -Dfile.encoding=UTF-8
+                        -javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
+                        <!-- http://jmockit.github.io/tutorial/CodeCoverage.html -->
+                        <!-- Coverage properties -->
+                        <!-- At least one of the following needs to be set: -->
+                        <!--                            -Dcoverage-output=html             &lt;!&ndash; or html-cp, serial, serial-append; if not set, defaults to "html" &ndash;&gt;-->
+                        <!--                            -Dcoverage-classes=loaded          &lt;!&ndash; or a "*" expression for class names; if not set, measures all production code classes &ndash;&gt;-->
+                        <!--                        -Dcoverage-excludes=.*(entity|entities).* &lt;!&ndash; default: empty &ndash;&gt;-->
+
+                    </argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
