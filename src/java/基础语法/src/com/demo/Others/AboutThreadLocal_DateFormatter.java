@@ -43,6 +43,7 @@ public class AboutThreadLocal_DateFormatter {
 //Demo 1：解决SimpleDateFormat线程不安全的问题
 class DateFormatter {
     // SimpleDateFormat is not thread-safe, so give one to each thread
+    // 每个线程第一次调用的时候就给他初始化一个
     private static final ThreadLocal<SimpleDateFormat> formatter =
             ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
