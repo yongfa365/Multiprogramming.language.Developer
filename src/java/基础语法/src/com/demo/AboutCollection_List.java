@@ -3,6 +3,7 @@ package com.demo;
 
 import com.demo.Entity.Person;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AboutCollection_List {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //演示：初始化List或ArrayList的几种方法
         var lstInit01 = new ArrayList<String>();
         var lstInit02 = new ArrayList<String>() {{
@@ -119,5 +120,17 @@ public class AboutCollection_List {
         String[] strs1 = List.of("1", "2", "3", "4").toArray(String[]::new);
         String[] strs2 = List.of("1", "2", "3", "4").toArray(new String[0]);
         String[] strs3 = List.of("1", "2", "3", "4").stream().filter(p -> Integer.parseInt(p) % 2 == 0).toArray(String[]::new);
+
+        //集合为空返回false，any就是至少有一个满足，如果都没有一个元素，当然不满足了
+        var bool1=List.of().stream().anyMatch(p->p.toString().length()>0);
+        var bool2=List.of().stream().anyMatch(p->p.toString().length()<0);
+        var bool3=List.of().stream().anyMatch(p->p.toString().length()==0);
+
+        //集合为空返回true，
+        var bool4=List.of().stream().allMatch(p->p.toString().length()>0);
+        var bool5=List.of().stream().allMatch(p->p.toString().length()<0);
+        var bool6=List.of().stream().allMatch(p->p.toString().length()==0);
+
+        System.in.read();
     }
 }

@@ -118,6 +118,18 @@ namespace ConsoleApp.BestPractices
             //集合“并行”执行
             Enumerable.Range(1, 10).ToList().AsParallel().ForAll(Console.WriteLine);
 
+            var lst = new List<String>();
+            //集合为空返回false，any就是至少有一个满足，如果都没有一个元素，当然不满足了
+            var bool1 = lst.Any(p => p.Length < 0);
+            var bool2 = lst.Any(p => p.Length > 0);
+            var bool3 = lst.Any(p => p.Length == 0);
+
+            //集合为空返回true，
+            var bool4 =lst.All(p => p.Length < 0);
+            var bool5 =lst.All(p => p.Length > 0);
+            var bool6 = lst.All(p => p.Length == 0);
+  
+
         }
 
         private static void RunHashSetDemo()
