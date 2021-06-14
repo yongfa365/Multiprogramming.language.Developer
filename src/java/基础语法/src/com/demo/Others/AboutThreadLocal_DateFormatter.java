@@ -14,7 +14,7 @@ public class AboutThreadLocal_DateFormatter {
         for (int i = 0; i < 100; i++) {
             final var x = i;
             new Thread(() -> {
-                Date date = Helper.GetDate(LocalDate.now().plusDays(x));
+                Date date = Helper.getDate(LocalDate.now().plusDays(x));
                 var date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
                 var date2 = formatter.format(date);
                 if (!date1.equals(date2)) {
@@ -28,7 +28,7 @@ public class AboutThreadLocal_DateFormatter {
         for (int i = 0; i < 100; i++) {
             final var x = i;
             new Thread(() -> {
-                Date date = Helper.GetDate(LocalDate.now().plusDays(x));
+                Date date = Helper.getDate(LocalDate.now().plusDays(x));
                 var date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
                 var date2 = DateFormatter.format(date);
                 if (!date1.equals(date2)) {

@@ -39,7 +39,7 @@ public class Helper {
         //}
     }
 
-    public static Date GetDate(LocalDate input) {
+    public static Date getDate(LocalDate input) {
         var zone = ZoneId.systemDefault();
         var instant = input.atStartOfDay().atZone(zone).toInstant();
         var date = Date.from(instant);
@@ -56,7 +56,7 @@ public class Helper {
     public static void sleep(long millis) {
         try {
             Thread.sleep(millis);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
     }
 

@@ -56,6 +56,9 @@ public class AboutCollection_List {
         var lstInit05 = new ArrayList<>(List.of("1", "2", "3", "3")); //★推荐
         lstInit05.add("4");
 
+        var lstInit06 = Stream.of("1", "2", "3", "3").collect(Collectors.toList()); //★推荐
+        lstInit06.add("4");
+
         //演示：lst的各种方法
         var lstData = new ArrayList<Person>();
 
@@ -122,14 +125,14 @@ public class AboutCollection_List {
         String[] strs3 = List.of("1", "2", "3", "4").stream().filter(p -> Integer.parseInt(p) % 2 == 0).toArray(String[]::new);
 
         //集合为空返回false，any就是至少有一个满足，如果都没有一个元素，当然不满足了
-        var bool1=List.of().stream().anyMatch(p->p.toString().length()>0);
-        var bool2=List.of().stream().anyMatch(p->p.toString().length()<0);
-        var bool3=List.of().stream().anyMatch(p->p.toString().length()==0);
+        var bool1 = List.of().stream().anyMatch(p -> p.toString().length() > 0);
+        var bool2 = List.of().stream().anyMatch(p -> p.toString().length() < 0);
+        var bool3 = List.of().stream().anyMatch(p -> p.toString().length() == 0);
 
         //集合为空返回true，
-        var bool4=List.of().stream().allMatch(p->p.toString().length()>0);
-        var bool5=List.of().stream().allMatch(p->p.toString().length()<0);
-        var bool6=List.of().stream().allMatch(p->p.toString().length()==0);
+        var bool4 = List.of().stream().allMatch(p -> p.toString().length() > 0);
+        var bool5 = List.of().stream().allMatch(p -> p.toString().length() < 0);
+        var bool6 = List.of().stream().allMatch(p -> p.toString().length() == 0);
 
         System.in.read();
     }

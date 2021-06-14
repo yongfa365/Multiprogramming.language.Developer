@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
 //此文件时最基础功能的展示，所以都用的是具体类型，没有用var,而平时用基本都是var
@@ -77,6 +78,7 @@ public class AboutBasic {
 
             //获取随机数
             int rnd = new Random().nextInt(10000);
+            int rnd2 = ThreadLocalRandom.current().nextInt(10000);
 
             String[] strs = new String[10];
             String[] strs2 = {"A", "B"};
